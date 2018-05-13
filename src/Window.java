@@ -3,12 +3,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.Clock;
 import java.util.Calendar;
+import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +21,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -32,12 +37,16 @@ public class Window extends JFrame implements ActionListener, MouseListener
 	JButton nextMonth;
 	JButton prevMonth;
 	JButton about;
+	JButton alarmClock;
+	JButton options;
 	
 	JPanel nextPanel;
 	JPanel prevPanel;
 	JPanel nextMonthPanel;
 	JPanel prevMonthPanel;
 	JPanel aboutPanel;
+	JPanel details;
+	JPanel alarmCloclkPanel;
 	
 	JTextField text1;
 	JTable table;
@@ -46,17 +55,22 @@ public class Window extends JFrame implements ActionListener, MouseListener
 	
 	JLabel year;
 	JLabel month;
+	JLabel dateTime;
+	JLabel time;
+	
 	int currentYear;
 	int currentMonth;
 	int currentDay;
 	
 	String meetingDetails = null;
 	CalendarLogic calendar;
+	MyClock clock;
+	Options optionsWidnow;
 	
-
 	Window(String title) 
 	{
 		
+		optionsWidnow = new Options(this);
 		calendar = new CalendarLogic(this);
 		frame = new JFrame();
 		next = new JButton("Next");
@@ -65,13 +79,19 @@ public class Window extends JFrame implements ActionListener, MouseListener
 		nextMonth = new JButton("Next");
 		prevMonth = new JButton("Prev");
 		about = new JButton("About");
+		alarmClock = new JButton("Alarm");
 		
 		nextPanel = new JPanel();
 		prevPanel = new JPanel();
 		nextMonthPanel = new JPanel();
 		prevMonthPanel = new JPanel();
 		aboutPanel = new JPanel();
+		details = new JPanel();
+		alarmCloclkPanel = new JPanel();
 		
+				
+		details.setBackground(new Color(255, 0, 255));
+		details.setBounds(600, 100, 100, 100);
 		currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
 		currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -84,6 +104,7 @@ public class Window extends JFrame implements ActionListener, MouseListener
 		nextMonth.addActionListener(this);
 		prevMonth.addActionListener(this);
 		about.addActionListener(this);
+		alarmClock.addActionListener(this);
 		
 		
 		panelTable = new JPanel(); 
@@ -125,12 +146,30 @@ public class Window extends JFrame implements ActionListener, MouseListener
 		month.setFont(new Font("Calibri", Font.BOLD, 20));
 		frame.add(month);
 		
-		about.setBounds(800, 500, 80, 30);
+		about.setBounds(860, 720, 80, 30);
 		frame.add(aboutPanel);
 		frame.add(about);
 		
+		clock = new MyClock(frame);
+		
+		alarmClock.setBounds(600, 200, 80, 30);
+		frame.add(alarmClock);
+		
+		options = new JButton("Options");
+		options.setBounds(700, 720, 80, 30);
+		options.addActionListener(this);
+		frame.add(options);
+		
 		
 		frame.setVisible(true);
+		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} 
+		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -227,7 +266,6 @@ public class Window extends JFrame implements ActionListener, MouseListener
         	}
         	setText((value == null) ? "" : value.toString());
             return this;
-        	//return cell;
         }
 	}
 
@@ -306,8 +344,20 @@ public class Window extends JFrame implements ActionListener, MouseListener
 		if(source == about)
 		{
 			About aboutInfo = new About();
-			aboutInfo.show(frame);
+			aboutInfo.show(frame);	
 		}
+		
+		if(source == alarmClock)
+		{
+			System.out.println(optionsWidnow.getChoice());
+			AlarmClock alarmWindow = new AlarmClock(this, optionsWidnow.getChoice());
+		}
+		
+		if(source == options)
+		{
+			optionsWidnow.openWindiow();
+		}
+
 		
 	}
 	
@@ -358,10 +408,13 @@ public class Window extends JFrame implements ActionListener, MouseListener
 		
 		if(e.getClickCount() == 2 && table.getSelectedRow() % 2 == 0 && row != 0)
 		{
-			InsertMeetingWindow insert = new InsertMeetingWindow(this, calendar, row, column);
-			insert.init();
-		}
-		
+			Object day = table.getValueAt(row - 1, column);
+			if(day != null)
+			{
+			  InsertMeetingWindow insert = new InsertMeetingWindow(this, calendar, row, column, currentYear, currentMonth, (int)day, optionsWidnow.getChoice());
+			  insert.init();	
+			}
+		}	
 	}
 
 
@@ -375,8 +428,14 @@ public class Window extends JFrame implements ActionListener, MouseListener
 	{
 	}
 
-
+	public Frame getFrame()
+	{
+		return frame;
+	}
 	
-	
+	public void rePaint()
+	{
+		frame.repaint();
+	}
 	
 }

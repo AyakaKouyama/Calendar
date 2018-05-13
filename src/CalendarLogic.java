@@ -4,22 +4,7 @@ import java.util.Calendar;
 
 public class CalendarLogic 
 {
-//	Object[][] data = {
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//		    {"", "", "", "", "", "", ""},
-//
-//		};
+	
 	Object[][] data = {
 		    {null, null, null, null, null, null, null},
 		    {null, null, null, null, null, null, null},
@@ -40,10 +25,13 @@ public class CalendarLogic
 	DateFormat date;
 	Window window;
 	int daysInMonth;
+	int dayOfWeek;
+	FillMeetingData dbFill;
 	
 	CalendarLogic(Window window)
 	{
 		this.window = window;
+		dbFill = new FillMeetingData(this);
 	}
 	
 	CalendarLogic()
@@ -81,7 +69,7 @@ public class CalendarLogic
 	{
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(window.getYear(), window.getMonth() - 1, 1);
-		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+		dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
 		
 		if(dayOfWeek == 0)
 		{
@@ -120,6 +108,8 @@ public class CalendarLogic
 			}
 		}
 		
+		dbFill.fillCalendar(window.getMonth(), window.getYear(), dayOfWeek, getDays());
+		
 		return data;
 	}
 	
@@ -150,6 +140,40 @@ public class CalendarLogic
 	public void setCellValue(String value, int i, int j)
 	{
 		data[i][j] = value;
+	}
+	public void setName(int id, String value)
+	{
+		dbFill.setName(id, value);
+	}
+	
+	public void setLocalization(int id, String value)
+	{
+		dbFill.setLocalization(id, value);
+	}
+	
+	public void setDate(int id, String value)
+	{
+		dbFill.setDate(id, value);
+	}
+	
+	public void setDetails(int id, String value)
+	{
+		dbFill.setDetails(id, value);
+	}
+	
+	public int getId(int id)
+	{
+		return dbFill.getId(id);
+	}
+	
+	public void insert(int id, String name, String localization, String date, String details)
+	{
+		dbFill.insert(id, name, localization, date, details);
+	}
+	
+	public void deleteMeeting(int id)
+	{
+		dbFill.deleteMeeting(id);
 	}
 	
 }
