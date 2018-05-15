@@ -3,6 +3,12 @@ import javax.swing.table.AbstractTableModel;
 public class MyTableModel extends AbstractTableModel
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	Object[][] data = {
 		    {null, null, null, null, null, null, null},
 		    {null, null, null, null, null, null, null},
@@ -21,19 +27,13 @@ public class MyTableModel extends AbstractTableModel
 
     
     String[] columnNames = {"Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz"};
-
+    CalendarLogic calendar;
 
     MyTableModel(Window window)
     {
-    	int x = 1;
-    	
-    	for(int i = 0; i<7; i++)
-    	{
-    		data[0][i] = columnNames[i];
-    	}
-    	
-    	CalendarLogic calendar = new CalendarLogic(window);
+    	this.calendar = window.getCalendar();
     	data = calendar.fillCalendar();
+    	
     	for(int i = 0; i<7; i++)
     	{
     		data[0][i] = columnNames[i];
@@ -66,15 +66,6 @@ public class MyTableModel extends AbstractTableModel
 	
     public boolean isCellEditable (int rowIndex, int columnIndex)
     {
-    	if(rowIndex == 0)
-    	{
-    		return false;
-    	}
-    	if(rowIndex%2 == 1)
-    	{
-    		return false;
-    	}
-
     	return false;
     }
 }

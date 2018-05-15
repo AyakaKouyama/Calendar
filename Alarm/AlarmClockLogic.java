@@ -1,9 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import javax.print.DocFlavor.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -29,23 +29,20 @@ public class AlarmClockLogic implements ActionListener
 	int days;
 	int years;
 	
-	boolean initMinutes = false;
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	int id;
+	
+	AlarmList alarms;
 
-	AlarmClockLogic(AlarmClock alarm, String musicName)
+	AlarmClockLogic(String musicName)
 	{
-		this.alarm = alarm;
 		this.musicName = musicName;
 		this.stopAlarm = new StopAlarm(this);
+		alarms = new AlarmList();
+		alarms.fill();
 		init();
 	}
 	
-	AlarmClockLogic(InsertMeetingWindow meeting, String musicName)
-	{
-		this.meeting = meeting;
-		this.musicName = musicName;
-		this.stopAlarm = new StopAlarm(this);
-		init();
-	}
 	
 	public void init()
 	{
@@ -84,65 +81,89 @@ public class AlarmClockLogic implements ActionListener
 	}
 	
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) 
+	public boolean chceckDate()
 	{
-		if(alarm != null || meeting != null)
+		int size = alarms.getList().size();
+		Calendar cal = Calendar.getInstance();
+		
+		for(int i = 0; i< size; i++)
 		{
-			if(alarm != null)
+			id = i;
+			
+			try 
 			{
-			    if(alarm.getDate() != null)
-				{
-					if(initMinutes == false)
-					{
-						minutes = alarm.getDate().get(Calendar.MINUTE);
-						hours = alarm.getDate().get(Calendar.HOUR_OF_DAY);
-						days = alarm.getDate().get(Calendar.DATE);
-						months = alarm.getDate().get(Calendar.MONTH);
-						years = alarm.getDate().get(Calendar.YEAR);
-						
-						initMinutes = true;
-					}
-				}
+				cal.setTime(format.parse(alarms.getList().get(i)));
+				
+			}
+			catch (ParseException e)
+			{
+				e.printStackTrace();
 			}
 			
-			if(meeting != null)
-			{
-				if(meeting.getDate() != null)
-				{
-					if(initMinutes == false)
-					{
-						minutes = meeting.getDate().get(Calendar.MINUTE);
-						hours = meeting.getDate().get(Calendar.HOUR_OF_DAY);
-						days = meeting.getDate().get(Calendar.DATE);
-						months = meeting.getDate().get(Calendar.MONTH);
-						years = meeting.getDate().get(Calendar.YEAR);
-						
-						initMinutes = true;
-					}
-				}
-			}
+			days = cal.get(Calendar.DATE);
+			months = cal.get(Calendar.MONTH);
+			years = cal.get(Calendar.YEAR);
+			hours = cal.get(Calendar.HOUR_OF_DAY);
+			minutes = cal.get(Calendar.MINUTE);
+			
 
-	    	if(stopAlarm.getNapValue() == true)
-	    	{			
-	    		 minutes += stopAlarm.getNapTime();
-				 stopAlarm.setNapValue(false);
-				 if(minutes >= 60)
-				 {
-					 minutes = minutes % 60;
-					 hours += 1;
-				 }
-	    	}
-	    		
 			if(Calendar.getInstance().get(Calendar.YEAR) == years &&  Calendar.getInstance().get(Calendar.MINUTE) == minutes
 			   && Calendar.getInstance().get(Calendar.MONTH) == months &&  Calendar.getInstance().get(Calendar.DATE) == days
-			    && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == hours && Calendar.getInstance().get(Calendar.SECOND) == 0)
+			   && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == hours && Calendar.getInstance().get(Calendar.SECOND) == 0)
 			{
-				playMusic();
-				stopAlarm.show();
+				return true;
 			}
 			
 		}
+		
+		
+		return false;
 	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		
+		if(stopAlarm.getNapValue() == true)
+		{
+			Calendar cal = Calendar.getInstance();
+			stopAlarm.setNapValue(false);
+			
+			System.out.print("Asdfg");
+			int currentMinutes = cal.get(Calendar.MINUTE);
+			int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+			
+			currentMinutes += stopAlarm.getNapTime();
+			if(minutes >= 60)
+			{
+			   minutes = minutes % 60;
+			   hours += 1;
+			}
+			
+			System.out.println(id);
+			String sDate = Integer.toString(cal.get(Calendar.YEAR)) + '-' + Integer.toString(cal.get(Calendar.MONTH) + 1) + '-' + Integer.toString(cal.get(Calendar.DATE)) + " " + Integer.toString(currentHour) + ":" + Integer.toString(currentMinutes);
+			alarms.update(id, sDate);
+		    alarms.updateList(id, sDate);
+		}
+
+		
+		if(chceckDate() == true)
+		{
+			playMusic();
+			stopAlarm.show();
+		}
+		
+	}
+		
+
+	public void addAlarm(String value)
+	{
+		System.out.println("no hej");
+		alarms.addAlarmToDB(value);
+	}
+	public void addAlarmToList(String value)
+	{
+		alarms.addAlarm(value);
+	}
+
 }
 

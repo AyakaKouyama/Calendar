@@ -1,5 +1,4 @@
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class CalendarLogic 
@@ -20,6 +19,7 @@ public class CalendarLogic
 		    {null, null, null, null, null, null, null},
 		    {null, null, null, null, null, null, null},
 		};
+    String[] columnNames = {"Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz"};
 	int[] currentPosition = {-1, -1};
 	
 	DateFormat date;
@@ -76,6 +76,11 @@ public class CalendarLogic
 			dayOfWeek = 7;
 		}
 		
+    	for(int i = 0; i<7; i++)
+    	{
+    		data[0][i] = columnNames[i];
+    	}
+		
 		int x = 1;
 		for(int i = 1; i<13; i++)
 		{
@@ -97,6 +102,7 @@ public class CalendarLogic
 						if(x <= getDays())
 						{
 							data[i][j] = x;
+							dbFill.fillCalendar(window.getMonth(), window.getYear(), dayOfWeek, getDays(), x, i, j);
 							x++;
 						}
 						else
@@ -107,8 +113,6 @@ public class CalendarLogic
 				}
 			}
 		}
-		
-		dbFill.fillCalendar(window.getMonth(), window.getYear(), dayOfWeek, getDays());
 		
 		return data;
 	}
@@ -132,9 +136,9 @@ public class CalendarLogic
 		data[i][j] = value;
 	}
 	
-	public String getCellValue(int i, int j)
+	public Object getCellValue(int i, int j)
 	{
-		return (String)data[i][j];
+		return data[i][j];
 	}
 
 	public void setCellValue(String value, int i, int j)
@@ -174,6 +178,20 @@ public class CalendarLogic
 	public void deleteMeeting(int id)
 	{
 		dbFill.deleteMeeting(id);
+	}
+	
+	public void deleteMeetingFromList(int id)
+	{
+		dbFill.deleteMeetingFromList(id);
+	}
+	public void AddElementToList(int id, String value)
+	{
+		dbFill.addToDictionary(id, value);
+	}
+	
+	public FillMeetingData getDB()
+	{
+		return dbFill;
 	}
 	
 }

@@ -1,56 +1,59 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FillMeetingData 
 {
 	CalendarLogic calendarLogic;
-	DataBase db;
-	
+	MeetingTable db;
+	Map<Integer, String> meeting;
 
 	
 	FillMeetingData(CalendarLogic calendarLogic)
 	{
 		this.calendarLogic = calendarLogic;
-		db = new DataBase();
-		db.connectToDataBase();
-		
+		db = new MeetingTable();
+		meeting = new HashMap<Integer, String>();
+		fillMeetingsDictionary();
 	}
 	
-	public void fillCalendar(int month, int year, int dayOfWeek, int daysInMonth)
+	FillMeetingData()
 	{
-		int x = 0;
-		
-		for(int i = 0; i<13; i++)
+		db = new MeetingTable();
+		meeting = new HashMap<Integer, String>();
+		fillMeetingsDictionary();
+	}
+	
+	
+	public void fillMeetingsDictionary()
+	{
+		System.out.println(this);
+		ArrayList<Integer> ids = db.getAllIds();
+		for(int i = 0; i<ids.size(); i++)
 		{
-			for(int j = 0; j<7; j++)
-			{
-				
-				if(i%2 == 0 && i != 0)
-				{
-					
-				   if(!(i == 2 && j<(dayOfWeek - 1)) && x < daysInMonth)
-				   {
-					  x++;
-				   }
-				   
-				   
-					String value;
-					String sId = Integer.toString(x) + Integer.toString(month) + Integer.toString((year % 1000));
-					int id = Integer.parseInt(sId);
-					
-					
-					if(db.getId(id) != -1)
-					{
-						String date = db.getDate(id).substring(10, 16);
-						value = "Nazwa:" + db.getName(id) + "\nLokalizacja:" + db.getLocalization(id) + "\nGodzina:" + date + "\nSzczegó³y:" + db.getDetails(id);
-					}
-					else
-					{
-						value = null;
-					}
-					
-					calendarLogic.setCellValue(value, i, j);
-				}
-			}
+			int id = ids.get(i);
+			String date = db.getDate(id).substring(10, 16);
+			String value = "Nazwa:" + db.getName(id) + "\nLokalizacja:" + db.getLocalization(id) + "\nGodzina:" + date + "\nSzczegó³y:" + db.getDetails(id);
+			meeting.put(id, value);
 		}
+	}
+	
+	public Map<Integer, String> getMap()
+	{
+		return meeting;
+	}
+	
+	public void fillCalendar(int month, int year, int dayOfWeek, int daysInMonth, int x, int row, int column)
+	{	   
+	    String sId = Integer.toString(x) + Integer.toString(month) + Integer.toString((year % 1000));
+	    int id = Integer.parseInt(sId);
+	      
+	    if(meeting.get(id) != null)
+		{
+	    	System.out.println(id);
+		  calendarLogic.setCellValue(meeting.get(id), row + 1, column);
+		}
+		
 	}
 	
 	public void setName(int id, String value)
@@ -87,4 +90,20 @@ public class FillMeetingData
 	{
 		db.deleteMeeting(id);
 	}
+	
+	public void deleteMeetingFromList(int id)
+	{
+		meeting.remove(id);
+	}
+	
+	public void addToDictionary(int id, String value)
+	{
+		meeting.put(id, value);
+	}
+	
+	public ArrayList<Integer> getAllIDs()
+	{
+		return db.getAllIds();
+	}
+	
 }

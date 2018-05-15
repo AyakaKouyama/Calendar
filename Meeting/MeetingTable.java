@@ -1,30 +1,19 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class DataBase 
+public class MeetingTable 
 {
-
+	Connection con;
 	java.sql.Statement stmt;
 	ResultSet rs;
-	Connection con = null;
 	
-	public void connectToDataBase()
+	MeetingTable()
 	{
-	   String connectionUrl = "jdbc:sqlserver://localhost:1433;" +
-				              "databaseName=meetings;integratedSecurity=true;";
-
-	  try 
-	  {
-	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-	       	con = DriverManager.getConnection(connectionUrl);       
-	  }
-	  catch (Exception e) 
-	  {
-	   	e.printStackTrace();
-	  }
-	  
+		DataBase db = new DataBase();
+		db.connectToDataBase();
+		con = db.getConnection();
 	}
 	
 	public int getId(int id)
@@ -207,5 +196,23 @@ public class DataBase
 	}
 	
 	
-	
+	public ArrayList<Integer> getAllIds()
+	{
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		try
+		{
+			stmt = con.createStatement();
+	        rs = stmt.executeQuery("SELECT id FROM meeting");
+	  	    while(rs.next())
+	  	    {
+	  	       ids.add(rs.getInt("id"));
+	  	    }
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return ids;
+	}
 }

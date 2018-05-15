@@ -1,16 +1,13 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
@@ -31,10 +28,10 @@ public class AlarmClock  implements ActionListener
 	Window window;
 	boolean accteped = false;
 	
-	AlarmClock(Window window, String soundName)
+	AlarmClock(Window window, String soundName, AlarmClockLogic music)
 	{
 		this.window = window;
-		music = new AlarmClockLogic(this, soundName);
+		this.music = music;
 		frame = new JFrame();
 		frame.setTitle("Alarm Clock");
 		frame.setResizable(false);
@@ -43,10 +40,6 @@ public class AlarmClock  implements ActionListener
 		frame.setSize(400, 300);
 		frame.setLocationRelativeTo(null);
 		
-		stop = new JButton("Stop");
-		stop.setBounds(200, 200, 80, 30);
-		stop.addActionListener(this);
-		frame.add(stop);
 		
 		dateLabel = new JLabel("Data: (dd/mm/yyyy)");
 		timeLabel = new JLabel("Godzina: (hh:mm)");
@@ -72,12 +65,22 @@ public class AlarmClock  implements ActionListener
 		frame.add(time);
 		
 		ok = new JButton("Ok");
-		ok.setBounds(100, 200, 80, 30);
+		ok.setBounds(155, 200, 80, 30);
 		ok.addActionListener(this);
 		frame.add(ok);
 		
-		
+	}
+	
+	public void add()
+	{
 		frame.setVisible(true);
+	}
+	
+	
+	public void updateDate()
+	{
+		date.setText((new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()))));
+		time.setText((new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis()))));
 	}
 
 	@Override
@@ -85,10 +88,6 @@ public class AlarmClock  implements ActionListener
 	{
 		Object source = e.getSource();
 		
-		if(source == stop)
-		{
-			music.stopMusic();
-		}
 		if(source == ok)
 		{
 			accteped = true;
@@ -107,6 +106,12 @@ public class AlarmClock  implements ActionListener
 			{
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(format.parse(date.getText() + " " + time.getText()));
+				
+				String sDate = Integer.toString(cal.get(Calendar.YEAR)) + '-' + Integer.toString(cal.get(Calendar.MONTH) + 1) + '-' + Integer.toString(cal.get(Calendar.DATE)) + " " + Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE));
+				System.out.println(sDate);
+			    music.addAlarm(sDate);
+			    music.addAlarmToList(sDate);
+			    
 				return cal;
 			}
 			catch (java.text.ParseException e) 

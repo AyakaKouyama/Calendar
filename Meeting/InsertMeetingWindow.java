@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -34,7 +33,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	JButton accept;
 	JButton alarm;
 	JButton deleteMeeting;
-	JPanel accetpPanel;
+	
 	String stringDetails = null;
 	String stringLocalization = null;
 	String stringDate = null;
@@ -60,7 +59,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	AlarmClockLogic alarmClock;
 	AlarmInfoDialog alarmInfo;
 	
-	InsertMeetingWindow(Window window, CalendarLogic calendar, int column, int row, int year, int month, int day, String soundName)
+	InsertMeetingWindow(Window window, CalendarLogic calendar, int column, int row, int year, int month, int day, String soundName, AlarmClockLogic alarmClock)
 	{
 		this.window = window;
 		this.column = column;
@@ -71,7 +70,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		this.year = year;
 		this.month = month;
 		
-		alarmClock = new AlarmClockLogic(this, soundName);
+		this.alarmClock = alarmClock;
 		frame = new JFrame();
 		detalisLabel = new JLabel("Szczegó³y");
 		nameLabel = new JLabel("Nazwa");
@@ -79,7 +78,6 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		dateLabel = new JLabel("Data");
 		details = new JTextField(20);
 		accept = new JButton("OK");
-		accetpPanel = new JPanel();
 		alarm = new JButton("Alarm");
 		deleteMeeting = new JButton("Usuñ spotkanie");
 		
@@ -97,9 +95,9 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	
 	public void initFillTable()
 	{
-		String meeting = mcalenadar.getCellValue(column, row);
+		String meeting = (String)mcalenadar.getCellValue(column, row);
 		
-		if(meeting != null)
+		if(meeting != null && meeting != "")
 		{
 			int[] index = new int[5];
 			index[0] = meeting.indexOf(':');
@@ -183,7 +181,6 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		frame.add(detalisLabel);
 		frame.add(details);
 		accept.setBounds(150, 200, 80, 30);
-		accetpPanel.add(accept);
 		frame.add(accept);
 		
 		accept.addActionListener(this);
@@ -206,7 +203,8 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			
 			fill(column, row);
 			fillData(column, row);
-
+			
+			accepted = false;
 			frame.dispose();
 		}
 		
@@ -214,6 +212,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		{
 			accepted = true;
 			alarmInfo = new AlarmInfoDialog(window.getFrame(), getDate());
+			
 			alarmInfo.show();
 		}
 		
@@ -227,10 +226,14 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 				localization.setText("");
 				time.setText("");
 				details.setText("");
+				
 				mcalenadar.deleteMeeting(id);
 				fill(column, row);
 				fillData(column, row);
 			}
+			
+			
+			// DELETE ALARM
 			
 		}
 	}
@@ -249,15 +252,17 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	
 	public void fillData(int row, int column)
 	{
+		String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 1000);
+		int id = Integer.parseInt(sId);
 		if(!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("") || !details.getText().equals(""))
 		{
-			mcalenadar.setCellValue("Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina: " + stringDate + "\nSzczegó³y:" + stringDetails, row, column);
-		  
-			String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 1000);
-			int id = Integer.parseInt(sId);
+			String value = "Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina: " + stringDate + "\nSzczegó³y:" + stringDetails;
+			mcalenadar.setCellValue(value, row, column);
 			
+
 			String date = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day) + " " + stringDate;
 			
+			mcalenadar.AddElementToList(id, value);
 			if(mcalenadar.getId(id) != -1)
 			{
 				mcalenadar.setName(id, stringName);
@@ -268,12 +273,11 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			else
 			{
 				mcalenadar.insert(id, stringName, stringLocalization, date, stringDetails);
-			}
-			
+			}	
 		}
 		else
 		{
-			mcalenadar.setCellValue("", row, column);
+			mcalenadar.deleteMeetingFromList(id);
 		}
 	}
 	
@@ -343,6 +347,12 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			
 			String sDate = Integer.toString(d) + "/" +  Integer.toString(month) + "/" + Integer.toString(year);
 			Calendar cal = Calendar.getInstance();
+			
+			
+			String ssDate =  Integer.toString(year) + "-" +  Integer.toString(month) + "-" + Integer.toString(day) + " " + sTime;
+			System.out.println(ssDate);
+		    alarmClock.addAlarm(ssDate);
+		    alarmClock.addAlarmToList(ssDate);
 			try 
 			{
 				cal.setTime(format.parse(sDate + " " + sTime));
