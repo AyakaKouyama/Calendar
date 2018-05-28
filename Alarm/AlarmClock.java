@@ -28,7 +28,7 @@ public class AlarmClock  implements ActionListener
 	Window window;
 	boolean accteped = false;
 	
-	AlarmClock(Window window, String soundName, AlarmClockLogic music)
+	AlarmClock(Window window, AlarmClockLogic music)
 	{
 		this.window = window;
 		this.music = music;

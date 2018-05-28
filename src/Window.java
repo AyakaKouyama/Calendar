@@ -64,11 +64,12 @@ public class Window implements ActionListener, MouseListener
 	Window(String title) 
 	{
 		
-		optionsWidnow = new Options(this);
+		
 		calendar = new CalendarLogic(this);
 		
-		alarmLogic = new AlarmClockLogic(optionsWidnow.getChoice());
-		alarmWindow = new AlarmClock(this, optionsWidnow.getChoice(), alarmLogic);
+		alarmLogic = new AlarmClockLogic();
+		alarmWindow = new AlarmClock(this, alarmLogic);
+		optionsWidnow = new Options(this, alarmLogic);
 		
 		frame = new JFrame();
 		next = new JButton("Next");
@@ -150,15 +151,6 @@ public class Window implements ActionListener, MouseListener
 		filter.addActionListener(this);
 		frame.add(filter);
 		
-		
-		try 
-		{
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} 
-		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	public void show()

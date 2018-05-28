@@ -23,6 +23,7 @@ public class AlarmClockLogic implements ActionListener
 	InsertMeetingWindow meeting;
 	String musicName;
 	StopAlarm stopAlarm;
+	OptionsContext options;
 	int minutes;
 	int hours;
 	int months;
@@ -34,15 +35,25 @@ public class AlarmClockLogic implements ActionListener
 	
 	AlarmList alarms;
 
-	AlarmClockLogic(String musicName)
+	AlarmClockLogic()
 	{
-		this.musicName = musicName;
+		options = new OptionsContext();
+		this.musicName = options.getSound();
 		this.stopAlarm = new StopAlarm(this);
 		alarms = new AlarmList();
 		alarms.fill();
 		init();
 	}
 	
+	public void setSound()
+	{
+		if(clip.isOpen() == true)
+		{
+			clip.close();
+		}
+		musicName = options.getSound();
+		init();
+	}
 	
 	public void init()
 	{
@@ -128,7 +139,6 @@ public class AlarmClockLogic implements ActionListener
 			Calendar cal = Calendar.getInstance();
 			stopAlarm.setNapValue(false);
 			
-			System.out.print("Asdfg");
 			int currentMinutes = cal.get(Calendar.MINUTE);
 			int currentHour = cal.get(Calendar.HOUR_OF_DAY);
 			
@@ -157,7 +167,6 @@ public class AlarmClockLogic implements ActionListener
 
 	public void addAlarm(String value)
 	{
-		System.out.println("no hej");
 		alarms.addAlarmToDB(value);
 	}
 	public void addAlarmToList(String value)

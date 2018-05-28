@@ -85,14 +85,21 @@ public class MeetingTableComponent
 	{
 		data = logic.remove(data, meetingData.getMap().size());
 		reFill();
-		//fillList();
 		window.updateCalendar();
+	}
+	
+	public void removeOne()
+	{
+		System.out.println(meetingData.getMap().size());
+		data = logic.removeOne(data, table.getSelectedRow(), meetingData.getMap().size());
+		reFill();
+		window.updateCalendar();
+		size--;
 	}
 	
 	public void cellValues(int id)
 	{
 		String meeting = meetingData.getMap().get(id);
-		System.out.println(id);
 
 		int[] index = new int[5];
 		index[0] = meeting.indexOf(':');
@@ -100,7 +107,6 @@ public class MeetingTableComponent
 		for(int i = 1; i<5; i++)
 		{
 			index[i] = meeting.indexOf(':', (index[i-1] + 1));
-			System.out.println("i" + index[i]);
 		}
 		
 

@@ -26,6 +26,7 @@ public class MeetingsFilter  implements ActionListener, ItemListener
 	JButton remove;
 	JButton findOlder;
 	JButton removeSlelected;
+	JButton removeOne;
 	
 	JLabel findL;
 	JLabel olderL;
@@ -97,6 +98,9 @@ public class MeetingsFilter  implements ActionListener, ItemListener
 		
 		findOlder = new JButton("Szukaj");
 		setButton(findOlder, 340, 265, 80, 20);
+		
+		removeOne = new JButton("Usuñ zaznaczony");
+		setButton(removeOne, 200, 320, 90, 30);
 
 		
 		find = new JTextField(100);
@@ -163,9 +167,9 @@ public class MeetingsFilter  implements ActionListener, ItemListener
 		}
 		if(source == remove)
 		{
-			//table.setData(obj);
 			table.resetData();
 			table.reFill();	
+
 		}
 		if(source == findOlder)
 		{
@@ -174,7 +178,17 @@ public class MeetingsFilter  implements ActionListener, ItemListener
 		}
 		if(source == removeSlelected)
 		{
-			table.remove();
+			RemoveWarning warning = new RemoveWarning(frame);
+			warning.show();
+			if(warning.getAnswer() == true)
+			{
+				table.remove();
+			}
+			
+		}
+		if(source == removeOne)
+		{
+			table.removeOne();
 		}
 		
 	}

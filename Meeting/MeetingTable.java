@@ -140,6 +140,7 @@ public class MeetingTable
 			e.printStackTrace();
 		}
 	}
+	
 	public void setName(int id, String value)
 	{
 		try 

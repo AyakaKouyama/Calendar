@@ -65,7 +65,6 @@ public class MeetingsFilterLogic
 		int x = 0;
 		for(int i = 0; i<size; i++)
 		{
-			System.out.println(data[i][column]);
 			if(data[i][column] != null)
 			{
 				
@@ -128,12 +127,11 @@ public class MeetingsFilterLogic
 					temp[x][1] = "";
 					temp[x][2] = "";
 					temp[x][3] = "";
-					System.out.println("gv");
 					x++;
 				}
 				else
 				{
-					temp[x][0] = "h";
+					temp[x][0] = data[i][1];
 					temp[x][1] = data[i][1];
 					temp[x][2] = data[i][2];
 					temp[x][3] = data[i][3];
@@ -141,6 +139,43 @@ public class MeetingsFilterLogic
 				}
 			}
 				
+		}
+		
+		return temp;
+	}
+	
+	public Object[][] removeOne(Object[][] data, int row, int size)
+	{
+		Object[][] temp = new Object[size][4];
+		
+		for(int i = 0; i<size; i++)
+		{
+			String cellValue = (String)data[i][2];
+			if(i == row)
+			{
+				data[i][0] = "";
+				data[i][1] = "";
+				data[i][2] = "";
+				data[i][3] = "";
+				String sId = cellValue.substring(0, 2) + cellValue.substring(3, 4) + cellValue.subSequence(7, 9);
+				int id = Integer.parseInt(sId);
+				db.deleteMeeting(id);
+				db.deleteMeetingFromList(id);
+			}	
+		}
+		
+		int x = 0;
+		for(int i = 0; i<size; i++)
+		{
+		   if(data[i][0].equals("") == false || data[i][1].equals("") == false || data[i][2].equals("") == false || data[i][3].equals("") == false)
+		   {
+			   for(int j = 0; j<4; j++)
+			   {
+				   temp[x][j] = data[i][j];
+			   }
+			   
+			   x++;
+		   }
 		}
 		
 		return temp;

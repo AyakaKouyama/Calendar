@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Calendar;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -23,7 +24,6 @@ public class CalendarTable implements ActionListener, MouseListener
 	JPanel panelTable;
 	Window window;
 	CalendarLogic calendar;
-	
 	int currentDay;
 	int currentMonth;
 	int currentYear;
@@ -45,6 +45,7 @@ public class CalendarTable implements ActionListener, MouseListener
 		JLabel label = new JLabel("sdf");
 		label.setBounds(200, 200, 200, 200);
 		window.getFrame().add(label);
+
 	}
 
 	public void add()

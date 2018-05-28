@@ -232,9 +232,6 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 				fillData(column, row);
 			}
 			
-			
-			// DELETE ALARM
-			
 		}
 	}
 	

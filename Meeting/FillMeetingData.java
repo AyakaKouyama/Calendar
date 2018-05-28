@@ -27,7 +27,6 @@ public class FillMeetingData
 	
 	public void fillMeetingsDictionary()
 	{
-		System.out.println(this);
 		ArrayList<Integer> ids = db.getAllIds();
 		for(int i = 0; i<ids.size(); i++)
 		{
@@ -50,7 +49,6 @@ public class FillMeetingData
 	      
 	    if(meeting.get(id) != null)
 		{
-	    	System.out.println(id);
 		  calendarLogic.setCellValue(meeting.get(id), row + 1, column);
 		}
 		
