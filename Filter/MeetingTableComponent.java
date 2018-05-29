@@ -173,5 +173,9 @@ public class MeetingTableComponent
 		data = oryginalData;
 	}
 	
+	public void setSize(int value)
+	{
+		size = value;
+	}
 	
 }

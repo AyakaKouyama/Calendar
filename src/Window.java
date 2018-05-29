@@ -41,7 +41,7 @@ public class Window implements ActionListener
 		
 		frame = new JFrame();
 		
-		about = new JButton("About");
+		about = new JButton("Info");
 		alarmClock = new JButton("Alarm");
 		allAlarms = new JButton("Alarmy");
 		alarmCloclkPanel = new JPanel();
@@ -57,31 +57,30 @@ public class Window implements ActionListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.pack();
-		frame.setSize(1000, 800);
+		frame.setSize(850, 750);
 		frame.setLocationRelativeTo(null);
 		
 
 		
-		allAlarms.setBounds(600, 280, 80, 30);
+		allAlarms.setBounds(655, 280, 100, 30);
 		frame.add(allAlarms);
 		
-		
-	
-		about.setBounds(860, 720, 80, 30);
+
+		about.setBounds(655, 520, 100, 30);
 		frame.add(about);
 		
 		clock = new MyClock(frame);
 		
-		alarmClock.setBounds(600, 200, 80, 30);
+		alarmClock.setBounds(655, 200, 100, 30);
 		frame.add(alarmClock);
 		
-		options = new JButton("Options");
-		options.setBounds(700, 720, 80, 30);
+		options = new JButton("Opcje");
+		options.setBounds(655, 440, 100, 30);
 		options.addActionListener(this);
 		frame.add(options);
 		
-		filter = new JButton("Filtr");
-		filter.setBounds(600, 350, 80, 30);
+		filter = new JButton("Spotkania");
+		filter.setBounds(655, 360, 100, 30);
 		filter.addActionListener(this);
 		frame.add(filter);
 		calendarWindow = new CalendarWindow(this);

@@ -3,7 +3,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -42,11 +46,11 @@ public class AllAlarms implements ActionListener
 		frame.add(scrollList);
 		
 		remove = new JButton("Usuñ");
-		remove.setBounds(350, 20, 80, 30);
+		remove.setBounds(350, 60, 80, 30);
 		remove.addActionListener(this);
 		
 		ok = new JButton("OK");
-		ok.setBounds(350, 60, 80, 30);
+		ok.setBounds(350, 20, 80, 30);
 		ok.addActionListener(this);
 		
 		frame.add(ok);

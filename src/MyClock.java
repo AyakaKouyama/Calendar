@@ -19,12 +19,12 @@ public class MyClock implements ActionListener
 		timer = new Timer(delay, this);
 		timer.start();
 		dateLabel = new JLabel(new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis())));
-		dateLabel.setBounds(750, 65, 200, 100);
-		dateLabel.setFont(new Font("Calibri", Font.BOLD, 35));
+		dateLabel.setBounds(620, 40, 200, 100);
+		dateLabel.setFont(new Font("Arial", Font.BOLD, 45));
 		
 		currentDate = new JLabel(new SimpleDateFormat("EEE, d MMM yyyy").format(new Date(System.currentTimeMillis())));
-		currentDate.setBounds(700, 20, 300, 100);
-		currentDate.setFont(new Font("Calibri", Font.BOLD, 30));
+		currentDate.setBounds(590, 10, 300, 50);
+		currentDate.setFont(new Font("Arial", Font.BOLD, 30));
 
 		frame.add(dateLabel);
 		frame.add(currentDate);

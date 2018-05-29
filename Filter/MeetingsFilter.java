@@ -21,6 +21,7 @@ public class MeetingsFilter implements ActionListener, ItemListener
 	JButton findOlder;
 	JButton removeSlelected;
 	JButton removeOne;
+	JButton findField;
 	
 	JLabel findL;
 	JLabel olderL;
@@ -44,24 +45,25 @@ public class MeetingsFilter implements ActionListener, ItemListener
 	    logic = new MeetingsFilterLogic(window.getCalendaeWindow().getCalendar().getDB());
 	    meetingData = window.getCalendaeWindow().getCalendar().getDB();
 		frame = new JFrame();
-		frame.setTitle("Meeting");
+		frame.setTitle("Spotkania");
 		frame.setResizable(false);
 		frame.setLayout(null);
 		frame.pack();
-		frame.setSize(600, 400);
+		frame.setSize(600, 430);
 
 		table = new MeetingTableComponent(frame, window, meetingData);
 		table.show();
 		
 		
 		ok = new JButton("Ok");
-		setButton(ok, 490, 320, 80, 30);
+		setButton(ok, 490, 350, 80, 30);
 		
 		remove = new JButton("Usuñ filtry");
-		setButton(remove, 400, 320, 80, 30);
+		setButton(remove, 350, 350, 100, 30);
 		
 		removeSlelected = new JButton("Usuñ wyniki");
-		setButton(removeSlelected, 300, 320, 90, 30);
+		setButton(removeSlelected, 195, 350, 120, 30);
+		
 		
 		findL = new JLabel("Szukaj:");
 		findL.setBounds(20, 230, 80, 30);
@@ -78,10 +80,10 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		sortL.setFont(new Font("Arial", Font.PLAIN, 15));
 		frame.add(sortL);
 		
-		up = new JButton("Rosn¹co");
+		up = new JButton("\u25b2");
 		setButton(up, 250, 295, 80, 20);
 		
-		down = new JButton("Malej¹co");
+		down = new JButton("\u25bc");
 		setButton(down, 340, 295, 80, 20);
 		
 		choice = new Choice();
@@ -93,8 +95,11 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		findOlder = new JButton("Szukaj");
 		setButton(findOlder, 340, 265, 80, 20);
 		
-		removeOne = new JButton("Usuñ zaznaczony");
-		setButton(removeOne, 200, 320, 90, 30);
+		removeOne = new JButton("Usuñ zaznaczone");
+		setButton(removeOne, 20, 350, 140, 30);
+		
+		findField = new JButton("Szukaj");
+		setButton(findField, 340, 235, 80, 20);
 
 		
 		find = new JTextField(100);
@@ -184,6 +189,11 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		{
 			table.removeOne();
 		}
+		if(source == findField)
+		{
+			table.setData(logic.find(table.getData(), findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText()));
+			table.reFill();
+		}
 		
 	}
 	
@@ -194,14 +204,14 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		
 		if(source == choice)
 		{
-			table.sort(choice.getSelectedItem(), order);
+			//table.sort(choice.getSelectedItem(), order);
 		}
 		if(source == findChoice)
 		{
 			//data = logic.findOlderThan(data,  meetingData.getMap().size(), olderThan.getText());
 			//data = logic.find(data, findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText());
-			table.setData(logic.find(table.getData(), findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText()));
-			table.reFill();
+		//	table.setData(logic.find(table.getData(), findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText()));
+			//table.reFill();
 		}
 		
 	}

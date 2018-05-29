@@ -78,7 +78,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		localizationLabel = new JLabel("Lokalizacja");
 		dateLabel = new JLabel("Data");
 		details = new JTextField(20);
-		accept = new JButton("OK");
+		accept = new JButton("Dodaj");
 		alarm = new JButton("Alarm");
 		deleteMeeting = new JButton("Usuñ spotkanie");
 		deleteMeeting.setText("<html><center>"+"Usuñ"+"<br>"+"spotkanie"+"</center></html>");
@@ -98,8 +98,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	
 	public void initFillTable()
 	{
-		//String meeting = (String)mcalenadar.getCellValue(column, row);
-		//String meeting = 
+		
 		String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 100);
 		int id = Integer.parseInt(sId);
 		String meeting = mcalenadar.getDB().getMap().get(id);
@@ -427,6 +426,5 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 				reminderTime = 60 * 24;
 			}
 		}
-		
 	}
 }

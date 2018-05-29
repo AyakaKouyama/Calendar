@@ -1,4 +1,5 @@
 import java.awt.Choice;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -18,47 +19,71 @@ public class Options extends JFrame implements ItemListener, ActionListener
 	private static final long serialVersionUID = 1L;
 	
 	JLabel alarmSound;
-	JLabel style;
+	JLabel themeLabel;
 	JButton ok;
 	Choice choice;
 	String sChoice;
+	
+	Choice theme;
+	String sTheme;
 	AlarmClockLogic alarm;
 	OptionsContext optionsContext;
+	Window window;
 	
 	Options(Window window, AlarmClockLogic alarm)
 	{
 		
+		this.window = window;
 		this.alarm = alarm;
 		optionsContext = new OptionsContext();
 		
-		setTitle("Alarm Clock");
+		setTitle("Ustawienia");
 		setResizable(false);
 		setLayout(null);
 		pack();
-		setSize(400, 300);
+		setSize(350, 200);
 		setLocationRelativeTo(null);
 		
 		ok = new JButton("OK");
-		ok.setBounds(290,220, 80, 30);
+		ok.setBounds(240,105, 80, 30);
 		ok.addActionListener(this);
 		add(ok);
 		
 		choice = new Choice();
-		choice.setBounds(20, 40, 100, 30);
+		choice.setBounds(20, 40, 110, 150);
 		choice.addItemListener(this);
+		choice.setFont(new Font("Arial", Font.PLAIN, 15));
 	
-		for(int i = 0; i<5; i++)
+		for(int i = 0; i<3; i++)
 		{
-			choice.add("sound" + (i + 1));
+			choice.add("Dzwiêk " + (i + 1));
 		}
 		
 		sChoice = choice.getItem(0);
 		choice.select(optionsContext.getSound());
 		add(choice);
+
+		theme = new Choice();
+		theme.setBounds(20, 110, 110, 100);
+		theme.setFont(new Font("Arial", Font.PLAIN, 15));
+		theme.addItemListener(this);
+		theme.add("Niebieski");
+		theme.add("Ró¿owy");
+		theme.add("Zielony");
+		theme.select(optionsContext.getTheme());
+		add(theme);
+		sTheme = theme.getSelectedItem();
 		
 		alarmSound = new JLabel("Dzwiêk alarmu");
 		alarmSound.setBounds(20, 10, 100, 30);
+		alarmSound.setFont(new Font("Arial", Font.PLAIN, 14));
 		add(alarmSound);
+		
+		themeLabel = new JLabel("Motyw");
+		themeLabel.setBounds(20, 80, 100, 30);
+		themeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+		add(themeLabel);
+
 
 	}
 
@@ -79,11 +104,23 @@ public class Options extends JFrame implements ItemListener, ActionListener
 			optionsContext.setSound(1, sChoice);
 			alarm.setSound();
 		}
+		
+		if(source == theme)
+		{
+			sTheme = theme.getSelectedItem();
+			optionsContext.setTheme(1, sTheme);
+			window.getCalendaeWindow().refresh();
+		}
 	}
 	
 	public String getChoice()
 	{
 		return sChoice;
+	}
+	
+	public String getTheme()
+	{
+		return sTheme;
 	}
 
 
@@ -96,6 +133,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		{
 			dispose();
 		}
+	
 		
 	}
 	

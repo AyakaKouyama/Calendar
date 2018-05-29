@@ -30,15 +30,15 @@ public class StopAlarm  implements ActionListener, ItemListener
 		frame.setLocationRelativeTo(null);
 		
 		stop = new JButton("Stop");
-		stop.setBounds(80, 30, 80, 30);
+		stop.setBounds(60, 30, 120, 30);
 		stop.addActionListener(this);
 		
 		nap = new JButton("Drzemka");
-		nap.setBounds(80, 70, 80, 30);
+		nap.setBounds(60, 70, 120, 30);
 		nap.addActionListener(this);
 		
 		choice = new Choice();
-		choice.setBounds(75, 110, 100, 30);
+		choice.setBounds(70, 110, 100, 30);
 		choice.addItemListener(this);
 		choice.add("5 min");
 		choice.add("1 min");

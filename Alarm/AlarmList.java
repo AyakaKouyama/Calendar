@@ -3,26 +3,15 @@ import java.util.ArrayList;
 public class AlarmList 
 {
 	ArrayList<String> alarm;
-	ArrayList<Boolean> init;
 	
 	AlarmTable db;
 	
 	AlarmList()
 	{
 		alarm = new ArrayList<String>();
-		init = new ArrayList<Boolean>();
 		db = new AlarmTable();
-		fillInit();
 	}
 	
-	public void fillInit()
-	{
-		ArrayList<Integer> ids = db.getAllIds();
-		for(int i = 0; i<ids.size(); i++)
-		{
-			init.add(false);
-		}
-	}
 	
 	public void fill()
 	{
@@ -37,7 +26,6 @@ public class AlarmList
 	
 	public void addAlarm(String value)
 	{
-		init.add(false);
 		alarm.add(value);
 	}
 	
@@ -50,11 +38,6 @@ public class AlarmList
 	{
 		ArrayList<Integer> ids = db.getAllIds();
 		db.insertDate(ids.size() + 1, value);
-	}
-	
-	public ArrayList<Boolean> getInit()
-	{
-		return init;
 	}
 	
 	public void update(int id, String value)

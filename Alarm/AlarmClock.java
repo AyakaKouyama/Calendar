@@ -107,6 +107,7 @@ public class AlarmClock  implements ActionListener
 			}
 
 		}
+
 		if(source == cancel)
 		{
 			frame.dispose();

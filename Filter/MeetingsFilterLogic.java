@@ -27,7 +27,14 @@ public class MeetingsFilterLogic
 		
 		if(choice == "Data")
 		{
-			Arrays.sort(data, (a, b) -> (!a[2].toString().equals("") && !b[2].toString().equals("")) ? order * LocalDateTime.parse(a[2].toString(), format).compareTo(LocalDateTime.parse(b[2].toString(), format)) : 0);
+			try
+			{
+				Arrays.sort(data, (a, b) -> (!a[2].toString().equals("") && !b[2].toString().equals("")) ? order * LocalDateTime.parse(a[2].toString(), format).compareTo(LocalDateTime.parse(b[2].toString(), format)) : 0);
+			}
+			catch(NullPointerException exc)
+			{
+				
+			}
 		}
 		
 		if(choice == "Szczegó³y")
@@ -103,7 +110,7 @@ public class MeetingsFilterLogic
 			}
 
 		}
-		
+
 		return temp;
 	}
 	
