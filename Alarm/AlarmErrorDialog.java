@@ -17,4 +17,5 @@ public class AlarmErrorDialog
 	{
 		JOptionPane.showMessageDialog(frame, "Nie mo¿na ustawiæ alarmu. Data ju¿ minê³a.", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+	
 }

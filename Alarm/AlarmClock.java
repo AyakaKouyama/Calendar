@@ -16,6 +16,7 @@ public class AlarmClock  implements ActionListener
 	JFrame frame;
 	JButton stop;
 	JButton ok;
+	JButton cancel;
 	JFormattedTextField date;
 	JFormattedTextField time;
 	AlarmClockLogic music;
@@ -27,6 +28,7 @@ public class AlarmClock  implements ActionListener
 	JLabel timeLabel;
 	Window window;
 	boolean accteped = false;
+	String sDate;
 	
 	AlarmClock(Window window, AlarmClockLogic music)
 	{
@@ -65,9 +67,14 @@ public class AlarmClock  implements ActionListener
 		frame.add(time);
 		
 		ok = new JButton("Ok");
-		ok.setBounds(155, 200, 80, 30);
+		ok.setBounds(220, 200, 80, 30);
 		ok.addActionListener(this);
 		frame.add(ok);
+		
+		cancel = new JButton("Anuluj");
+		cancel.setBounds(100, 200, 80, 30);
+		cancel.addActionListener(this);
+		frame.add(cancel);
 		
 	}
 	
@@ -92,7 +99,16 @@ public class AlarmClock  implements ActionListener
 		{
 			accteped = true;
 			AlarmInfoDialog alarmInfo = new AlarmInfoDialog(window.getFrame(), getDate());
-			alarmInfo.show();
+			if(alarmInfo.show() == true)
+			{
+			    music.addAlarm(sDate);
+			    music.addAlarmToList(sDate);
+			    frame.dispose();
+			}
+
+		}
+		if(source == cancel)
+		{
 			frame.dispose();
 		}
 
@@ -106,13 +122,8 @@ public class AlarmClock  implements ActionListener
 			{
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(format.parse(date.getText() + " " + time.getText()));
-				
-				String sDate = Integer.toString(cal.get(Calendar.YEAR)) + '-' + Integer.toString(cal.get(Calendar.MONTH) + 1) + '-' + Integer.toString(cal.get(Calendar.DATE)) + " " + Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE));
-				System.out.println(sDate);
-			    music.addAlarm(sDate);
-			    music.addAlarmToList(sDate);
-			    
-				return cal;
+				sDate = Integer.toString(cal.get(Calendar.YEAR)) + '-' + Integer.toString(cal.get(Calendar.MONTH) + 1) + '-' + Integer.toString(cal.get(Calendar.DATE)) + " " + Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE));
+                return cal;
 			}
 			catch (java.text.ParseException e) 
 			{

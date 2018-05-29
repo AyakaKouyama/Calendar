@@ -7,11 +7,15 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
 
 public class Options extends JFrame implements ItemListener, ActionListener
 {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	JLabel alarmSound;
 	JLabel style;

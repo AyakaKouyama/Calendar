@@ -46,10 +46,11 @@ public class FillMeetingData
 	{	   
 	    String sId = Integer.toString(x) + Integer.toString(month) + Integer.toString((year % 1000));
 	    int id = Integer.parseInt(sId);
-	      
+	    
 	    if(meeting.get(id) != null)
 		{
-		  calendarLogic.setCellValue(meeting.get(id), row + 1, column);
+		//  calendarLogic.setCellValue(meeting.get(id), row + 1, column);
+	    	calendarLogic.setCellValue(db.getName(id), row + 1, column);
 		}
 		
 	}

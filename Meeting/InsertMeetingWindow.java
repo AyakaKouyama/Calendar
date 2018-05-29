@@ -33,6 +33,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	JButton accept;
 	JButton alarm;
 	JButton deleteMeeting;
+	JButton cancel;
 	
 	String stringDetails = null;
 	String stringLocalization = null;
@@ -80,6 +81,8 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		accept = new JButton("OK");
 		alarm = new JButton("Alarm");
 		deleteMeeting = new JButton("Usuñ spotkanie");
+		deleteMeeting.setText("<html><center>"+"Usuñ"+"<br>"+"spotkanie"+"</center></html>");
+		cancel = new JButton("Anuluj");
 		
 		remindChoice = new Choice();
 		
@@ -95,20 +98,23 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	
 	public void initFillTable()
 	{
-		String meeting = (String)mcalenadar.getCellValue(column, row);
+		//String meeting = (String)mcalenadar.getCellValue(column, row);
+		//String meeting = 
+		String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 100);
+		int id = Integer.parseInt(sId);
+		String meeting = mcalenadar.getDB().getMap().get(id);
+		
 		
 		if(meeting != null && meeting != "")
 		{
 			int[] index = new int[5];
 			index[0] = meeting.indexOf(':');
-			System.out.println(index[0]);
 			for(int i = 1; i<5; i++)
 			{
 				index[i] = meeting.indexOf(':', (index[i-1] + 1));
-				System.out.println("i" + index[i]);
 			}
 			
-			System.out.println("asdf");
+			
 		  if(index[4] == -1)
 		  {
 			  name.setText(meeting.substring(index[0] + 1 , index[1] - "Lokalizacja".length() - 1));
@@ -166,8 +172,9 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		dateLabel.setBounds(20, 100, 150, 30);
 		detalisLabel.setBounds(20, 140, 150, 30);
 		
-		deleteMeeting.setBounds(300, 120, 80, 30);
+		deleteMeeting.setBounds(300, 120, 80, 50);
 		deleteMeeting.addActionListener(this);
+		
 		
 		frame.add(deleteMeeting);
 		frame.add(detalisLabel);
@@ -180,11 +187,14 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		frame.add(name);
 		frame.add(detalisLabel);
 		frame.add(details);
-		accept.setBounds(150, 200, 80, 30);
+		accept.setBounds(200, 200, 80, 30);
+		cancel.setBounds(100, 200, 80, 30);
+		frame.add(cancel);
 		frame.add(accept);
 		
 		accept.addActionListener(this);
 		details.addActionListener(this);
+		cancel.addActionListener(this);
 		frame.setVisible(true);
 	}
 
@@ -201,11 +211,25 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			stringLocalization = localization.getText();
 			stringDate = time.getText();
 			
-			fill(column, row);
-			fillData(column, row);
+			if(stringName.equals("") && stringDetails.equals("") && stringLocalization.equals("") && stringDate.equals(""))
+			{
+				frame.dispose();
+				accepted = false;
+				frame.dispose();
+			}
+			else if(stringName.equals("") == true)
+			{
+				IntertNameWarning warning = new IntertNameWarning(frame);
+				warning.show();
+			}	
+			else
+			{
+				fill(column, row);
+				fillData(column, row);
+				accepted = false;
+				frame.dispose();
+			}	
 			
-			accepted = false;
-			frame.dispose();
 		}
 		
 		if(source == alarm)
@@ -233,17 +257,22 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			}
 			
 		}
+		
+		if(source == cancel)
+		{
+			frame.dispose();
+		}
 	}
 	
 	public void fill(int row, int column)
 	{
 		if(!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("") || !details.getText().equals(""))
 		{
-			window.fillCell("Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina:" + stringDate + "\nSzczegó³y:" + stringDetails, row, column);
+			//window.fillCell("Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina:" + stringDate + "\nSzczegó³y:" + stringDetails, row, column);
 		}
 		else
 		{
-			window.fillCell("", row, column);
+			window.getCalendaeWindow().fillCell("", row, column);
 		}
 	}
 	
@@ -254,7 +283,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		if(!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("") || !details.getText().equals(""))
 		{
 			String value = "Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina: " + stringDate + "\nSzczegó³y:" + stringDetails;
-			mcalenadar.setCellValue(value, row, column);
+		//	mcalenadar.setCellValue(value, row, column);
 			
 
 			String date = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day) + " " + stringDate;
@@ -347,13 +376,11 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			
 			
 			String ssDate =  Integer.toString(year) + "-" +  Integer.toString(month) + "-" + Integer.toString(day) + " " + sTime;
-			System.out.println(ssDate);
 		    alarmClock.addAlarm(ssDate);
 		    alarmClock.addAlarmToList(ssDate);
 			try 
 			{
 				cal.setTime(format.parse(sDate + " " + sTime));
-				System.out.println(cal.getTime());
 				return cal;
 			} 
 			catch (ParseException e) 

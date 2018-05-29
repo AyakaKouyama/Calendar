@@ -6,18 +6,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
-public class MeetingsFilter  implements ActionListener, ItemListener
+public class MeetingsFilter implements ActionListener, ItemListener
 {
 	JFrame frame;
 	JButton ok;
@@ -47,8 +41,8 @@ public class MeetingsFilter  implements ActionListener, ItemListener
 	MeetingsFilter(Window window)
 	{
 		this.window = window;
-	    logic = new MeetingsFilterLogic(window.getCalendar().getDB());
-	    meetingData = window.getCalendar().getDB();
+	    logic = new MeetingsFilterLogic(window.getCalendaeWindow().getCalendar().getDB());
+	    meetingData = window.getCalendaeWindow().getCalendar().getDB();
 		frame = new JFrame();
 		frame.setTitle("Meeting");
 		frame.setResizable(false);

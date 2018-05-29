@@ -29,10 +29,10 @@ public class MyTableModel extends AbstractTableModel
     String[] columnNames = {"Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz"};
     CalendarLogic calendar;
 
-    MyTableModel(Window window)
+    MyTableModel(CalendarWindow window)
     {
     	this.calendar = window.getCalendar();
-    	data = calendar.fillCalendar();
+    	data = calendar.fillCalendar(window.getYear(), window.getMonth());
     	
     	for(int i = 0; i<7; i++)
     	{

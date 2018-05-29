@@ -122,7 +122,8 @@ public class AlarmClockLogic implements ActionListener
 			   && Calendar.getInstance().get(Calendar.MONTH) == months &&  Calendar.getInstance().get(Calendar.DATE) == days
 			   && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == hours && Calendar.getInstance().get(Calendar.SECOND) == 0)
 			{
-				return true;
+				alarms.removeAlarm(years + "-" + (months + 1) + "-" + days + " " + hours + ":" + minutes + ":00.0");
+				System.out.println(years + "-" + (months + 1) + "-" + days + " " + hours + ":" + minutes + ":00.0");
 			}
 			
 		}
@@ -163,8 +164,8 @@ public class AlarmClockLogic implements ActionListener
 		}
 		
 	}
-		
-
+	
+	
 	public void addAlarm(String value)
 	{
 		alarms.addAlarmToDB(value);

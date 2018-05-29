@@ -15,17 +15,19 @@ public class AlarmInfoDialog
 		this.date = date;
 	}
 
-	public void show()
+	public boolean show()
 	{
 		difference();
 		if(message != null)
 		{
 			JOptionPane.showMessageDialog(frame, "Alarm rozpocznie siê za: " + message, "Alarm", JOptionPane.INFORMATION_MESSAGE);
+			return true;
 		}
 		else
 		{
 			AlarmErrorDialog error = new AlarmErrorDialog(frame);
 			error.show();
+			return false;
 		}
 	}
 	

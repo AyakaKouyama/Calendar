@@ -23,21 +23,17 @@ public class CalendarLogic
 	int[] currentPosition = {-1, -1};
 	
 	DateFormat date;
-	Window window;
+	CalendarWindow window;
 	int daysInMonth;
 	int dayOfWeek;
 	FillMeetingData dbFill;
 	
-	CalendarLogic(Window window)
+	CalendarLogic(CalendarWindow window)
 	{
 		this.window = window;
 		dbFill = new FillMeetingData(this);
 	}
 	
-	CalendarLogic()
-	{
-		
-	}
 	
 	public int getDays()
 	{
@@ -65,10 +61,10 @@ public class CalendarLogic
 		return daysInMonth;	
 	}
 	
-	public Object[][] fillCalendar()
+	public Object[][] fillCalendar(int year, int month)
 	{
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(window.getYear(), window.getMonth() - 1, 1);
+		calendar.set(year, month - 1, 1);
 		dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
 		
 		if(dayOfWeek == 0)
@@ -88,7 +84,7 @@ public class CalendarLogic
 			{
 				if(i%2 == 1)
 				{
-					if(x == window.getDay())
+					if(x == window.getCurrentDay())
 					{
 						currentPosition[0] = i;
 						currentPosition[1] = j;
@@ -102,7 +98,7 @@ public class CalendarLogic
 						if(x <= getDays())
 						{
 							data[i][j] = x;
-							dbFill.fillCalendar(window.getMonth(), window.getYear(), dayOfWeek, getDays(), x, i, j);
+							dbFill.fillCalendar(month, year, dayOfWeek, getDays(), x, i, j);
 							x++;
 						}
 						else
@@ -193,5 +189,6 @@ public class CalendarLogic
 	{
 		return dbFill;
 	}
+	
 	
 }

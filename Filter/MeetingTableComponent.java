@@ -27,11 +27,16 @@ public class MeetingTableComponent
 	    this.meetingData = meetingData;
 	    size = meetingData.getMap().size();
 		data = new Object[meetingData.getMap().size()][4];
-		logic = new MeetingsFilterLogic(window.getCalendar().getDB());
+		logic = new MeetingsFilterLogic(window.getCalendaeWindow().getCalendar().getDB());
 		fillList();
 		oryginalData = data;
 		
 		DefaultTableModel model = new DefaultTableModel(data, columnNames) { 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column)
 			{
@@ -85,7 +90,7 @@ public class MeetingTableComponent
 	{
 		data = logic.remove(data, meetingData.getMap().size());
 		reFill();
-		window.updateCalendar();
+		window.getCalendaeWindow().updateCalendar();
 	}
 	
 	public void removeOne()
@@ -93,7 +98,7 @@ public class MeetingTableComponent
 		System.out.println(meetingData.getMap().size());
 		data = logic.removeOne(data, table.getSelectedRow(), meetingData.getMap().size());
 		reFill();
-		window.updateCalendar();
+		window.getCalendaeWindow().updateCalendar();
 		size--;
 	}
 	
