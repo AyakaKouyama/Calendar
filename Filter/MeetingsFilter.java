@@ -177,8 +177,8 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		}
 		if(source == removeSlelected)
 		{
-			RemoveWarning warning = new RemoveWarning(frame);
-			warning.show();
+			RemoveWarning warning = new RemoveWarning();
+			warning.show(frame);
 			if(warning.getAnswer() == true)
 			{
 				table.remove();

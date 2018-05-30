@@ -218,8 +218,8 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			}
 			else if(stringName.equals("") == true)
 			{
-				IntertNameWarning warning = new IntertNameWarning(frame);
-				warning.show();
+				IntertNameWarning warning = new IntertNameWarning();
+				warning.show(frame);
 			}	
 			else
 			{
@@ -234,9 +234,9 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		if(source == alarm)
 		{
 			accepted = true;
-			alarmInfo = new AlarmInfoDialog(window.getFrame(), getDate());
+			alarmInfo = new AlarmInfoDialog(getDate());
 			
-			alarmInfo.show();
+			alarmInfo.show(window.getFrame());
 		}
 		
 		if(source == deleteMeeting)
@@ -267,7 +267,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	{
 		if(!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("") || !details.getText().equals(""))
 		{
-			//window.fillCell("Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina:" + stringDate + "\nSzczegó³y:" + stringDetails, row, column);
+			window.getCalendaeWindow().fillCell(stringName , row, column);
 		}
 		else
 		{

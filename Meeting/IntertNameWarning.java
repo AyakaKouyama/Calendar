@@ -2,20 +2,12 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
-public class IntertNameWarning
+public class IntertNameWarning implements MessageWindow
 {
-	String message;
-	Frame frame;
-	int answer;
-	public IntertNameWarning(Frame frame)
-	{
-		this.frame = frame;
-		message = "Nale¿y wprowadziæ nazwê wydarzenia, aby je dodaæ.";
-		         
-	}
 	
-	public void show()
+	public void show(Frame frame)
 	{
+		String message = "Nale¿y wprowadziæ nazwê wydarzenia, aby je dodaæ.";
 		JOptionPane.showMessageDialog(frame, message);
 	}
 }

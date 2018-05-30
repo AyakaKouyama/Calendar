@@ -34,6 +34,7 @@ public class AlarmClock  implements ActionListener
 	{
 		this.window = window;
 		this.music = music;
+		System.out.println(music);
 		frame = new JFrame();
 		frame.setTitle("Alarm Clock");
 		frame.setResizable(false);
@@ -98,8 +99,9 @@ public class AlarmClock  implements ActionListener
 		if(source == ok)
 		{
 			accteped = true;
-			AlarmInfoDialog alarmInfo = new AlarmInfoDialog(window.getFrame(), getDate());
-			if(alarmInfo.show() == true)
+			AlarmInfoDialog alarmInfo = new AlarmInfoDialog(getDate());
+			System.out.println(sDate);
+			if(alarmInfo.show(window.getFrame()) == true)
 			{
 			    music.addAlarm(sDate);
 			    music.addAlarmToList(sDate);

@@ -2,7 +2,7 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
-public class About
+public class About implements MessageWindow
 {
 
 	public void show(Frame frame)

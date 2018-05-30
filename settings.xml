@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="9.0.1" class="java.beans.XMLDecoder">
+ <object class="ChosenSettings" id="ChosenSettings0">
+  <void class="ChosenSettings" method="getField">
+   <string>sound</string>
+   <void method="set">
+    <object idref="ChosenSettings0"/>
+    <string>Dzwięk 1</string>
+   </void>
+  </void>
+  <void class="ChosenSettings" method="getField">
+   <string>theme</string>
+   <void method="set">
+    <object idref="ChosenSettings0"/>
+    <string>Zielony</string>
+   </void>
+  </void>
+ </object>
+</java>

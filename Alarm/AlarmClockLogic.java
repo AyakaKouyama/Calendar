@@ -23,7 +23,7 @@ public class AlarmClockLogic implements ActionListener
 	InsertMeetingWindow meeting;
 	String musicName;
 	StopAlarm stopAlarm;
-	OptionsContext options;
+	ChosenSettings settings;
 	int minutes;
 	int hours;
 	int months;
@@ -35,10 +35,11 @@ public class AlarmClockLogic implements ActionListener
 	
 	AlarmList alarms;
 
-	AlarmClockLogic()
+	AlarmClockLogic(ChosenSettings settings)
 	{
-		options = new OptionsContext();
-		this.musicName = options.getSound();
+		//this.musicName = options.getSound();
+		this.settings = settings;
+		this.musicName = settings.getSound();
 		this.stopAlarm = new StopAlarm(this);
 		alarms = new AlarmList();
 		alarms.fill();
@@ -51,7 +52,8 @@ public class AlarmClockLogic implements ActionListener
 		{
 			clip.close();
 		}
-		musicName = options.getSound();
+		//musicName = options.getSound();
+		musicName = settings.getSound();
 		init();
 	}
 	
@@ -122,7 +124,7 @@ public class AlarmClockLogic implements ActionListener
 			   && Calendar.getInstance().get(Calendar.MONTH) == months &&  Calendar.getInstance().get(Calendar.DATE) == days
 			   && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == hours && Calendar.getInstance().get(Calendar.SECOND) == 0)
 			{
-				alarms.removeAlarm(years + "-" + (months + 1) + "-" + days + " " + hours + ":" + minutes + ":00.0");
+				//alarms.removeAlarm(years + "-" + (months + 1) + "-" + days + " " + hours + ":" + minutes + ":00.0");
 				return true;
 			}
 			

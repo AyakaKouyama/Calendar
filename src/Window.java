@@ -1,6 +1,9 @@
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class Window implements ActionListener
+public class Window implements ActionListener, WindowListener
 {
 	JFrame frame;
 	JButton about;
@@ -16,6 +19,7 @@ public class Window implements ActionListener
 	JButton options;
 	JButton allAlarms;
 	JButton filter;
+	JButton export;
 	
 	JPanel alarmCloclkPanel;
 	
@@ -32,12 +36,27 @@ public class Window implements ActionListener
 	AlarmClock alarmWindow;
 	AlarmClockLogic alarmLogic;
 	CalendarWindow calendarWindow;
+	SerializeSettings saveSettings;
+	ChosenSettings settings;
 	
 	Window(String title) 
 	{
-		alarmLogic = new AlarmClockLogic();
+		saveSettings = new SerializeSettings();
+		if(saveSettings.deserialize() == null)
+		{
+			settings = new ChosenSettings();
+			settings.setSound("Dzwiêk 1");
+			settings.setTheme("Niebieski");
+		}
+		else
+		{
+			settings = saveSettings.deserialize();
+		}
+		
+		alarmLogic = new AlarmClockLogic(settings);
 		alarmWindow = new AlarmClock(this, alarmLogic);
 		optionsWidnow = new Options(this, alarmLogic);
+	
 		
 		frame = new JFrame();
 		
@@ -45,13 +64,11 @@ public class Window implements ActionListener
 		alarmClock = new JButton("Alarm");
 		allAlarms = new JButton("Alarmy");
 		alarmCloclkPanel = new JPanel();
-	
-		
+
 		about.addActionListener(this);
 		alarmClock.addActionListener(this);
 		allAlarms.addActionListener(this);
 	
-	    
 		frame.getContentPane().setLayout(null);
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,18 +76,13 @@ public class Window implements ActionListener
 		frame.pack();
 		frame.setSize(850, 750);
 		frame.setLocationRelativeTo(null);
-		
-
-		
+			
 		allAlarms.setBounds(655, 280, 100, 30);
 		frame.add(allAlarms);
-		
-
-		about.setBounds(655, 520, 100, 30);
+		about.setBounds(655, 600, 100, 30);
 		frame.add(about);
 		
 		clock = new MyClock(frame);
-		
 		alarmClock.setBounds(655, 200, 100, 30);
 		frame.add(alarmClock);
 		
@@ -83,6 +95,13 @@ public class Window implements ActionListener
 		filter.setBounds(655, 360, 100, 30);
 		filter.addActionListener(this);
 		frame.add(filter);
+		
+		export = new JButton("Ekspotuj");
+		export.setBounds(655, 520, 100, 30);
+		export.addActionListener(this);
+		frame.add(export);
+		frame.addWindowListener(this);
+		
 		calendarWindow = new CalendarWindow(this);
 
 	}
@@ -128,11 +147,21 @@ public class Window implements ActionListener
 			MeetingsFilter meetingFilter = new MeetingsFilter(this);
 			meetingFilter.show();
 		}
+		if(source == export)
+		{
+			ExportWindow exportWindow = new ExportWindow(frame);
+			exportWindow.saveCSV();
+		}
 
 		
 	}
 	
 
+	public ChosenSettings getSettings()
+	{
+		return settings;
+	}
+	
 	public Frame getFrame()
 	{
 		return frame;
@@ -157,5 +186,37 @@ public class Window implements ActionListener
 	public CalendarWindow getCalendaeWindow()
 	{
 		return calendarWindow;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) 
+	{
+		saveSettings.serialize(settings);
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) 
+	{
+		saveSettings.serialize(settings);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {	
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {	
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
 	}
 }

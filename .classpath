@@ -9,6 +9,8 @@
 	<classpathentry kind="src" path="Alarm"/>
 	<classpathentry kind="src" path="Meeting"/>
 	<classpathentry kind="src" path="Filter"/>
+	<classpathentry kind="src" path="Settings"/>
+	<classpathentry kind="src" path="Export"/>
 	<classpathentry kind="lib" path="F:/jdbc/sqljdbc_6.0/enu/jre8/sqljdbc42.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

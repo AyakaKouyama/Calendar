@@ -3,19 +3,17 @@ import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
-public class AlarmInfoDialog 
+public class AlarmInfoDialog
 {
 
-	Frame frame;
 	Calendar date;
 	String message = null;
-	public AlarmInfoDialog(Frame frame, Calendar date) 
+	public AlarmInfoDialog(Calendar date) 
 	{
-		this.frame = frame;
 		this.date = date;
 	}
 
-	public boolean show()
+	public boolean show(Frame frame)
 	{
 		difference();
 		if(message != null)
@@ -25,8 +23,8 @@ public class AlarmInfoDialog
 		}
 		else
 		{
-			AlarmErrorDialog error = new AlarmErrorDialog(frame);
-			error.show();
+			AlarmErrorDialog error = new AlarmErrorDialog();
+			error.show(frame);
 			return false;
 		}
 	}

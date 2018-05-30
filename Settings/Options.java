@@ -27,7 +27,6 @@ public class Options extends JFrame implements ItemListener, ActionListener
 	Choice theme;
 	String sTheme;
 	AlarmClockLogic alarm;
-	OptionsContext optionsContext;
 	Window window;
 	
 	Options(Window window, AlarmClockLogic alarm)
@@ -35,7 +34,6 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		
 		this.window = window;
 		this.alarm = alarm;
-		optionsContext = new OptionsContext();
 		
 		setTitle("Ustawienia");
 		setResizable(false);
@@ -60,7 +58,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		}
 		
 		sChoice = choice.getItem(0);
-		choice.select(optionsContext.getSound());
+		choice.select(window.getSettings().getSound());
 		add(choice);
 
 		theme = new Choice();
@@ -70,7 +68,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		theme.add("Niebieski");
 		theme.add("Ró¿owy");
 		theme.add("Zielony");
-		theme.select(optionsContext.getTheme());
+		theme.select(window.getSettings().getTheme());
 		add(theme);
 		sTheme = theme.getSelectedItem();
 		
@@ -83,8 +81,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		themeLabel.setBounds(20, 80, 100, 30);
 		themeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		add(themeLabel);
-
-
+		
 	}
 
 
@@ -101,14 +98,14 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		if(source == choice)
 		{
 			sChoice = choice.getSelectedItem();
-			optionsContext.setSound(1, sChoice);
+			window.getSettings().setSound(sChoice);
 			alarm.setSound();
 		}
 		
 		if(source == theme)
 		{
 			sTheme = theme.getSelectedItem();
-			optionsContext.setTheme(1, sTheme);
+			window.getSettings().setTheme(sTheme);
 			window.getCalendaeWindow().refresh();
 		}
 	}
