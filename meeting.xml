@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="9.0.1" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <int>1618</int>
+   <object class="MeetingObject" id="MeetingObject0">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject0"/>
+      <string>Test</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject0"/>
+      <string>test</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject0"/>
+      <string>14:28</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject0"/>
+      <string>Test</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>22618</int>
+   <object class="MeetingObject" id="MeetingObject1">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string>Ala</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string>ma</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string>14:29</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string>kota</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>2618</int>
+   <object class="MeetingObject" id="MeetingObject2">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
+      <string>jopj</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
+      <string>opjop</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
+      <string>14:31</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
+      <string>jpoj</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>31518</int>
+   <object class="MeetingObject" id="MeetingObject3">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string>gigui</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string>14:25</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string></string>
+     </void>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
