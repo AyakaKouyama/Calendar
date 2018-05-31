@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AlarmList 
@@ -6,7 +7,7 @@ public class AlarmList
 	
 	AlarmTable db;
 	
-	AlarmList()
+	AlarmList() throws ClassNotFoundException, SQLException
 	{
 		alarm = new ArrayList<String>();
 		db = new AlarmTable();
@@ -54,4 +55,20 @@ public class AlarmList
 	{
 		db.remove(value);
 	}
+	
+	public String getDefaultUrl()
+	{
+		return db.getDefaultUrl();
+	}
+	
+	public String getUrl()
+	{
+		return db.getUrl();
+	}
+	
+	public void setUrl(String value) throws ClassNotFoundException, SQLException
+	{
+		db.setUrl(value);
+	}
+	
 }

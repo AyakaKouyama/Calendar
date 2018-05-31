@@ -1,6 +1,7 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -29,7 +30,17 @@ public class AllAlarms implements ActionListener
 	
 	AllAlarms()
 	{
-		alarms = new AlarmList();
+		try
+		{
+			alarms = new AlarmList();
+		} catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			ConnectionError error = new ConnectionError();
+			error.show(frame);
+		}
 		frame = new JFrame();
 		frame.setTitle("Alarmy");
 		frame.setResizable(false);

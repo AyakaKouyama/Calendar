@@ -34,7 +34,6 @@ public class AlarmClock  implements ActionListener
 	{
 		this.window = window;
 		this.music = music;
-		System.out.println(music);
 		frame = new JFrame();
 		frame.setTitle("Alarm Clock");
 		frame.setResizable(false);

@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,11 +53,19 @@ public class Window implements ActionListener, WindowListener
 			settings = (ChosenSettings) saveSettings.deserialize();
 		}
 		frame = new JFrame();
-
+		
+		try
+		{
+			alarmLogic = new AlarmClockLogic(settings);
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			ConnectionError error = new ConnectionError();
+			error.show(frame);
+		}
 		optionsWidnow = new Options(this, alarmLogic);
-		alarmLogic = new AlarmClockLogic(settings);
 		alarmWindow = new AlarmClock(this, alarmLogic);
 		calendarWindow = new CalendarWindow(this);
+		
 
 		about = new JButton("Info");
 		alarmClock = new JButton("Alarm");

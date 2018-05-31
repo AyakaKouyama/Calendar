@@ -107,7 +107,7 @@
      <string>name</string>
      <void method="set">
       <object idref="MeetingObject3"/>
-      <string>gigui</string>
+      <string>Test</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">

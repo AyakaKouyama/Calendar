@@ -8,7 +8,7 @@ public class OptionsData
 	java.sql.Statement stmt;
 	ResultSet rs;
 
-	OptionsData()
+	OptionsData() throws ClassNotFoundException, SQLException
 	{
 		DataBase db = new DataBase();
 		db.connectToDataBase();

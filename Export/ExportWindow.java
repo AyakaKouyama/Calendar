@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -13,7 +14,15 @@ public class ExportWindow
 	ExportWindow(JFrame frame)
 	{
 		choose = new JFileChooser();
-		logic = new ExportLogic();
+			try
+			{
+				logic = new ExportLogic();
+			} catch (ClassNotFoundException | SQLException e)
+			{
+				ConnectionError error = new ConnectionError();
+				error.show(frame);
+			}
+		
 		this.frame = frame;
 	}
 	

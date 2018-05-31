@@ -5,7 +5,7 @@
    <string>sound</string>
    <void method="set">
     <object idref="ChosenSettings0"/>
-    <string>Dzwięk 2</string>
+    <string>Dzwięk 3</string>
    </void>
   </void>
   <void class="ChosenSettings" method="getField">

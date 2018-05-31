@@ -8,10 +8,11 @@ public class AlarmTable
 	Connection con;
 	java.sql.Statement stmt;
 	ResultSet rs;
+	DataBase db;
 	
-	AlarmTable()
+	AlarmTable() throws ClassNotFoundException, SQLException
 	{
-		DataBase db = new DataBase();
+	    db = new DataBase();
 		db.connectToDataBase();
 		con = db.getConnection();
 	}
@@ -114,6 +115,21 @@ public class AlarmTable
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public String getDefaultUrl()
+	{
+		return db.getDefaultUrl();
+	}
+	
+	public String getUrl()
+	{
+		return db.getUrl();
+	}
+	
+	public void setUrl(String value) throws ClassNotFoundException, SQLException
+	{
+		db.setUrl(value);
 	}
 	
 }

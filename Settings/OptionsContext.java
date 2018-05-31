@@ -1,10 +1,11 @@
+import java.sql.SQLException;
 
 public class OptionsContext
 {
 
 	OptionsData data;
 
-	OptionsContext()
+	OptionsContext() throws ClassNotFoundException, SQLException
 	{
 		data = new OptionsData();
 	}

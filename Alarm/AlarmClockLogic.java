@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,7 +36,7 @@ public class AlarmClockLogic implements ActionListener
 	
 	AlarmList alarms;
 
-	AlarmClockLogic(ChosenSettings settings)
+	AlarmClockLogic(ChosenSettings settings) throws ClassNotFoundException, SQLException
 	{
 		//this.musicName = options.getSound();
 		this.settings = settings;
@@ -176,6 +177,21 @@ public class AlarmClockLogic implements ActionListener
 	public void addAlarmToList(String value)
 	{
 		alarms.addAlarm(value);
+	}
+	
+	public String getDefaultUrl()
+	{
+		return alarms.getDefaultUrl();
+	}
+	
+	public String getUrl()
+	{
+		return alarms.getUrl();
+	}
+	
+	public void setUrl(String value) throws ClassNotFoundException, SQLException
+	{
+		alarms.setUrl(value);
 	}
 
 }

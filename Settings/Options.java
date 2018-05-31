@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 public class Options extends JFrame implements ItemListener, ActionListener
 {
@@ -21,7 +23,10 @@ public class Options extends JFrame implements ItemListener, ActionListener
 
 	JLabel alarmSound;
 	JLabel themeLabel;
+	JLabel urlLabel;
 	JButton ok;
+	JButton change;
+	JButton setDefualt;
 	Choice choice;
 	String sChoice;
 
@@ -33,6 +38,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 	JRadioButton modeXml;
 	JRadioButton modeBase;
 	ButtonGroup mode;
+	JTextField url;
 	// Choice mode;
 	int iMode;
 
@@ -46,11 +52,11 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		setResizable(false);
 		setLayout(null);
 		pack();
-		setSize(380, 200);
+		setSize(380, 270);
 		setLocationRelativeTo(null);
 
 		ok = new JButton("OK");
-		ok.setBounds(240, 105, 80, 30);
+		ok.setBounds(275, 190, 80, 30);
 		ok.addActionListener(this);
 		add(ok);
 
@@ -89,22 +95,6 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		themeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		add(themeLabel);
 
-		// mode = new Choice();
-		// mode.setBounds(180, 40, 110, 100);
-		// mode.setFont(new Font("Arial", Font.PLAIN, 15));
-		// mode.addItemListener(this);
-		// mode.add("Baza danych");
-		// mode.add("XML");
-		// mode.select(window.getSettings().getMode());
-		// if (window.getSettings().getMode().equals("XML"))
-		// {
-		// iMode = 2;
-		// } else
-		// {
-		// iMode = 1;
-		// }
-		// add(mode);
-
 		modeXml = new JRadioButton("XML");
 		modeBase = new JRadioButton("Baza Danych");
 		modeXml.setBounds(160, 40, 80, 30);
@@ -114,12 +104,11 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		mode.add(modeXml);
 		mode.add(modeBase);
 		System.out.print(window.getSettings().getMode());
-		if(window.getSettings().getMode().equals("XML"))
+		if (window.getSettings().getMode().equals("XML"))
 		{
 			iMode = 2;
 			modeXml.setSelected(true);
-		}
-		else
+		} else
 		{
 			iMode = 1;
 			modeBase.setSelected(true);
@@ -128,6 +117,28 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		modeBase.addItemListener(this);
 		add(modeXml);
 		add(modeBase);
+
+		url = new JTextField(100);
+		url.setBounds(160, 110, 190, 25);
+		url.addActionListener(this);
+		url.setText(alarm.getUrl());
+		add(url);
+
+		urlLabel = new JLabel("URL bazy danych");
+		urlLabel.setBounds(160, 80, 180, 30);
+		urlLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+		add(urlLabel);
+
+		change = new JButton("Zmieñ URL");
+		change.setBounds(255, 150, 98, 20);
+		change.addActionListener(this);
+		add(change);
+		
+		setDefualt = new JButton("Reset URL");
+		setDefualt.setBounds(160, 150, 100, 20);
+		setDefualt.addActionListener(this);
+		add(setDefualt);
+
 	}
 
 	public void openWindiow()
@@ -159,7 +170,6 @@ public class Options extends JFrame implements ItemListener, ActionListener
 			{
 				if (modeXml.getSelectedObjects() != null)
 				{
-					System.out.println("xml selected");
 					sMode = "XML";
 				}
 			}
@@ -167,7 +177,6 @@ public class Options extends JFrame implements ItemListener, ActionListener
 			{
 				if (modeBase.getSelectedObjects() != null)
 				{
-					System.out.println("base selected");
 					sMode = "Baza danych";
 				}
 			}
@@ -177,13 +186,28 @@ public class Options extends JFrame implements ItemListener, ActionListener
 			if (sMode == "XML")
 			{
 				iMode = 2;
-				window.getCalendaeWindow().getCalendar().setMode(iMode);
+				try
+				{
+					window.getCalendaeWindow().getCalendar().setMode(iMode);
+				} catch (ClassNotFoundException | SQLException e1)
+				{
+					ConnectionError error = new ConnectionError();
+					error.show(window.getFrame());
+				}
+
 				window.setMode();
 
 			} else
 			{
 				iMode = 1;
-				window.getCalendaeWindow().getCalendar().setMode(iMode);
+				try
+				{
+					window.getCalendaeWindow().getCalendar().setMode(iMode);
+				} catch (ClassNotFoundException | SQLException e1)
+				{
+					ConnectionError error = new ConnectionError();
+					error.show(window.getFrame());
+				}
 				window.setMode();
 			}
 		}
@@ -207,6 +231,31 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		if (source == ok)
 		{
 			dispose();
+		}
+		if (source == change)
+		{
+			try
+			{
+				alarm.setUrl(url.getText());
+			} catch (ClassNotFoundException | SQLException e1)
+			{
+				ConnectionError error = new ConnectionError();
+				error.show(window.getFrame());
+			}
+		}
+		if(source == setDefualt)
+		{
+			try
+			{
+				alarm.setUrl(alarm.getDefaultUrl());
+				url.setText(alarm.getDefaultUrl());
+				
+			} catch (ClassNotFoundException | SQLException e1)
+			{
+				ConnectionError error = new ConnectionError();
+				error.show(window.getFrame());
+			}
+			
 		}
 
 	}

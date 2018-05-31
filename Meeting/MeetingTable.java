@@ -9,7 +9,7 @@ public class MeetingTable
 	java.sql.Statement stmt;
 	ResultSet rs;
 
-	MeetingTable()
+	MeetingTable() throws ClassNotFoundException, SQLException
 	{
 		DataBase db = new DataBase();
 		db.connectToDataBase();

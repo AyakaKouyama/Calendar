@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class FillMeetingData
 	HashMap<Integer, MeetingObject> meetingObject;
 	ArrayList<Integer> xmlIds;
 
-	FillMeetingData(CalendarLogic calendarLogic, int mode, HashMap<Integer, MeetingObject> list, ArrayList<Integer> allIds)
+	FillMeetingData(CalendarLogic calendarLogic, int mode, HashMap<Integer, MeetingObject> list, ArrayList<Integer> allIds) throws ClassNotFoundException, SQLException
 	{
 		this.calendarLogic = calendarLogic;
 		this.mode = mode;
@@ -24,7 +25,7 @@ public class FillMeetingData
 		fillMeetingsDictionary();
 	}
 
-	FillMeetingData()
+	FillMeetingData() throws ClassNotFoundException, SQLException
 	{
 		db = new MeetingTable();
 		meeting = new HashMap<Integer, String>();

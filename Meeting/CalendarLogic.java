@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +36,7 @@ public class CalendarLogic
 	HashMap<Integer, MeetingObject> meetingObject;
 	ArrayList<Integer> allIds;
 
-	CalendarLogic(CalendarWindow window)
+	CalendarLogic(CalendarWindow window) throws ClassNotFoundException, SQLException
 	{
 		MeetingObjectList list = new MeetingObjectList();
 		meetingObject = list.deserializeList();
@@ -43,16 +44,18 @@ public class CalendarLogic
 
 		this.window = window;
 		mode = window.getMode();
-		if (meetingObject != null)
-		{
-			dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
-		} else
-		{
-			meetingObject = new HashMap<Integer, MeetingObject>();
-			allIds = new ArrayList<Integer>();
-			dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
-		}
 
+			if (meetingObject != null)
+			{
+				dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+			} 
+			else
+			{
+				meetingObject = new HashMap<Integer, MeetingObject>();
+				allIds = new ArrayList<Integer>();
+				dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+
+			}
 	}
 
 	public int getDays()
@@ -279,7 +282,7 @@ public class CalendarLogic
 		return mode;
 	}
 
-	public void setMode(int value)
+	public void setMode(int value) throws ClassNotFoundException, SQLException
 	{
 		mode = value;
 		dbFill = new FillMeetingData(this, mode, meetingObject, allIds);

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -53,7 +54,15 @@ public class CalendarWindow implements MouseListener, ActionListener
 		panel = new JPanel();
 		panel.setBounds(20, 100, 560, 800);
 		window.getFrame().add(panel);
-		calendar = new CalendarLogic(this);
+		
+		try
+		{
+			calendar = new CalendarLogic(this);
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			ConnectionError error = new ConnectionError();
+			error.show(window.getFrame());
+		}
 		initTable();
 		table.addMouseListener(this);
 

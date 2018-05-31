@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class ExportLogic
 	private ArrayList<Integer> allIds;
 	private Map<Integer, String> meetings;
 	
-	ExportLogic()
+	ExportLogic() throws ClassNotFoundException, SQLException
 	{
 		data = new FillMeetingData();
 		values = new String[5];
