@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Serializer
 {
-	String fileName;
+	private String fileName;
 
 	Serializer(String fileName)
 	{
@@ -17,7 +17,6 @@ public class Serializer
 
 	public void serialize(Object settings)
 	{
-
 		XMLEncoder encoder;
 		try
 		{
@@ -45,6 +44,7 @@ public class Serializer
 		} catch (FileNotFoundException e)
 		{
 			return null;
+
 		} catch (IOException e)
 		{
 			e.printStackTrace();

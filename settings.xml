@@ -5,7 +5,7 @@
    <string>sound</string>
    <void method="set">
     <object idref="ChosenSettings0"/>
-    <string>Dzwięk 3</string>
+    <string>Dzwięk 2</string>
    </void>
   </void>
   <void class="ChosenSettings" method="getField">
@@ -19,7 +19,14 @@
    <string>mode</string>
    <void method="set">
     <object idref="ChosenSettings0"/>
-    <string>XML</string>
+    <string>Baza danych</string>
+   </void>
+  </void>
+  <void class="ChosenSettings" method="getField">
+   <string>url</string>
+   <void method="set">
+    <object idref="ChosenSettings0"/>
+    <string>jdbc:sqlserver://localhost:1433;databaseName=meetings;integratedSecurity=true;</string>
    </void>
   </void>
  </object>

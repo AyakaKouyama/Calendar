@@ -6,37 +6,41 @@ import javax.swing.table.DefaultTableModel;
 
 public class MeetingTableComponent
 {
-	Frame frame;
-	JTable table;
-	JScrollPane scrollList;
+	private Frame frame;
+	private JTable table;
+	private JScrollPane scrollList;
 
-	Object[][] data;
-	Object[][] oryginalData;
+	private String[] columnNames = {"Nazwa", "Lokalizacja", "Data", "Szczegó³y"};
+	private String name, localization, time, details;
+	private Object[][] data;
+	private Object[][] oryginalData;
+	private int size;
 	
-    String[] columnNames = {"Nazwa", "Lokalizacja", "Data", "Szczegó³y"};
-    String name, localization, time, details;
-    
-    FillMeetingData meetingData;
-    Window window;
-    MeetingsFilterLogic logic;
-    int size;
+	private FillMeetingData meetingData;
+	private Window window;
+	private MeetingsFilterLogic logic;
+	
 	MeetingTableComponent(Frame frame, Window window, FillMeetingData meetingData)
 	{
 		this.frame = frame;
 		this.window = window;
 	    this.meetingData = meetingData;
+	    
 	    size = meetingData.getMap().size();
 		data = new Object[meetingData.getMap().size()][4];
-		logic = new MeetingsFilterLogic(window.getCalendaeWindow().getCalendar().getDB());
+		logic = new MeetingsFilterLogic(window.getCalendarWindow().getCalendar().getDB());
+		
 		fillList();
 		oryginalData = data;
+		initComponents();
 		
+	}
+	
+	private void initComponents()
+	{
 		DefaultTableModel model = new DefaultTableModel(data, columnNames) { 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
 
+			private static final long serialVersionUID = 1L;
 			@Override
 			public boolean isCellEditable(int row, int column)
 			{
@@ -48,9 +52,7 @@ public class MeetingTableComponent
 		table.setFont(new Font("Arial", Font.PLAIN, 16));
 		table.setRowHeight(20);
 		scrollList = new JScrollPane(table);
-		scrollList.setBounds(20, 20, 550, 200);
-		
-		
+		scrollList.setBounds(20, 20, 550, 200);		
 	}
 	
 	public void show()
@@ -58,7 +60,7 @@ public class MeetingTableComponent
 		frame.add(scrollList);
 	}
 	
-
+	
 	public void fillList()
 	{
 		meetingData.getAllIDs();
@@ -91,15 +93,14 @@ public class MeetingTableComponent
 	{
 		data = logic.remove(data, meetingData.getMap().size());
 		reFill();
-		window.getCalendaeWindow().updateCalendar();
+		window.getCalendarWindow().updateCalendar();
 	}
 	
 	public void removeOne()
 	{
-		System.out.println(meetingData.getMap().size());
 		data = logic.removeOne(data, table.getSelectedRow(), meetingData.getMap().size());
 		reFill();
-		window.getCalendaeWindow().updateCalendar();
+		window.getCalendarWindow().updateCalendar();
 		size--;
 	}
 	
@@ -156,7 +157,7 @@ public class MeetingTableComponent
 
 	public void sort(String value, int order)
 	{
-		data = logic.sort(data, value, order);
+		data = logic.sort(data, size, value, order);
 		reFill();
 	}
 	

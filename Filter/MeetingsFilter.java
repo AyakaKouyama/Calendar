@@ -2,58 +2,66 @@ import java.awt.Choice;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class MeetingsFilter implements ActionListener, ItemListener
+public class MeetingsFilter implements ActionListener
 {
-	JFrame frame;
-	JButton ok;
-	JButton up;
-	JButton down;
-	JButton remove;
-	JButton findOlder;
-	JButton removeSlelected;
-	JButton removeOne;
-	JButton findField;
+	private JFrame frame;
+	private JButton ok;
+	private JButton up;
+	private JButton down;
+	private JButton remove;
+	private JButton findOlder;
+	private JButton removeSlelected;
+	private JButton removeOne;
+	private JButton findField;
+	private JLabel findL;
+	private JLabel olderL;
+	private JLabel sortL;
+	private JTextField find;
+	private JTextField olderThan;
+	private Choice findChoice;
+	private Choice choice;
 	
-	JLabel findL;
-	JLabel olderL;
-	JLabel sortL;
+	private int order = 1;
 	
-	JTextField find;
-	JTextField olderThan;
-	
-	int order = 1;
-	MeetingTableComponent table;
-	MeetingsFilterLogic logic;
-	Window window;
-	FillMeetingData meetingData;
-	
-	Choice findChoice;
-	Choice choice;
+	private MeetingTableComponent table;
+	private MeetingsFilterLogic logic;
+	private Window window;
+	private FillMeetingData meetingData;
 	
 	MeetingsFilter(Window window)
 	{
 		this.window = window;
-	    logic = new MeetingsFilterLogic(window.getCalendaeWindow().getCalendar().getDB());
-	    meetingData = window.getCalendaeWindow().getCalendar().getDB();
+	    logic = new MeetingsFilterLogic(window.getCalendarWindow().getCalendar().getDB());
+	    meetingData = window.getCalendarWindow().getCalendar().getDB();
+	    initFrame();
+	    initComponents();
+	}
+	
+	private void initFrame()
+	{
 		frame = new JFrame();
 		frame.setTitle("Spotkania");
+		frame.setIconImage(new ImageIcon("calendar.png").getImage());
 		frame.setResizable(false);
 		frame.setLayout(null);
 		frame.pack();
 		frame.setSize(600, 430);
+	}
+	
+	private void initComponents()
+	{
 
 		table = new MeetingTableComponent(frame, window, meetingData);
 		table.show();
-		
 		
 		ok = new JButton("Ok");
 		setButton(ok, 490, 350, 80, 30);
@@ -63,7 +71,6 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		
 		removeSlelected = new JButton("Usuñ wyniki");
 		setButton(removeSlelected, 195, 350, 120, 30);
-		
 		
 		findL = new JLabel("Szukaj:");
 		findL.setBounds(20, 230, 80, 30);
@@ -82,26 +89,19 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		
 		up = new JButton("\u25b2");
 		setButton(up, 250, 295, 80, 20);
-		
 		down = new JButton("\u25bc");
 		setButton(down, 340, 295, 80, 20);
-		
 		choice = new Choice();
 		setChoice(choice, 120, 295, 100, 30);
-	
 		findChoice = new Choice();
 		setChoice(findChoice, 220, 235, 80, 30);
-		
 		findOlder = new JButton("Szukaj");
 		setButton(findOlder, 340, 265, 80, 20);
-		
 		removeOne = new JButton("Usuñ zaznaczone");
 		setButton(removeOne, 20, 350, 140, 30);
-		
 		findField = new JButton("Szukaj");
 		setButton(findField, 340, 235, 80, 20);
 
-		
 		find = new JTextField(100);
 		find.setBounds(100, 235, 100, 20);
 		find.addActionListener(this);
@@ -112,11 +112,8 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		olderThan.setText((new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()))));
 		olderThan.addActionListener(this);
 		frame.add(olderThan);
-
-		
 		frame.setLocationRelativeTo(null);
 	}
-	
 	public void show()
 	{
 		frame.setVisible(true);
@@ -139,7 +136,6 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		
 		choice.select(2);
 		choice.setBounds(x, y, width, height);
-		choice.addItemListener(this);
 		frame.add(choice);
 		
 	}
@@ -191,30 +187,10 @@ public class MeetingsFilter implements ActionListener, ItemListener
 		}
 		if(source == findField)
 		{
+			table.resetData();
 			table.setData(logic.find(table.getData(), findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText()));
 			table.reFill();
-		}
-		
+		}		
 	}
-	
-	@Override
-	public void itemStateChanged(ItemEvent e)
-	{
-		Object source = e.getSource();
-		
-		if(source == choice)
-		{
-			//table.sort(choice.getSelectedItem(), order);
-		}
-		if(source == findChoice)
-		{
-			//data = logic.findOlderThan(data,  meetingData.getMap().size(), olderThan.getText());
-			//data = logic.find(data, findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText());
-		//	table.setData(logic.find(table.getData(), findChoice.getSelectedItem(), meetingData.getMap().size(), find.getText()));
-			//table.reFill();
-		}
-		
-	}
-	
 	
 }

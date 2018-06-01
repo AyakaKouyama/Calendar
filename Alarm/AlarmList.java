@@ -3,16 +3,14 @@ import java.util.ArrayList;
 
 public class AlarmList 
 {
-	ArrayList<String> alarm;
-	
-	AlarmTable db;
+	private ArrayList<String> alarm;
+	private AlarmTable db;
 	
 	AlarmList() throws ClassNotFoundException, SQLException
 	{
 		alarm = new ArrayList<String>();
 		db = new AlarmTable();
 	}
-	
 	
 	public void fill()
 	{

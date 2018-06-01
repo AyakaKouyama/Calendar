@@ -1,13 +1,13 @@
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class CalendarLogic
 {
 
-	Object[][] data =
+	private Object[][] data =
 	{
 			{ null, null, null, null, null, null, null },
 			{ null, null, null, null, null, null, null },
@@ -22,63 +22,44 @@ public class CalendarLogic
 			{ null, null, null, null, null, null, null },
 			{ null, null, null, null, null, null, null },
 			{ null, null, null, null, null, null, null }, };
-	String[] columnNames =
-	{ "Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz" };
-	int[] currentPosition =
-	{ -1, -1 };
+	
+	private String[] columnNames = { "Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz" };
+	private int[] currentPosition = { -1, -1 };
 
-	DateFormat date;
-	CalendarWindow window;
-	int daysInMonth;
-	int dayOfWeek;
-	int mode;
-	FillMeetingData dbFill;
-	HashMap<Integer, MeetingObject> meetingObject;
-	ArrayList<Integer> allIds;
-
+	private int daysInMonth;
+	private int dayOfWeek;
+	private int mode;
+	
+	private FillMeetingData dbFill;
+	private HashMap<Integer, MeetingObject> meetingObject;
+	private ArrayList<Integer> allIds;
+	
+	private CalendarWindow window;
+	
 	CalendarLogic(CalendarWindow window) throws ClassNotFoundException, SQLException
 	{
+		this.window = window;
 		MeetingObjectList list = new MeetingObjectList();
 		meetingObject = list.deserializeList();
 		allIds = list.getAllIds();
-
-		this.window = window;
 		mode = window.getMode();
 
-			if (meetingObject != null)
-			{
-				dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
-			} 
-			else
-			{
-				meetingObject = new HashMap<Integer, MeetingObject>();
-				allIds = new ArrayList<Integer>();
-				dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
-
-			}
+		if (meetingObject != null)
+		{
+			dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+		} 
+		else
+		{
+			meetingObject = new HashMap<Integer, MeetingObject>();
+			allIds = new ArrayList<Integer>();
+			dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+		}
 	}
 
 	public int getDays()
 	{
-		if (window.getMonth() == 1 || window.getMonth() == 3 || window.getMonth() == 5 || window.getMonth() == 7
-				|| window.getMonth() == 8 || window.getMonth() == 10 || window.getMonth() == 12)
-		{
-			daysInMonth = 31;
-		} else
-		{
-			if (window.getYear() % 4 == 0 && window.getMonth() == 2)
-			{
-				daysInMonth = 29;
-			} else if (window.getMonth() == 2)
-			{
-				daysInMonth = 28;
-			} else
-			{
-				daysInMonth = 30;
-			}
-		}
-
-		return daysInMonth;
+		Calendar cal = new GregorianCalendar(window.getYear(), window.getMonth() - 1, 1);
+		return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
 	public Object[][] fillCalendar(int year, int month)
@@ -195,6 +176,7 @@ public class CalendarLogic
 			meetingObject.get(id).setLocalization(value);
 		}
 	}
+	
 
 	public void setDate(int id, String value)
 	{
@@ -210,7 +192,6 @@ public class CalendarLogic
 		{
 			meetingObject.put(id, new MeetingObject());
 			meetingObject.get(id).setTime(value);
-			System.out.println(meetingObject.get(id).getTime());
 		}
 
 	}
@@ -246,15 +227,15 @@ public class CalendarLogic
 
 	public void deleteMeeting(int id)
 	{
-		dbFill.deleteMeeting(id);
+		if(mode == 1)
+			dbFill.deleteMeeting(id);
+		else
+			meetingObject.remove(id);
 	}
 
 	public void deleteMeetingFromList(int id)
 	{
-		if (mode == 1)
-			dbFill.deleteMeetingFromList(id);
-		else
-			meetingObject.remove(id);
+		dbFill.deleteMeetingFromList(id);
 	}
 
 	public void AddElementToList(int id, String value)
@@ -287,4 +268,10 @@ public class CalendarLogic
 		mode = value;
 		dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
 	}
+	
+	public FillMeetingData getFillMeetingData()
+	{
+		return dbFill;
+	}
+
 }

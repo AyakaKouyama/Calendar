@@ -4,6 +4,7 @@ public class ChosenSettings
 	public String sound;
 	public String theme;
 	public String mode;
+	public String url;
 
 	public void setSound(String value)
 	{
@@ -20,6 +21,11 @@ public class ChosenSettings
 		mode = value;
 	}
 
+	public void setUrl(String value)
+	{
+		url = value;
+	}
+
 	public String getSound()
 	{
 		return sound;
@@ -33,5 +39,10 @@ public class ChosenSettings
 	public String getMode()
 	{
 		return mode;
+	}
+
+	public String getUrl()
+	{
+		return url;
 	}
 }

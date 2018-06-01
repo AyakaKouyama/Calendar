@@ -6,8 +6,9 @@ import javax.swing.JOptionPane;
 public class AlarmInfoDialog
 {
 
-	Calendar date;
-	String message = null;
+	private Calendar date;
+	private String message = null;
+	
 	public AlarmInfoDialog(Calendar date) 
 	{
 		this.date = date;

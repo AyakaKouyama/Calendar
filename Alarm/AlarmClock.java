@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -13,36 +15,45 @@ import javax.swing.SwingConstants;
 
 public class AlarmClock  implements ActionListener
 {
-	JFrame frame;
-	JButton stop;
-	JButton ok;
-	JButton cancel;
-	JFormattedTextField date;
-	JFormattedTextField time;
-	AlarmClockLogic music;
-	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	private JFrame frame;
+	private JButton ok;
+	private JButton cancel;
+	private JLabel dateLabel;
+	private JLabel timeLabel;
+	private JFormattedTextField date;
+	private JFormattedTextField time;
+	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	
-	JLabel dateLabel;
-	JLabel timeLabel;
-	Window window;
-	boolean accteped = false;
-	String sDate;
+	private boolean accteped = false;
+	private String sDate;
+	
+	private Window window;
+	private AlarmClockLogic music;
 	
 	AlarmClock(Window window, AlarmClockLogic music)
 	{
 		this.window = window;
 		this.music = music;
+		initFrame();
+		initComponents();	
+	}
+	
+	private void initFrame()
+	{
 		frame = new JFrame();
 		frame.setTitle("Alarm Clock");
+		frame.setIconImage(new ImageIcon("calendar.png").getImage());
 		frame.setResizable(false);
 		frame.setLayout(null);
 		frame.pack();
 		frame.setSize(400, 300);
 		frame.setLocationRelativeTo(null);
-		
-		
+	}
+	
+	private void initComponents()
+	{
 		dateLabel = new JLabel("Data: (dd/mm/yyyy)");
 		timeLabel = new JLabel("Godzina: (hh:mm)");
 		
@@ -75,14 +86,12 @@ public class AlarmClock  implements ActionListener
 		cancel.setBounds(100, 200, 80, 30);
 		cancel.addActionListener(this);
 		frame.add(cancel);
-		
 	}
 	
 	public void add()
 	{
 		frame.setVisible(true);
 	}
-	
 	
 	public void updateDate()
 	{
@@ -134,9 +143,5 @@ public class AlarmClock  implements ActionListener
 		}
 
 		return null;
-	}
-	
-	
-	
-	
+	}	
 }

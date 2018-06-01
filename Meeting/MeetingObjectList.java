@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MeetingObjectList
 {
-	HashMap<Integer, MeetingObject> list;
-	ArrayList<Integer> allIds;
+	private HashMap<Integer, MeetingObject> list;
+	private ArrayList<Integer> allIds;
 
 	MeetingObjectList()
 	{
@@ -13,6 +12,7 @@ public class MeetingObjectList
 		allIds = new ArrayList<Integer>();
 	}
 
+	@SuppressWarnings("unchecked")
 	public HashMap<Integer, MeetingObject> deserializeList()
 	{
 		Serializer serializer = new Serializer("meeting.xml");

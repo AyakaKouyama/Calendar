@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class MeetingTable
 {
-	Connection con;
-	java.sql.Statement stmt;
-	ResultSet rs;
+	private Connection con;
+	private java.sql.Statement stmt;
+	private ResultSet rs;
 
 	MeetingTable() throws ClassNotFoundException, SQLException
 	{

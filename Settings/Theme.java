@@ -2,7 +2,7 @@ import java.awt.Color;
 
 public class Theme
 {
-	Color[] colors;
+	private Color[] colors;
 
 	Theme()
 	{

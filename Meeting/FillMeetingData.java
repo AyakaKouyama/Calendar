@@ -5,36 +5,31 @@ import java.util.Map;
 
 public class FillMeetingData
 {
-	CalendarLogic calendarLogic;
-	MeetingTable db;
-	Map<Integer, String> meeting;
-	Map<Integer, String> names;
-	int mode;
-	HashMap<Integer, MeetingObject> meetingObject;
-	ArrayList<Integer> xmlIds;
+	private Map<Integer, String> meeting;
+	private Map<Integer, String> names;
+	private HashMap<Integer, MeetingObject> meetingObject;
+	private ArrayList<Integer> xmlIds;
+	
+	private int mode;
+	private CalendarLogic calendarLogic;
+	private MeetingTable db;
 
 	FillMeetingData(CalendarLogic calendarLogic, int mode, HashMap<Integer, MeetingObject> list, ArrayList<Integer> allIds) throws ClassNotFoundException, SQLException
 	{
 		this.calendarLogic = calendarLogic;
 		this.mode = mode;
 		db = new MeetingTable();
+		
 		meetingObject = list;
 		meeting = new HashMap<Integer, String>();
 		names = new HashMap<Integer, String>();
 		xmlIds = allIds;
-		fillMeetingsDictionary();
-	}
-
-	FillMeetingData() throws ClassNotFoundException, SQLException
-	{
-		db = new MeetingTable();
-		meeting = new HashMap<Integer, String>();
+		
 		fillMeetingsDictionary();
 	}
 
 	public void fillMeetingsDictionary()
 	{
-
 		if (mode == 1)
 		{
 			ArrayList<Integer> ids = db.getAllIds();
@@ -147,5 +142,4 @@ public class FillMeetingData
 		else
 			return xmlIds;
 	}
-
 }

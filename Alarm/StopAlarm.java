@@ -7,20 +7,28 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class StopAlarm  implements ActionListener, ItemListener
+public class StopAlarm implements ActionListener, ItemListener
 {
-	JFrame frame;
-	JButton stop;
-	JButton nap;
-	AlarmClockLogic alarmClock;
-	Choice choice;
-	int napTime;
-	boolean napVlaue = false;
-	
+	private JFrame frame;
+	private JButton stop;
+	private JButton nap;
+	private Choice choice;
+
+	private int napTime;
+	private boolean napVlaue = false;
+
+	private AlarmClockLogic alarmClock;
+
 	StopAlarm(AlarmClockLogic alarmClock)
 	{
 		this.alarmClock = alarmClock;
 		napTime = 5;
+		initFrame();
+		initComponents();
+	}
+
+	private void initFrame()
+	{
 		frame = new JFrame();
 		frame.setTitle("Meeting");
 		frame.setResizable(false);
@@ -28,15 +36,18 @@ public class StopAlarm  implements ActionListener, ItemListener
 		frame.pack();
 		frame.setSize(250, 200);
 		frame.setLocationRelativeTo(null);
-		
+	}
+
+	private void initComponents()
+	{
 		stop = new JButton("Stop");
 		stop.setBounds(60, 30, 120, 30);
 		stop.addActionListener(this);
-		
+
 		nap = new JButton("Drzemka");
 		nap.setBounds(60, 70, 120, 30);
 		nap.addActionListener(this);
-		
+
 		choice = new Choice();
 		choice.setBounds(70, 110, 100, 30);
 		choice.addItemListener(this);
@@ -45,49 +56,43 @@ public class StopAlarm  implements ActionListener, ItemListener
 		choice.add("10 min");
 		choice.add("15 min");
 		choice.add("30 min");
-		
+
 		frame.add(choice);
 		frame.add(nap);
 		frame.add(stop);
 	}
-	
+
 	public void show()
 	{
 		frame.setVisible(true);
 	}
-	
-	public void close()
-	{
-		frame.dispose();
-	}
 
-	
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-		
-		if(source == stop)
+
+		if (source == stop)
 		{
 			alarmClock.stopMusic();
 			napVlaue = false;
 			frame.dispose();
 		}
-		if(source == nap)
+		if (source == nap)
 		{
-			
+
 			alarmClock.stopMusic();
 			napVlaue = true;
 			frame.dispose();
 		}
-		
+
 	}
-	
+
 	public boolean getNapValue()
 	{
 		return napVlaue;
 	}
-	
+
 	public void setNapValue(boolean value)
 	{
 		napVlaue = value;
@@ -97,38 +102,35 @@ public class StopAlarm  implements ActionListener, ItemListener
 	{
 		return napTime;
 	}
-	
-	
+
 	@Override
-	public void itemStateChanged(ItemEvent e) 
+	public void itemStateChanged(ItemEvent e)
 	{
 		Object source = e.getSource();
-		
-		if(source == choice)
+
+		if (source == choice)
 		{
-			if(choice.getSelectedItem() == "1 min")
+			if (choice.getSelectedItem() == "1 min")
 			{
 				napTime = 1;
 			}
-			if(choice.getSelectedItem() == "5 min")
+			if (choice.getSelectedItem() == "5 min")
 			{
 				napTime = 5;
 			}
-			if(choice.getSelectedItem() == "10 min")
+			if (choice.getSelectedItem() == "10 min")
 			{
 				napTime = 10;
 			}
-			if(choice.getSelectedItem() == "15 min")
+			if (choice.getSelectedItem() == "15 min")
 			{
 				napTime = 15;
 			}
-			if(choice.getSelectedItem() == "30 min")
+			if (choice.getSelectedItem() == "30 min")
 			{
 				napTime = 30;
 			}
 		}
-		
 	}
-	
-	
+
 }

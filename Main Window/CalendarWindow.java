@@ -4,44 +4,38 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
-
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
+
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-public class CalendarWindow implements MouseListener, ActionListener
+public class CalendarWindow extends MouseAdapter implements ActionListener
 {
-	JTable table;
-	JPanel panel;
-	Window window;
-	CalendarLogic calendar;
+	private JButton next;
+	private JButton prev;
+	private JButton nextMonth;
+	private JButton prevMonth;
+	private JTable table;
+	private JPanel panel;
+	private JLabel year;
+	private JLabel month;
 
-	JButton next;
-	JButton prev;
-	JButton nextMonth;
-	JButton prevMonth;
+	private int currentYear;
+	private int currentMonth;
+	private int currentDay;
 
-	JLabel year;
-	JLabel month;
-
-	int currentYear;
-	int currentMonth;
-	int currentDay;
-
-	Theme theme;
+	private Theme theme;
+	private Window window;
+	private CalendarLogic calendar;
 
 	CalendarWindow(Window window)
 	{
@@ -50,11 +44,9 @@ public class CalendarWindow implements MouseListener, ActionListener
 		currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
 		theme = new Theme();
-		this.window = window;
 		panel = new JPanel();
-		panel.setBounds(20, 100, 560, 800);
-		window.getFrame().add(panel);
-		
+		this.window = window;
+
 		try
 		{
 			calendar = new CalendarLogic(this);
@@ -63,14 +55,22 @@ public class CalendarWindow implements MouseListener, ActionListener
 			ConnectionError error = new ConnectionError();
 			error.show(window.getFrame());
 		}
+
 		initTable();
-		table.addMouseListener(this);
+		initComponents();
+	}
+
+	private void initComponents()
+	{
+		panel.setBounds(20, 100, 560, 800);
+		window.getFrame().add(panel);
 
 		next = new JButton("\u25b6");
 		prev = new JButton("\u25c0");
 		nextMonth = new JButton("\u25b6");
 		prevMonth = new JButton("\u25c0");
 
+		table.addMouseListener(this);
 		next.addActionListener(this);
 		prev.addActionListener(this);
 		nextMonth.addActionListener(this);
@@ -98,10 +98,8 @@ public class CalendarWindow implements MouseListener, ActionListener
 
 	void initTable()
 	{
-
 		table = new JTable(new MyTableModel(this));
 		panel.add(table);
-
 		window.getFrame().add(panel);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -117,9 +115,6 @@ public class CalendarWindow implements MouseListener, ActionListener
 		}
 
 		TableColumnModel model = table.getColumnModel();
-		table.setFont(new Font("Arial", Font.BOLD, 20));
-		JTextField aligment = new JTextField();
-		aligment.setHorizontalAlignment(SwingConstants.CENTER);
 		MyRenderer renderer = new MyRenderer();
 
 		for (int i = 0; i < 7; i++)
@@ -132,91 +127,12 @@ public class CalendarWindow implements MouseListener, ActionListener
 
 	public void refresh()
 	{
-
-		// table = new JTable(new MyTableModel(this));
 		panel.remove(table);
 		window.getFrame().remove(panel);
 		window.getFrame().repaint();
 		table = new JTable(new MyTableModel(this));
 		initTable();
 		table.addMouseListener(this);
-	}
-
-	private class MyRenderer extends JTextArea implements TableCellRenderer
-	{
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		Color[] colors;
-
-		MyRenderer()
-		{
-			setLineWrap(true);
-			setWrapStyleWord(true);
-			setOpaque(true);
-			String themeChoice = window.getOptionWindow().getTheme();
-			theme.select(themeChoice);
-
-			colors = theme.getTheme();
-		}
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column)
-		{
-
-			calendar.fillCalendar(currentYear, currentMonth);
-			if (row == 0)
-			{
-				setBackground(colors[0]);
-			} else if (row == calendar.currentDayRow(currentDay) && column == calendar.currentDayColumn(currentDay)
-					&& currentYear == Calendar.getInstance().get(Calendar.YEAR)
-					&& currentMonth == Calendar.getInstance().get(Calendar.MONTH) + 1)
-			{
-				setBackground(colors[1]);
-			} else if (row == calendar.currentDayRow(currentDay) + 1 && column == calendar.currentDayColumn(currentDay)
-					&& currentYear == Calendar.getInstance().get(Calendar.YEAR)
-					&& currentMonth == Calendar.getInstance().get(Calendar.MONTH) + 1)
-			{
-				setBackground(colors[2]);
-			} else
-			{
-				setBackground(colors[3]);
-			}
-
-			if (row == 0 || row % 2 == 1)
-			{
-				setFont(new Font("Calibri", Font.BOLD, 20));
-			} else
-			{
-				setFont(new Font("Calibri", Font.PLAIN, 15));
-			}
-			setText((value == null) ? "" : value.toString());
-			return this;
-		}
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -233,16 +149,9 @@ public class CalendarWindow implements MouseListener, ActionListener
 			{
 				InsertMeetingWindow insert = new InsertMeetingWindow(window, calendar, row, column, currentYear,
 						currentMonth, (int) day, window.getOptionWindow().getChoice(), window.getAlarmLogic());
-				insert.init();
+				insert.show();
 			}
 		}
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 	public void updateCalendar()
@@ -369,5 +278,78 @@ public class CalendarWindow implements MouseListener, ActionListener
 	public HashMap<Integer, MeetingObject> getMeeting()
 	{
 		return calendar.getObjectMeetings();
+	}
+
+	public CalendarWindow getCalendarWindow()
+	{
+		return this;
+	}
+
+	public FillMeetingData getFillMeetingData()
+	{
+		return calendar.getFillMeetingData();
+	}
+
+	private class MyRenderer extends JTextArea implements TableCellRenderer
+	{
+		private static final long serialVersionUID = 1L;
+		private Color[] colors;
+
+		MyRenderer()
+		{
+			setLineWrap(true);
+			setWrapStyleWord(true);
+			setOpaque(true);
+
+			String themeChoice = window.getOptionWindow().getTheme();
+			theme.select(themeChoice);
+			colors = theme.getTheme();
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column)
+		{
+
+			calendar.fillCalendar(currentYear, currentMonth);
+
+			if (row == 0)
+			{
+				setBackground(colors[0]);
+				setBackground(colors[0]);
+			} else if (row == calendar.currentDayRow(currentDay) && column == calendar.currentDayColumn(currentDay)
+					&& currentYear == Calendar.getInstance().get(Calendar.YEAR)
+					&& currentMonth == Calendar.getInstance().get(Calendar.MONTH) + 1)
+			{
+				setBackground(colors[1]);
+				setBackground(colors[1]);
+			} else if (row == calendar.currentDayRow(currentDay) + 1 && column == calendar.currentDayColumn(currentDay)
+					&& currentYear == Calendar.getInstance().get(Calendar.YEAR)
+					&& currentMonth == Calendar.getInstance().get(Calendar.MONTH) + 1)
+			{
+				setBackground(colors[2]);
+				setBackground(colors[2]);
+			} else
+			{
+				setBackground(colors[3]);
+				setBackground(colors[3]);
+			}
+
+			if (row == 0 || row % 2 == 1)
+			{
+				setFont(new Font("Calibri", Font.BOLD, 20));
+			} else
+			{
+				setFont(new Font("Calibri", Font.PLAIN, 15));
+			}
+
+			if (hasFocus == true && row % 2 == 0 && row != 0)
+			{
+				setBackground(colors[2]);
+			}
+			setText((value == null) ? "" : value.toString());
+
+			return this;
+		}
 	}
 }

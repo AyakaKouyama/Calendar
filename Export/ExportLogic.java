@@ -3,7 +3,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ExportLogic 
@@ -14,9 +13,9 @@ public class ExportLogic
 	private ArrayList<Integer> allIds;
 	private Map<Integer, String> meetings;
 	
-	ExportLogic() throws ClassNotFoundException, SQLException
+	ExportLogic(FillMeetingData data) throws ClassNotFoundException, SQLException
 	{
-		data = new FillMeetingData();
+		this.data = data;
 		values = new String[5];
 		allIds = data.getAllIDs();
 		meetings = data.getMap();
@@ -36,6 +35,7 @@ public class ExportLogic
 		}
 	}
 	
+
 	public void getMeeting(int id)
 	{
 		String meeting = meetings.get(id);

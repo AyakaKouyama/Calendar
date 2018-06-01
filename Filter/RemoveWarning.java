@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 public class RemoveWarning 
 {
 	
-	int answer;
+	private int answer;
 
 	public void show(Frame frame)
 	{

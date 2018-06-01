@@ -2,66 +2,165 @@
 <java version="9.0.1" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
-   <int>1618</int>
+   <int>29521</int>
    <object class="MeetingObject" id="MeetingObject0">
     <void class="MeetingObject" method="getField">
      <string>name</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string>Test</string>
+      <string>ji</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>localization</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string>test</string>
+      <string>jhjkjkk</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>time</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string>14:28</string>
+      <string>20:39</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>details</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string>Test</string>
+      <string>420</string>
      </void>
     </void>
    </object>
   </void>
   <void method="put">
-   <int>22618</int>
+   <int>1618</int>
    <object class="MeetingObject" id="MeetingObject1">
     <void class="MeetingObject" method="getField">
      <string>name</string>
      <void method="set">
       <object idref="MeetingObject1"/>
+      <string>Dzień Dziecka</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string>16:00</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject1"/>
+      <string></string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>23618</int>
+   <object class="MeetingObject" id="MeetingObject2">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
       <string>Ala</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>localization</string>
      <void method="set">
-      <object idref="MeetingObject1"/>
+      <object idref="MeetingObject2"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
+      <string>21:17</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject2"/>
+      <string></string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>30518</int>
+   <object class="MeetingObject" id="MeetingObject3">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string>test</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string>tf</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string>17:47</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject3"/>
+      <string>ftfk</string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>22618</int>
+   <object class="MeetingObject" id="MeetingObject4">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject4"/>
+      <string>Ala</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject4"/>
       <string>ma</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>time</string>
      <void method="set">
-      <object idref="MeetingObject1"/>
+      <object idref="MeetingObject4"/>
       <string>14:29</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>details</string>
      <void method="set">
-      <object idref="MeetingObject1"/>
+      <object idref="MeetingObject4"/>
       <string>kota</string>
      </void>
     </void>
@@ -69,65 +168,131 @@
   </void>
   <void method="put">
    <int>2618</int>
-   <object class="MeetingObject" id="MeetingObject2">
+   <object class="MeetingObject" id="MeetingObject5">
     <void class="MeetingObject" method="getField">
      <string>name</string>
      <void method="set">
-      <object idref="MeetingObject2"/>
-      <string>jopj</string>
+      <object idref="MeetingObject5"/>
+      <string>Nic</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>localization</string>
      <void method="set">
-      <object idref="MeetingObject2"/>
+      <object idref="MeetingObject5"/>
       <string>opjop</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>time</string>
      <void method="set">
-      <object idref="MeetingObject2"/>
-      <string>14:31</string>
+      <object idref="MeetingObject5"/>
+      <string>15:00</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>details</string>
      <void method="set">
-      <object idref="MeetingObject2"/>
+      <object idref="MeetingObject5"/>
       <string>jpoj</string>
      </void>
     </void>
    </object>
   </void>
   <void method="put">
-   <int>31518</int>
-   <object class="MeetingObject" id="MeetingObject3">
+   <int>16618</int>
+   <object class="MeetingObject" id="MeetingObject6">
     <void class="MeetingObject" method="getField">
      <string>name</string>
      <void method="set">
-      <object idref="MeetingObject3"/>
-      <string>Test</string>
+      <object idref="MeetingObject6"/>
+      <string>guigui</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>localization</string>
      <void method="set">
-      <object idref="MeetingObject3"/>
+      <object idref="MeetingObject6"/>
       <string></string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>time</string>
      <void method="set">
-      <object idref="MeetingObject3"/>
-      <string>14:25</string>
+      <object idref="MeetingObject6"/>
+      <string>18:47</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>details</string>
      <void method="set">
-      <object idref="MeetingObject3"/>
+      <object idref="MeetingObject6"/>
+      <string></string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>31518</int>
+   <object class="MeetingObject" id="MeetingObject7">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject7"/>
+      <string>Hejka</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject7"/>
+      <string></string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject7"/>
+      <string>20:33</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject7"/>
+      <string></string>
+     </void>
+    </void>
+   </object>
+  </void>
+  <void method="put">
+   <int>29518</int>
+   <object class="MeetingObject" id="MeetingObject8">
+    <void class="MeetingObject" method="getField">
+     <string>name</string>
+     <void method="set">
+      <object idref="MeetingObject8"/>
+      <string>Ala</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>localization</string>
+     <void method="set">
+      <object idref="MeetingObject8"/>
+      <string>kot</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>time</string>
+     <void method="set">
+      <object idref="MeetingObject8"/>
+      <string>22:03</string>
+     </void>
+    </void>
+    <void class="MeetingObject" method="getField">
+     <string>details</string>
+     <void method="set">
+      <object idref="MeetingObject8"/>
       <string></string>
      </void>
     </void>

@@ -9,15 +9,22 @@ import javax.swing.Timer;
 
 public class MyClock implements ActionListener
 {
-	Timer timer;
-	int delay = 1000;
-	JLabel dateLabel;
-	JLabel currentDate;
+	private Timer timer;
+	private int delay = 1000;
+	private JLabel dateLabel;
+	private JLabel currentDate;
 
 	MyClock(Frame frame)
 	{
 		timer = new Timer(delay, this);
 		timer.start();
+		initComponents();
+		frame.add(dateLabel);
+		frame.add(currentDate);
+	}
+	
+	private void initComponents()
+	{
 		dateLabel = new JLabel(new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis())));
 		dateLabel.setBounds(610, 40, 200, 100);
 		dateLabel.setFont(new Font("Arial", Font.BOLD, 45));
@@ -26,8 +33,6 @@ public class MyClock implements ActionListener
 		currentDate.setBounds(580, 10, 300, 50);
 		currentDate.setFont(new Font("Arial", Font.BOLD, 30));
 
-		frame.add(dateLabel);
-		frame.add(currentDate);
 	}
 
 	@Override

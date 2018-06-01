@@ -1,22 +1,20 @@
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 public class ExportWindow 
 {
-	JFileChooser choose;
-	JFrame frame;
-	ExportLogic logic;
+	private JFileChooser choose;
+	private JFrame frame;
+	private ExportLogic logic;
 	
-	ExportWindow(JFrame frame)
+	ExportWindow(JFrame frame, FillMeetingData data)
 	{
 		choose = new JFileChooser();
 			try
 			{
-				logic = new ExportLogic();
+				logic = new ExportLogic(data);
 			} catch (ClassNotFoundException | SQLException e)
 			{
 				ConnectionError error = new ConnectionError();

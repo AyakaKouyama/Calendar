@@ -1,45 +1,55 @@
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-public class Window implements ActionListener, WindowListener
+public class Window extends WindowAdapter implements ActionListener
 {
-	JFrame frame;
-	JButton about;
-	JButton alarmClock;
-	JButton options;
-	JButton allAlarms;
-	JButton filter;
-	JButton export;
+	private MyClock clock;
+	private Options optionsWidnow;
+	private AlarmClock alarmWindow;
+	private AlarmClockLogic alarmLogic;
+	private CalendarWindow calendarWindow;
+	private Serializer saveSettings;
+	private ChosenSettings settings;
+	
+	private JFrame frame;
+	private JButton about;
+	private JButton alarmClock;
+	private JButton options;
+	private JButton allAlarms;
+	private JButton filter;
+	private JButton export;
+	private JPanel alarmCloclkPanel;
 
-	JPanel alarmCloclkPanel;
+	Window()
+	{
+		frame = new JFrame();
+		initWindow();
+		initObjects();
+		initComponents();
+	}
 
-	JTextField text1;
+	private void initWindow()
+	{
+		frame.getContentPane().setLayout(null);
+		frame.setTitle("Kalendarz");
+		frame.setIconImage(new ImageIcon("calendar.png").getImage());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.pack();
+		frame.setSize(850, 750);
+		frame.setLocationRelativeTo(null);
+	}
 
-	JLabel year;
-	JLabel month;
-	JLabel dateTime;
-	JLabel time;
-
-	String meetingDetails = null;
-	MyClock clock;
-	Options optionsWidnow;
-	AlarmClock alarmWindow;
-	AlarmClockLogic alarmLogic;
-	CalendarWindow calendarWindow;
-	Serializer saveSettings;
-	ChosenSettings settings;
-
-	Window(String title)
+	private void initObjects()
 	{
 		saveSettings = new Serializer("settings.xml");
 		if (saveSettings.deserialize() == null)
@@ -47,13 +57,12 @@ public class Window implements ActionListener, WindowListener
 			settings = new ChosenSettings();
 			settings.setSound("Dzwiêk 1");
 			settings.setTheme("Niebieski");
-			settings.setMode("Do Bazy");
+			settings.setMode("XML");
+			settings.setUrl("jdbc:sqlserver://localhost:1433;" + "databaseName=meetings;integratedSecurity=true;");
 		} else
 		{
 			settings = (ChosenSettings) saveSettings.deserialize();
 		}
-		frame = new JFrame();
-		
 		try
 		{
 			alarmLogic = new AlarmClockLogic(settings);
@@ -61,28 +70,30 @@ public class Window implements ActionListener, WindowListener
 		{
 			ConnectionError error = new ConnectionError();
 			error.show(frame);
+			settings.setMode("XML");	
 		}
-		optionsWidnow = new Options(this, alarmLogic);
-		alarmWindow = new AlarmClock(this, alarmLogic);
-		calendarWindow = new CalendarWindow(this);
-		
+			optionsWidnow = new Options(this, alarmLogic);
+			alarmWindow = new AlarmClock(this, alarmLogic);
+			calendarWindow = new CalendarWindow(this);
+}
 
+	private void initComponents()
+	{
 		about = new JButton("Info");
 		alarmClock = new JButton("Alarm");
 		allAlarms = new JButton("Alarmy");
+		options = new JButton("Opcje");
+		filter = new JButton("Spotkania");
+		export = new JButton("Ekspotuj");
 		alarmCloclkPanel = new JPanel();
 
 		about.addActionListener(this);
 		alarmClock.addActionListener(this);
 		allAlarms.addActionListener(this);
-
-		frame.getContentPane().setLayout(null);
-		frame.setTitle(title);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.pack();
-		frame.setSize(850, 750);
-		frame.setLocationRelativeTo(null);
+		options.addActionListener(this);
+		export.addActionListener(this);
+		filter.addActionListener(this);
+		frame.addWindowListener(this);
 
 		allAlarms.setBounds(655, 280, 100, 30);
 		frame.add(allAlarms);
@@ -93,22 +104,14 @@ public class Window implements ActionListener, WindowListener
 		alarmClock.setBounds(655, 200, 100, 30);
 		frame.add(alarmClock);
 
-		options = new JButton("Opcje");
 		options.setBounds(655, 440, 100, 30);
-		options.addActionListener(this);
 		frame.add(options);
 
-		filter = new JButton("Spotkania");
 		filter.setBounds(655, 360, 100, 30);
-		filter.addActionListener(this);
 		frame.add(filter);
 
-		export = new JButton("Ekspotuj");
 		export.setBounds(655, 520, 100, 30);
-		export.addActionListener(this);
 		frame.add(export);
-		frame.addWindowListener(this);
-
 	}
 
 	public void show()
@@ -151,7 +154,7 @@ public class Window implements ActionListener, WindowListener
 		}
 		if (source == export)
 		{
-			ExportWindow exportWindow = new ExportWindow(frame);
+			ExportWindow exportWindow = new ExportWindow(frame, calendarWindow.getFillMeetingData());
 			exportWindow.saveCSV();
 		}
 
@@ -161,41 +164,6 @@ public class Window implements ActionListener, WindowListener
 	{
 		calendarWindow.updateCalendar();
 		calendarWindow.refresh();
-	}
-
-	public ChosenSettings getSettings()
-	{
-		return settings;
-	}
-
-	public Frame getFrame()
-	{
-		return frame;
-	}
-
-	public String getOptionsChoice()
-	{
-		return optionsWidnow.getChoice();
-	}
-
-	public Options getOptionWindow()
-	{
-		return optionsWidnow;
-	}
-
-	public AlarmClockLogic getAlarmLogic()
-	{
-		return alarmLogic;
-	}
-
-	public CalendarWindow getCalendaeWindow()
-	{
-		return calendarWindow;
-	}
-
-	@Override
-	public void windowActivated(WindowEvent arg0)
-	{
 	}
 
 	@Override
@@ -213,24 +181,30 @@ public class Window implements ActionListener, WindowListener
 		Serializer serializer = new Serializer("meeting.xml");
 		serializer.serialize(calendarWindow.getMeeting());
 	}
-
-	@Override
-	public void windowDeactivated(WindowEvent arg0)
+	
+	public ChosenSettings getSettings()
 	{
+		return settings;
 	}
 
-	@Override
-	public void windowDeiconified(WindowEvent arg0)
+	public Frame getFrame()
 	{
+		return frame;
 	}
 
-	@Override
-	public void windowIconified(WindowEvent arg0)
+	public Options getOptionWindow()
 	{
+		return optionsWidnow;
 	}
 
-	@Override
-	public void windowOpened(WindowEvent arg0)
+	public AlarmClockLogic getAlarmLogic()
 	{
+		return alarmLogic;
 	}
+
+	public CalendarWindow getCalendarWindow()
+	{
+		return calendarWindow;
+	}
+
 }

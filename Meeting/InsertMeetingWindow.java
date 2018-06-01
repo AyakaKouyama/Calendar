@@ -8,57 +8,52 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class InsertMeetingWindow implements ActionListener, ItemListener
 {
-	JFrame frame;
-	JLabel detalisLabel;
-	JLabel nameLabel;
-	JLabel localizationLabel;
-	JLabel dateLabel;
+	private JFrame frame;
+	private JLabel detalisLabel;
+	private JLabel nameLabel;
+	private JLabel localizationLabel;
+	private JLabel dateLabel;
 
-	JTextField details;
-	JTextField name;
-	JTextField localization;
-	JTextField time;
-	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private JButton accept;
+	private JButton alarm;
+	private JButton deleteMeeting;
+	private JButton cancel;
+	private Choice remindChoice;
 
-	JButton accept;
-	JButton alarm;
-	JButton deleteMeeting;
-	JButton cancel;
+	private JTextField details;
+	private JTextField name;
+	private JTextField localization;
+	private JTextField time;
+	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-	String stringDetails = null;
-	String stringLocalization = null;
-	String stringDate = null;
-	String stringName = null;
+	private String stringDetails = null;
+	private String stringLocalization = null;
+	private String stringDate = null;
+	private String stringName = null;
 
-	Choice remindChoice;
-	boolean done = false;
-	Window window;
-	CalendarLogic mcalenadar;
-	int column;
-	int row;
+	private boolean done = false;
+	private boolean accepted = false;
+	private int column;
+	private int row;
+	private int day;
+	private int month;
+	private int year;
+	private int reminderTime;
 
-	int day;
-	int month;
-	int year;
-
-	int reminderTime;
-
-	boolean accepted = false;
-
-	JRadioButton choice;
-
-	AlarmClockLogic alarmClock;
-	AlarmInfoDialog alarmInfo;
+	private AlarmClockLogic alarmClock;
+	private AlarmInfoDialog alarmInfo;
+	private CalendarLogic mcalenadar;
+	private Window window;
 
 	InsertMeetingWindow(Window window, CalendarLogic calendar, int column, int row, int year, int month, int day,
 			String soundName, AlarmClockLogic alarmClock)
@@ -67,31 +62,13 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		this.column = column;
 		this.row = row;
 		this.mcalenadar = calendar;
-
 		this.day = day;
 		this.year = year;
 		this.month = month;
-
 		this.alarmClock = alarmClock;
-		frame = new JFrame();
-		detalisLabel = new JLabel("Szczegó³y");
-		nameLabel = new JLabel("Nazwa");
-		localizationLabel = new JLabel("Lokalizacja");
-		dateLabel = new JLabel("Data");
-		details = new JTextField(20);
-		accept = new JButton("Dodaj");
-		alarm = new JButton("Alarm");
-		deleteMeeting = new JButton("Usuñ spotkanie");
-		deleteMeeting.setText("<html><center>" + "Usuñ" + "<br>" + "spotkanie" + "</center></html>");
-		cancel = new JButton("Anuluj");
 
-		remindChoice = new Choice();
-
-		name = new JTextField(20);
-		localization = new JTextField(20);
-		time = new JFormattedTextField(timeFormat);
-		time.setText((new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis()))));
-
+		initFrame();
+		initComponents();
 		initFillTable();
 
 	}
@@ -130,15 +107,25 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 
 	}
 
-	public void init()
+	private void initComponents()
 	{
-		frame.setTitle("Meeting");
-		frame.setResizable(false);
-		frame.setLayout(null);
-		frame.pack();
-		frame.setSize(400, 300);
+		detalisLabel = new JLabel("Szczegó³y");
+		nameLabel = new JLabel("Nazwa");
+		localizationLabel = new JLabel("Lokalizacja");
+		dateLabel = new JLabel("Data");
+		details = new JTextField(20);
+		accept = new JButton("Dodaj");
+		alarm = new JButton("Alarm");
+		deleteMeeting = new JButton("Usuñ spotkanie");
+		deleteMeeting.setText("<html><center>" + "Usuñ" + "<br>" + "spotkanie" + "</center></html>");
+		cancel = new JButton("Anuluj");
 
-		frame.setLocationRelativeTo(null);
+		remindChoice = new Choice();
+
+		name = new JTextField(20);
+		localization = new JTextField(20);
+		time = new JFormattedTextField(timeFormat);
+		time.setText((new SimpleDateFormat("HH:mm").format(new Date(System.currentTimeMillis()))));
 
 		remindChoice.setBounds(300, 70, 80, 30);
 		remindChoice.add("0 min");
@@ -188,6 +175,23 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		accept.addActionListener(this);
 		details.addActionListener(this);
 		cancel.addActionListener(this);
+
+	}
+
+	public void initFrame()
+	{
+		frame = new JFrame();
+		frame.setIconImage(new ImageIcon("calendar.png").getImage());
+		frame.setTitle("Meeting");
+		frame.setResizable(false);
+		frame.setLayout(null);
+		frame.pack();
+		frame.setSize(400, 300);
+		frame.setLocationRelativeTo(null);
+	}
+
+	public void show()
+	{
 		frame.setVisible(true);
 	}
 
@@ -236,17 +240,21 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		{
 			String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 1000);
 			int id = Integer.parseInt(sId);
-			if (mcalenadar.getId(id) != -1)
-			{
-				name.setText("");
-				localization.setText("");
-				time.setText("");
-				details.setText("");
+			//if (mcalenadar.getMode() == 1)
+			//{
+				//if (mcalenadar.getId(id) != -1)
+				//{
+					name.setText("");
+					localization.setText("");
+					time.setText("");
+					details.setText("");
+					
+					mcalenadar.deleteMeeting(id);
+					fill(column, row);
+					fillData(column, row);
+				//}
+			//}
 
-				mcalenadar.deleteMeeting(id);
-				fill(column, row);
-				fillData(column, row);
-			}
 
 		}
 
@@ -261,10 +269,11 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		if (!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("")
 				|| !details.getText().equals(""))
 		{
-			window.getCalendaeWindow().fillCell(stringName, row, column);
+			
+			window.getCalendarWindow().fillCell(stringName, row, column);
 		} else
 		{
-			window.getCalendaeWindow().fillCell("", row, column);
+			window.getCalendarWindow().fillCell("", row, column);
 		}
 	}
 
@@ -277,25 +286,22 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		{
 			String value = "Nazwa:" + stringName + "\nLokalizacja:" + stringLocalization + "\nGodzina: " + stringDate
 					+ "\nSzczegó³y:" + stringDetails;
-			// mcalenadar.setCellValue(value, row, column);
-
 			String date = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day) + " "
 					+ stringDate;
 
 			mcalenadar.AddElementToList(id, value);
 			mcalenadar.addNameToList(id, stringName);
 
-			if (mcalenadar.getMode() == 1)
-				if (mcalenadar.getId(id) != -1)
-				{
-					mcalenadar.setName(id, stringName);
-					mcalenadar.setLocalization(id, stringLocalization);
-					mcalenadar.setDate(id, stringDate); // ???
-					mcalenadar.setDetails(id, stringDetails);
-				} else
-				{
-					mcalenadar.insert(id, stringName, stringLocalization, date, stringDetails);
-				}
+			if (mcalenadar.getMode() == 1) if (mcalenadar.getId(id) != -1)
+			{
+				mcalenadar.setName(id, stringName);
+				mcalenadar.setLocalization(id, stringLocalization);
+				mcalenadar.setDate(id, stringDate); // ???
+				mcalenadar.setDetails(id, stringDetails);
+			} else
+			{
+				mcalenadar.insert(id, stringName, stringLocalization, date, stringDetails);
+			}
 
 			if (mcalenadar.getMode() == 2)
 			{
@@ -303,7 +309,6 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 				mcalenadar.setLocalizationXml(id, stringLocalization);
 				mcalenadar.setDateXml(id, stringDate); // ???
 				mcalenadar.setDetailsXml(id, stringDetails);
-				// mcalenadar.addId
 			}
 		} else
 		{
