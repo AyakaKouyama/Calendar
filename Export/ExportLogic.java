@@ -5,6 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Klasa realizuj¹ca logikê obs³ugi eksportu plików.
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ */
 public class ExportLogic 
 {
 	private String header = "\"Temat\",\"Lokalizacja\",\"Godzina rozpoczêcia\",\"Data rozpoczêcia\",\"Opis\"";
@@ -13,7 +18,13 @@ public class ExportLogic
 	private ArrayList<Integer> allIds;
 	private Map<Integer, String> meetings;
 	
-	ExportLogic(FillMeetingData data) throws ClassNotFoundException, SQLException
+	/**
+	 * Konstruktor klasy.
+	 * @param data obiekt zawieraj¹cy i manipuluj¹cy list¹ spotkañ
+	 * @throws ClassNotFoundException {@link}
+	 * @throws SQLException {@link}
+	 */
+	public ExportLogic(FillMeetingData data) throws ClassNotFoundException, SQLException
 	{
 		this.data = data;
 		values = new String[5];
@@ -22,6 +33,11 @@ public class ExportLogic
 		
 	}
 	
+	/**
+	 * Metoda zapisuj¹ca spotkania do pliku w formacie .csv.
+	 * @param fileName nazwa pliku 
+	 * @throws IOException {@link}
+	 */
 	public void save(File fileName) throws IOException
 	{
 		try(FileWriter file = new FileWriter(fileName + ".csv"))
@@ -36,6 +52,10 @@ public class ExportLogic
 	}
 	
 
+	/**
+	 * Metoda wywo³ywana w motodzie save() odczytuj¹ca dane (nazwa, lokalizacja, data, szczegó³y) dotycz¹ce spotkania o podanym ID.
+	 * @param id ID spotkania
+	 */
 	public void getMeeting(int id)
 	{
 		String meeting = meetings.get(id);

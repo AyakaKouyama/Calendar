@@ -6,22 +6,41 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * Klasa serializuj¹ca i deserializuj¹ca obiekty do/z wkazanego pliku.
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class Serializer
 {
-	private String fileName;
+	protected String fileName;
 
-	Serializer(String fileName)
+	/**
+	 * Konstruktor klasy.
+	 * 
+	 * @param fileName
+	 *            nazwa pliku do serializacji/deserializacji
+	 */
+	public Serializer(String fileName)
 	{
 		this.fileName = fileName;
 	}
 
-	public void serialize(Object settings)
+	/**
+	 * Metoda serializuj¹ca podany obiekiet do pliku fileName.
+	 * 
+	 * @param object
+	 *            obiekt, który ma zostaæ zserializowany
+	 */
+	public void serialize(Object object)
 	{
 		XMLEncoder encoder;
 		try
 		{
 			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(fileName)));
-			encoder.writeObject(settings);
+			encoder.writeObject(object);
 			encoder.close();
 		} catch (FileNotFoundException e)
 		{
@@ -30,6 +49,12 @@ public class Serializer
 
 	}
 
+	/**
+	 * Metoda deserializuj¹ca obiekt z pliku fileName.
+	 * 
+	 * @return w przypadku powodzenia zwraca zdeserializowany obiekt, w przeciwnym
+	 *         razie zwraca null
+	 */
 	public Object deserialize()
 	{
 		FileInputStream fis;

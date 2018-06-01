@@ -14,6 +14,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
 
 /**
+ * Klasa obs³uguj¹ca logikê alarmów. Odpowiedzialna jest za otwieranie,
+ * zamykanie plików audio, uruchamianie alarmów, wy³¹czanie alarmów,
+ * aktualizowanie alarmów (w przypadku wybrania opcji "Drzemka").
  * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
@@ -50,14 +53,13 @@ public class AlarmClockLogic implements ActionListener
 	 * @param settings
 	 *            obiekt zawieraj¹cy konfiguracjê aplikacji
 	 * @throws UnsupportedAudioFileException
-	 *             wyj¹tek rzucany w przypadku próby otwarcia pliku audio w
-	 *             nieos³ugiwanym formacie (obs³ugiwany format .wav)
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/UnsupportedAudioFileException.html">https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/UnsupportedAudioFileException.html</a>
 	 * @throws IOException
-	 *             wyj¹tek rzucany w przypadku nieudanej próby odczytu z pliku
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/java/io/IOException.html">https://docs.oracle.com/javase/7/docs/api/java/io/IOException.html</a>
 	 * @throws LineUnavailableException
-	 *             wyj¹tek rzucany w przypaku nieudanej próby otwarcia linii
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/LineUnavailableException.html">https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/LineUnavailableException.html</a>
 	 * @throws NullPointerException
-	 *             wyj¹tek rzucany w przypadku braku pliku w katalogu
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html">https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html</a>
 	 */
 	public AlarmClockLogic(ChosenSettings settings)
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException, NullPointerException
@@ -77,14 +79,13 @@ public class AlarmClockLogic implements ActionListener
 	 * otwarcie nowego).
 	 * 
 	 * @throws UnsupportedAudioFileException
-	 *             wyj¹tek rzucany w przypadku próby otwarcia pliku audio w
-	 *             nieos³ugiwanym formacie (obs³ugiwany format .wav)
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/UnsupportedAudioFileException.html">https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/UnsupportedAudioFileException.html</a>
 	 * @throws IOException
-	 *             wyj¹tek rzucany w przypadku nieudanej próby odczytu z pliku
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/java/io/IOException.html">https://docs.oracle.com/javase/7/docs/api/java/io/IOException.html</a>
 	 * @throws LineUnavailableException
-	 *             wyj¹tek rzucany w przypaku nieudanej próby otwarcia linii
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/LineUnavailableException.html">https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/LineUnavailableException.html</a>
 	 * @throws NullPointerException
-	 *             wyj¹tek rzucany w przypadku braku pliku w katalogu
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html">https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html</a>
 	 */
 	public void setSound()
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException, NullPointerException
@@ -101,14 +102,13 @@ public class AlarmClockLogic implements ActionListener
 	 * Metoda s³u¿¹ca do otwarcia pliku audio.
 	 * 
 	 * @throws UnsupportedAudioFileException
-	 *             wyj¹tek rzucany w przypadku próby otwarcia pliku audio w
-	 *             nieos³ugiwanym formacie (obs³ugiwany format .wav)
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/UnsupportedAudioFileException.html">https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/UnsupportedAudioFileException.html</a>
 	 * @throws IOException
-	 *             wyj¹tek rzucany w przypadku nieudanej próby odczytu z pliku
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/java/io/IOException.html">https://docs.oracle.com/javase/7/docs/api/java/io/IOException.html</a>
 	 * @throws LineUnavailableException
-	 *             wyj¹tek rzucany w przypaku nieudanej próby otwarcia linii
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/LineUnavailableException.html">https://docs.oracle.com/javase/7/docs/api/javax/sound/sampled/LineUnavailableException.html</a>
 	 * @throws NullPointerException
-	 *             wyj¹tek rzucany w przypadku braku pliku w katalogu
+	 *             <a href= "https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html">https://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html</a>
 	 */
 	public void init() throws UnsupportedAudioFileException, IOException, LineUnavailableException, NullPointerException
 	{
@@ -185,7 +185,7 @@ public class AlarmClockLogic implements ActionListener
 	/**
 	 * Metoda, która co sekundê (na podstawie timera) sprawdza wartoœæ zwracan¹
 	 * przez metodê chceckDate(). Uruchamia alarm w przypadku, gdy metoda
-	 * chceckDate() zwróci wartoœæ true. Aktualizuje listê alarmów w przyppadku
+	 * chceckDate() zwróci wartoœæ true.Aktualizuje listê alarmów w przyppadku
 	 * wybrania opcji "Drzemka" dodaj¹c wybrany czas drzemki.
 	 */
 	@Override
@@ -233,7 +233,7 @@ public class AlarmClockLogic implements ActionListener
 
 	/**
 	 * Metoda dodaj¹ca alarm do bazy danych/serializowanego obiektu (w zale¿noœci od
-	 * trybu)
+	 * trybu).
 	 * 
 	 * @param ³añcuch
 	 *            znaków reprezentuj¹cy datê alarmu
@@ -255,6 +255,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
+	 * Metoda zwracaj¹ca domyœlny URL bazy danych.
 	 * 
 	 * @return zwraca domyœlny URL bazy danych
 	 */
@@ -264,6 +265,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
+	 * Metoda zwracaj¹ca oceny URL bazy danych.
 	 * 
 	 * @return zwraca obecny URL bazy danych
 	 */
@@ -273,7 +275,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
-	 * Wywoluje metodê do ustawiania URL bazy danych
+	 * Wywo³uje metodê do ustawiania URL bazy danych.
 	 * 
 	 * @param value
 	 *            nowa wartoœæ URL
@@ -288,6 +290,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
+	 * Metoda zwracaj¹ca listê wszystkich alarmów.
 	 * 
 	 * @return zwraca listê wszystkich alarmów
 	 */
@@ -297,6 +300,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
+	 * Metoda zwracaj¹ca listê obiektów do serializacji zawieraj¹cych alarmy.
 	 * 
 	 * @return zwraca listê obiektów do serializacji zawieraj¹cych alarmy
 	 */
@@ -306,6 +310,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
+	 * Metoda zwracaj¹ca obiekt typu AlarmList
 	 * 
 	 * @return zwraca obiekt typu AlarmList
 	 */
@@ -315,8 +320,8 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
-	 * Metoda s³u¿¹ca do zmiany trybu pracy aplikacji. Wywo³uje odpowienie metody
-	 * odpwiedzialne za zmianê trybu. Zapisuje stan aplikacji.
+	 * Metoda s³u¿¹ca do zmiany trybu pracy aplikacji.Wywo³uje odpowienie metody
+	 * odpwiedzialne za zmianê trybu.Zapisuje stan aplikacji.
 	 * 
 	 * @param mode
 	 *            wartoœæ liczbowa trybu w jakim ma pracowaæ aplikacja (1 - "XML", 2
@@ -330,8 +335,11 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca odpowiednie metody informuj¹ce o stanie po³¹czenia z baz¹ danych.
-	 * @return zwraca true w przypadku, gdy uda³o siê po³¹czyæ z baz¹ danych; zwraca false w przeciwnym wypadku
+	 * Metoda wywo³uj¹ca odpowiednie metody informuj¹ce o stanie po³¹czenia z baz¹
+	 * danych.
+	 * 
+	 * @return zwraca true w przypadku, gdy uda³o siê po³¹czyæ z baz¹ danych; zwraca
+	 *         false w przeciwnym wypadku
 	 */
 	public boolean getConnectionStatus()
 	{
@@ -339,7 +347,7 @@ public class AlarmClockLogic implements ActionListener
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody s³u¿¹ce do zapisu stanu aplikacji
+	 * Metoda wywo³uj¹ca metody s³u¿¹ce do zapisu stanu aplikacji.
 	 */
 	public void saveData()
 	{

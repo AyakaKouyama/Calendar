@@ -19,6 +19,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 /**
+ * Tabela kalendarza umieszczona w oknie g³ównym. Klasa konfiguruje ustawienia i
+ * zachowanie tabeli reprezentuj¹cej kalendarz.
  * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
@@ -69,7 +71,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * Metoda do inicjalizacji przycisków s³u¿acych do zmiany miesi¹ca oraz roku
+	 * Metoda do inicjalizacji przycisków s³u¿acych do zmiany miesi¹ca oraz roku.
 	 */
 	private void initComponents()
 	{
@@ -157,11 +159,12 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda do obslugi zdarzeñ generwoanych przez naciœniêcie myszy.Po dwukrotnym
+	 * naciœniêciu na komórkê w tabeli, otwierane jest okno zawieraj¹ce szczegó³y
+	 * spotkania.
+	 * 
 	 * @param e
-	 *            zdarzenie generowane przez naciœniêcie przycisku myszt Metoda do
-	 *            obslugi zdarzeñ generwoanych przez naciœniêcie myszy. Po
-	 *            dwukrotnym naciœniêciu na komórkê w tabeli otwierane jest okno
-	 *            zawieraj¹ce szczegó³y spotkania.
+	 *            zdarzenie generowane przez naciœniêcie przycisku myszy
 	 */
 	@Override
 	public void mousePressed(MouseEvent e)
@@ -210,6 +213,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda wype³niaj¹ca komórkê tabeli podan¹ wartoœci¹.
 	 * 
 	 * @param value
 	 *            wartoœæ, któr¹ ma zostaæ wype³niona komórka w tabeli
@@ -224,11 +228,11 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda do ustawiania wartoœci pola cuurentMonth (obecny miesi¹c w
+	 * kalendarzu).
 	 * 
 	 * @param value
-	 *            wartoœæ jaka ma zostaæ przypisana do pola currentMonth Metoda do
-	 *            ustawiania wartoœci pola cuurentMonth (obecny miesi¹c w
-	 *            kalendarzu)
+	 *            wartoœæ jaka ma zostaæ przypisana do pola currentMonth
 	 */
 	public void setCurrentMonth(int value)
 	{
@@ -236,10 +240,10 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda do ustawiania wartoœci pola currentDay (obecny dzieñ w kalendarzu).
 	 * 
 	 * @param value
-	 *            wartoœc jaka ma zostaæ przypisana do pola currentDay Metoda do
-	 *            ustawiania wartoœci pola currentDay (obecny dzieñ w kalendarzu)
+	 *            wartoœc jaka ma zostaæ przypisana do pola currentDay
 	 */
 	public void setCurrentDay(int value)
 	{
@@ -247,10 +251,10 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda do ustawiania wartoœci pola currentYear (obecny rok w kalendarzu).
 	 * 
 	 * @param value
-	 *            wartoœc jaka ma zostaæ przypisana do pola currentYear Metoda do
-	 *            ustawiania wartoœci pola currentYear (obecny rok w kalendarzu)
+	 *            wartoœc jaka ma zostaæ przypisana do pola currentYear
 	 */
 	public void setCurrentYear(int value)
 	{
@@ -258,12 +262,13 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda do obs³ugi przycisków do zmiany miesi¹ca/roku. Zmienia wartoœæ pola
+	 * currentYear oraz currentMonth, jednoczeœnie zmieniaj¹c wartoœæ wyœwietlnaego
+	 * miesi¹ca/roku Aktualizuje zawartoœæ kalendarza, wywo³uj¹c metodê
+	 * updateCalendar().
+	 * 
 	 * @param e
-	 *            zdarzenie generowane przez naciœniêcie na przycisk Metoda do
-	 *            obs³ugi przycisków do zmiany miesi¹ca/roku. Zmienia wartoœæ pola
-	 *            currentYear oraz currentMonth, jednoczeœnie zmieniaj¹c wartoœæ
-	 *            wyœwietlnaego miesi¹ca/roku. Aktualizuje zawartoœæ kalendarza,
-	 *            wywo³uj¹c metodê updateCalendar().
+	 *            zdarzenie generowane przez naciœniêcie na przycisk
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -319,8 +324,8 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
-	 * @return obiekt CalendarLogic obs³uguj¹cy logikê kalendarza
+	 * Metoda zwracaj¹ca obiekt typu CalendarLogic obs³uguj¹cy logikê kalendarza.
+	 * @return obiekt CalendarLogic
 	 */
 	public CalendarLogic getCalendar()
 	{
@@ -328,7 +333,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca wartoœæ aktualnego roku ustawionego w kalendarzu
 	 * @return wartoœæ aktualnego roku ustawionego w kalendarzu
 	 */
 	public int getYear()
@@ -337,7 +342,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca wartoœæ aktualnego miesi¹ca ustawionego w kalendarzu.
 	 * @return wartoœæ aktualnego miesi¹ca ustawionego w kalendarzu
 	 */
 	public int getMonth()
@@ -346,7 +351,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca wartoœæ aktualnego dnia ustawionego w kalendarzu.
 	 * @return wartoœæ aktualnego dnia ustawionego w kalendarzu
 	 */
 	public int getCurrentDay()
@@ -355,8 +360,8 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
-	 * @return tryb pracy aplikacji ("XML" lub "Baza danych")
+	 * Metoda zwracaj¹ca wartoœæ liczbow¹ trybu pracy.
+	 * @return zwraca 1 w przypadku trybu "XML", zwraca 2 w przypadku trybu "Baza danych"
 	 */
 	public int getMode()
 	{
@@ -364,7 +369,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda wracaj¹ca mapê wszystkich spotkañ
 	 * @return mapa zawieraj¹ca wszystkie spotkania
 	 */
 	public HashMap<Integer, MeetingObject> getMeeting()
@@ -373,7 +378,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 *Metoda zwracaj¹ca okno kalendarza 
 	 * @return okno kalendarza
 	 */
 	public CalendarWindow getCalendarWindow()

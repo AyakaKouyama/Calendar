@@ -2,9 +2,18 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Okno z informacj¹ o b³êdzie po³¹czenia z baz¹ danych.
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class ConnectionError implements MessageWindow
 {
 
+	/**
+	 * Metoda wyœwietlaj¹ca okno.
+	 */
 	@Override
 	public void show(Frame frame)
 	{

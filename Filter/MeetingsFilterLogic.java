@@ -2,17 +2,46 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ * 
+ * Klasa odpowiedzialna za logikê filtrowania danych. Posiada metody s³u¿¹ce do
+ * sortowania, usuwania danych, zwracania spotkañ spe³niaj¹cych dane kryterium.
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ * 
+ *
+ */
 public class MeetingsFilterLogic
 {
 	private DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm");
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm");
 	private FillMeetingData db;
 
-	MeetingsFilterLogic(FillMeetingData db)
+	/**
+	 * Konstruktor klasy.
+	 * 
+	 * @param db
+	 *            obiekt przechowuj¹cy i manipuluj¹cy list¹ spotkañ
+	 */
+	public MeetingsFilterLogic(FillMeetingData db)
 	{
 		this.db = db;
 	}
 
+	/**
+	 * Metoda sortuj¹ca listê spotk¹ñ wg. wybranego pola.
+	 * 
+	 * @param data
+	 *            tablica zawieraj¹ca dane na temat spotkañ
+	 * @param size
+	 *            rozmiar tablicy
+	 * @param choice
+	 *            nazwa pola, wg. którego ma zostaæ wykonane sortowanie
+	 * @param order
+	 *            porz¹dek 1 - rosn¹cy, -1 malej¹cy
+	 * @return zwraca tablicê posortowan¹ wg. wybranego pola
+	 */
 	public Object[][] sort(Object[][] data, int size, String choice, int order)
 	{
 		for (int i = 0; i < size; i++)
@@ -28,13 +57,11 @@ public class MeetingsFilterLogic
 
 		if (choice == "Nazwa")
 		{
-			Arrays.sort(data,
-					(a, b) -> order * a[0].toString().compareTo(b[0].toString()));
+			Arrays.sort(data, (a, b) -> order * a[0].toString().compareTo(b[0].toString()));
 		}
 		if (choice == "Lokazlizacja")
 		{
-			Arrays.sort(data,
-					(a, b) -> (order * a[1].toString().compareTo(b[1].toString())));
+			Arrays.sort(data, (a, b) -> (order * a[1].toString().compareTo(b[1].toString())));
 		}
 		if (choice == "Data")
 		{
@@ -48,14 +75,26 @@ public class MeetingsFilterLogic
 
 		if (choice == "Szczegó³y")
 		{
-			Arrays.sort(data,
-					(a, b) -> (order * a[3].toString().compareTo(b[3].toString())));
+			Arrays.sort(data, (a, b) -> (order * a[3].toString().compareTo(b[3].toString())));
 		}
 
 		return data;
 
 	}
 
+	/**
+	 * Metoda wyszukuj¹ca dane z wybranej kolumny, o konkretnej wartoœci.
+	 * 
+	 * @param data
+	 *            tablica zawieraj¹ca dane na temat spotkañ
+	 * @param choice
+	 *            kolumna, z której ma nast¹piæ wyszukiwanie
+	 * @param size
+	 *            rozmiar tablicy
+	 * @param text
+	 *            szukana wartoœæ
+	 * @return zwraca tablicê wype³nion¹ wyszukanymi rekordami
+	 */
 	public Object[][] find(Object[][] data, String choice, int size, String text)
 	{
 		Object[][] temp = new Object[size][4];
@@ -99,6 +138,17 @@ public class MeetingsFilterLogic
 		return temp;
 	}
 
+	/**
+	 * Metoda wyszukuj¹ca spotkania strasze ni¿ podana data.
+	 * 
+	 * @param data
+	 *            tablica zawieraj¹ca dane na temat spotkañ
+	 * @param size
+	 *            rozmiar tablicy
+	 * @param text
+	 *            data, od której starsze maj¹ byæ wyniki
+	 * @return zwraca tablicê wype³nion¹ wyszukanymi wynikami
+	 */
 	public Object[][] findOlderThan(Object[][] data, int size, String text)
 	{
 		Object[][] temp = new Object[size][4];
@@ -122,6 +172,15 @@ public class MeetingsFilterLogic
 		return temp;
 	}
 
+	/**
+	 * Metoda usuwaj¹ca przefitrowane wyniki (wszystkie obecie widoczne na liscie).
+	 * 
+	 * @param data
+	 *            tablica zawieraj¹ca dane na temat spotkañ
+	 * @param size
+	 *            rozmiar tablicy
+	 * @return tablica z usuniêtymi rekordami
+	 */
 	public Object[][] remove(Object[][] data, int size)
 	{
 		Object[][] temp = new Object[size][4];
@@ -159,6 +218,17 @@ public class MeetingsFilterLogic
 		return temp;
 	}
 
+	/**
+	 * Metoda usuwaj¹ca jeden wybrany rekord.
+	 * 
+	 * @param data
+	 *            tablica zawieraj¹ca dane na temat spotkañ
+	 * @param row
+	 *            rz¹d, w kórym znajduje siê wybrany rekors
+	 * @param size
+	 *            rozmiar tablicy
+	 * @return tablica z usuniêtym wybranym rekordem
+	 */
 	public Object[][] removeOne(Object[][] data, int row, int size)
 	{
 		Object[][] temp = new Object[size][4];

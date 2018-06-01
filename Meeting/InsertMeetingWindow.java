@@ -15,6 +15,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * Okno s³u¿¹ce do dodawania nowego spotkania w danym dniu, usuwania spotkania,
+ * dodawania przypomnieñ dzwiêkowych o wydarzeniu oraz modyfikacji istniej¹cych
+ * spotkañ.
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class InsertMeetingWindow implements ActionListener, ItemListener
 {
 	private JFrame frame;
@@ -97,7 +106,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 
 	/**
 	 * Metoda s³u¿¹ca do wype³nienia komórek z informacjami o spotkaniu na podstawie
-	 * listy spotkañ
+	 * listy spotkañ.
 	 */
 	public void initFillTable()
 	{
@@ -233,10 +242,12 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	}
 
 	/**
+	 * Metoda obs³uguj¹ca zdarzenia generowane przez naciœniêcie przycisku. Wywo³uje
+	 * metody do zamkniêcia okna, usuniêcia spotkania, ustawienia przypomnienia o
+	 * spotkaniu.
+	 * 
 	 * @param e
-	 *            zdarzenie generowane przez naciœniecie przyciskó Metdoa do obs³ugi
-	 *            zdarzeñ generwoanych przez naciœniêcie przycisków. Odpowiednio
-	 *            zamyka okno, usuwa spotkanie, ustawia przypomnienie o spotkaniu.
+	 *            zdarzenie generowane przez naciœniecie przycisku.
 	 * 
 	 */
 	@Override
@@ -301,7 +312,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	}
 
 	/**
-	 * Metoda aktualizuj¹ca stan tabeli kalendarza po dodaniu nowego spotkania
+	 * Metoda aktualizuj¹ca stan tabeli kalendarza po dodaniu nowego spotkania.
 	 * 
 	 * @param row
 	 *            modyfikowany rz¹d
@@ -323,8 +334,8 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 
 	/**
 	 * Metdoa wywo³uj¹ca metody s³u¿¹ce do dodania spotkania do listy spotkañ,
-	 * modyfikuj¹ce stan bazy oraz obiektu przechowuj¹cego spotkania do pliku XML (w
-	 * zale¿noœci od u¿ywanego trybu)
+	 * modyfikuj¹ce stan bazy oraz obiektu przechowuj¹cego spotkania do pliku XML(w
+	 * zale¿noœci od u¿ywanego trybu).
 	 * 
 	 * @param row
 	 *            modyfikowany rz¹d
@@ -371,7 +382,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca ³añcuch znaków opisuj¹cy szczegó³y spotkania.
 	 * @return ³añcuch znaków zawieraj¹cy szczegó³y spotkania
 	 */
 	public String getDetails()
@@ -466,12 +477,12 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	}
 
 	/**
-	 * Metoda do obs³ugi zdarzeñ przez zmianê na liœcie wyboru czasu przypomnienia o
-	 * zdarzeniu
+	 * Metoda do obs³ugi zdarzeñ generowanych przez zmianê na liœcie wyboru czasu przypomnienia o
+	 * spotkaniu.
 	 * 
 	 * @param e
 	 *            zdarzenie generwoane przez zmianê na liœcie wyboru czasu
-	 *            przypomnienia o zdarzeniu
+	 *            przypomnienia o spotkaniu
 	 */
 	@Override
 	public void itemStateChanged(ItemEvent e)

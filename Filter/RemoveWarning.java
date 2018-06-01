@@ -2,11 +2,21 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Okno ostrze¿enia przed usuniêciem przefiltrowanych spotkañ.
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class RemoveWarning 
 {
 	
 	private int answer;
 
+	/**
+	 * Meotda wyœwietlaj¹ca okno ostrze¿enia.
+	 * @param frame okno rodzic
+	 */
 	public void show(Frame frame)
 	{
 		String message = "    Czy na pewno chcesz kontynowaæ? \n "
@@ -17,6 +27,10 @@ public class RemoveWarning
 		        null, new Object[] {"Tak", "Nie"}, JOptionPane.YES_OPTION);
 	}
 	
+	/**
+	 * Metoda zwracaj¹ca wybran¹ reakcjê przez u¿ytkownika.
+	 * @return zwraca true w przypadku zgody na usuniêcie danych, false w przeciwnym wypadku.
+	 */
 	public boolean getAnswer()
 	{
 		if(answer == JOptionPane.YES_OPTION)

@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 
 /**
  * 
+ * Okno zawieraj¹ce listê wszystkich alarmów. Umo¿liwia usuwanie wybranych alarmów za pomoc¹ przycisku "Usuñ".
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
  *
@@ -28,13 +29,10 @@ public class AllAlarms implements ActionListener
 	private JButton ok;
 
 	private DefaultListModel<String> model = new DefaultListModel<>();
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	private SimpleDateFormat newformat = new SimpleDateFormat("dd.MM.yyyy    HH:mm");
-
 	private AlarmList alarms;
 
 	/**
-	 * Konstruktor klasy wyowu³uje metody do inicjalizacji okna, komponentów oraz wype³nienia listy alarmów
+	 * Konstruktor klasy wyowu³uje metody do inicjalizacji okna, komponentów oraz wype³nienia listy alarmów.
 	 * @param mode tryb pracy aplikacji ("XML"/"Do bazy")
 	 * @param alarms klasa obs³uguj¹ca listê alarmów
 	 */
@@ -86,7 +84,7 @@ public class AllAlarms implements ActionListener
 	}
 
 	/**
-	 * Metoda s³u¿¹ca do wyœwietlania okna
+	 * Metoda s³u¿¹ca do wyœwietlania okna.
 	 */
 	public void show()
 	{
@@ -94,7 +92,7 @@ public class AllAlarms implements ActionListener
 	}
 
 	/**
-	 * Meotda wype³niaj¹ca komponent list alarmamy pobranymi od klasy AlarmList
+	 * Meotda wype³niaj¹ca komponent "list" alarmami pobranymi od klasy AlarmList.
 	 */
 	public void fillList()
 	{
@@ -107,7 +105,7 @@ public class AllAlarms implements ActionListener
 
 	
 	/**
-	 * Metoda obs³uguj¹ca zdaerzenia generowane przez naciœniêcie przycisków. Wywo³uje metody s³u¿¹ce do zamkniêcia okna, usuniêcia alarmu.
+	 * Metoda obs³uguj¹ca zdarzenia generowane przez naciœniêcie przycisków. Wywo³uje metody s³u¿¹ce do zamkniêcia okna, usuniêcia alarmu.
 	 * @param e zdarzenia generwoane przez naciœniêcie przycisku
 	 */
 	@Override

@@ -13,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 /**
+ * Okno alarmu. Zwiera pola tekstowe data oraz godzina, które s³u¿¹ do podania
+ * daty nowego alarmu. Domyœlnie wype³nione s¹ aktualnym czasem systemowym.
+ * Przyciski "OK" oraz "Anuluj" s³u¿¹ odpowiednio do dodania nowego alarmu oraz
+ * zamkniêcia okna bez dodwania nowego alarmu.
  * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
@@ -37,9 +41,13 @@ public class AlarmClock implements ActionListener
 	private AlarmClockLogic music;
 
 	/**
-	 * Konstruktor klasy; wywo³uje metody s³u¿¹ce do inicjalizacji okna oraz komonentów.
-	 * @param window okno rodzic
-	 * @param music klasa obslugj¹ca logikê alarmów
+	 * Konstruktor klasy. Wywo³uje metody s³u¿¹ce do inicjalizacji okna oraz
+	 * komponentów.
+	 * 
+	 * @param window
+	 *            okno rodzic
+	 * @param music
+	 *            klasa obslugj¹ca logikê alarmów
 	 */
 	public AlarmClock(Window window, AlarmClockLogic music)
 	{
@@ -49,9 +57,9 @@ public class AlarmClock implements ActionListener
 		initComponents();
 	}
 
-	
 	/**
-	 * Metoda s³u¿aca do inicjalizacji okna. Ustawia parametry takie jak np. rozmiar okna, jego nazwa.
+	 * Metoda s³u¿aca do inicjalizacji okna. Ustawia parametry takie jak np. rozmiar
+	 * okna, jego nazwa.
 	 */
 	private void initFrame()
 	{
@@ -66,7 +74,8 @@ public class AlarmClock implements ActionListener
 	}
 
 	/**
-	 * Metoda s³u¿¹ca do inicjalizacji komponentów. Tworzy i konfiguruje etykiety, pola tekstowe, przyciski.
+	 * Metoda s³u¿¹ca do inicjalizacji komponentów. Tworzy i konfiguruje etykiety,
+	 * pola tekstowe, przyciski.
 	 */
 	private void initComponents()
 	{
@@ -105,7 +114,7 @@ public class AlarmClock implements ActionListener
 	}
 
 	/**
-	 * Metoda s³u¿¹ca do wyœwietlania okna
+	 * Metoda s³u¿¹ca do wyœwietlania okna alarmu.
 	 */
 	public void add()
 	{
@@ -113,7 +122,8 @@ public class AlarmClock implements ActionListener
 	}
 
 	/**
-	 * Metoda aktualizuj¹ca czas w polach tekstowych, tak, aby domyœlnie wyœwietlany by³ aktualny czas systemowy.
+	 * Metoda aktualizuj¹ca czas w polach tekstowych, tak, aby domyœlnie wyœwietlany
+	 * by³ aktualny czas systemowy.
 	 */
 	public void updateDate()
 	{
@@ -122,8 +132,11 @@ public class AlarmClock implements ActionListener
 	}
 
 	/**
-	 * Metoda do obs³ugi zdarzeñ generwoanych przez naciœniêcie przyciku. Wywo³uje odpowiednie metody do zamkniêcia okna, dodania nowego alarmu.
-	 * @param e zdarzenia generowane przez naciœniêcie przycisku 
+	 * Metoda do obs³ugi zdarzeñ generowanych przez naciœniêcie przycisku.Wywo³uje
+	 * odpowiednie metody do zamkniêcia okna, dodania nowego alarmu.
+	 * 
+	 * @param e
+	 *            zdarzenia generowane przez naciœniêcie przycisku
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -152,8 +165,10 @@ public class AlarmClock implements ActionListener
 	}
 
 	/**
-	 * Metoda zwracaj¹ca obiekt klasy Calendar z ustawion¹ dat¹ alarmu wybran¹ przez u¿ytownika.
-	 * @return obiekt Calendar z ustawion¹ dat¹ alarmu wybran¹ przez u¿ytkownika
+	 * Metoda zwracaj¹ca obiekt klasy Calendar z ustawion¹ dat¹ alarmu wybran¹ przez
+	 * u¿ytownika.
+	 * 
+	 * @return obiekt Calendar z ustawion¹ dat¹ alarmu wybran¹ przez u¿ytkownika.
 	 */
 	public Calendar getDate()
 	{
@@ -163,12 +178,12 @@ public class AlarmClock implements ActionListener
 			{
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(format.parse(date.getText() + " " + time.getText()));
-			
+
 				SimpleDateFormat newformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:00.0");
 				Calendar formatted = Calendar.getInstance();
 				formatted.setTime(format.parse(date.getText() + " " + time.getText()));
 				formattedDate = newformat.format(formatted.getTime());
-				
+
 				return cal;
 			} catch (java.text.ParseException e)
 			{
@@ -178,5 +193,5 @@ public class AlarmClock implements ActionListener
 
 		return null;
 	}
-	
+
 }

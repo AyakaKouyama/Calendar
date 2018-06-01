@@ -1,19 +1,37 @@
 import java.awt.Color;
 
+/**
+ * Klasa s³u¿¹ca do wyboru motywu kalendarza.
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class Theme
 {
 	private Color[] colors;
 
+	/**
+	 * Konstruktor klasy.
+	 */
 	Theme()
 	{
 		colors = new Color[4];
 	}
 
+	/**
+	 * Metoda zwracaj¹ca tablicê z kolorami wybranego motywu.
+	 * @return tablica z kolorami wybranego motywu
+	 */
 	public Color[] getTheme()
 	{
 		return colors;
 	}
 
+	/**
+	 * Metoda ustawiaj¹ca kolory w tablicy w zale¿noœci od wyboru u¿ytkownika.
+	 * @param choice nazwa wybranego motywu
+	 */
 	public void select(String choice)
 	{
 

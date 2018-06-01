@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ * Klasa tworz¹ca mapê spotkañ oraz listê nazw spotkañ na podstawie dancyh z bazy/pliku i operuj¹ca na tych kolekcjach.
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
  *
@@ -24,7 +24,7 @@ public class FillMeetingData
 	private boolean connectionFailed = false;
 
 	/**
-	 * Konstruktor kalsy; Tworzy obiekt MeetingTable. W przypadku nieudanej próby
+	 * Konstruktor kalsy.Tworzy obiekt MeetingTable.W przypadku nieudanej próby
 	 * po³¹czenia z baz¹ danych zmienia tryb pracy aplikacji na "XML"
 	 * 
 	 * @param calendarLogic
@@ -77,7 +77,7 @@ public class FillMeetingData
 	}
 
 	/**
-	 * Metoda wype³niaj¹ca listê spotkañ danymi z bazy lub pliku XML (w zale¿noœci od trybu)
+	 * Metoda wype³niaj¹ca listê spotkañ danymi z bazy lub pliku XML (w zale¿noœci od trybu).
 	 */
 	public void fillMeetingsDictionary()
 	{
@@ -113,7 +113,7 @@ public class FillMeetingData
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca mapê wszystkich spotkañ.
 	 * @return zwraca mapê wszystkich spotkañ
 	 */
 	public Map<Integer, String> getMap()
@@ -149,8 +149,8 @@ public class FillMeetingData
 	}
 
 	/**
-	 * Meteoda aktualizuj¹ca nazwê spotkania danego dnia w bazie danych (na podstawie id spotkania).
-	 * @param id id spotkania
+	 * Meteoda aktualizuj¹ca nazwê spotkania danego dnia w bazie danych (na podstawie ID spotkania).
+	 * @param id ID spotkania
 	 * @param value nazwa spotkania
 	 */
 	public void setName(int id, String value)
@@ -159,8 +159,8 @@ public class FillMeetingData
 	}
 
 	/**
-	 * Meteoda aktualizuj¹ca lokalizacje spotkania danego dnia w bazie danych (na podstawie id spotkania).
-	 * @param id id spotkania
+	 * Meteoda aktualizuj¹ca lokalizacje spotkania danego dnia w bazie danych (na podstawie ID spotkania).
+	 * @param id ID spotkania
 	 * @param value lokalizacja spotkania
 	 */
 	public void setLocalization(int id, String value)
@@ -169,8 +169,8 @@ public class FillMeetingData
 	}
 
 	/**
-	 * Meteoda aktualizuj¹ca datê spotkania danego dnia w bazie danych (na podstawie id spotkania).
-	 * @param id id spotkania
+	 * Meteoda aktualizuj¹ca datê spotkania danego dnia w bazie danych (na podstawie ID spotkania).
+	 * @param id ID spotkania
 	 * @param value data spotkania
 	 */
 	public void setDate(int id, String value)
@@ -179,8 +179,8 @@ public class FillMeetingData
 	}
 
 	/**
-	 * Meteoda aktualizuj¹ca szczegó³y spotkania danego dnia w bazie danych (na podstawie id spotkania).
-	 * @param id id spotkania
+	 * Meteoda aktualizuj¹ca szczegó³y spotkania danego dnia w bazie danych (na podstawie ID spotkania).
+	 * @param id ID spotkania
 	 * @param value szczegó³y spotkania
 	 */
 	public void setDetails(int id, String value)
@@ -189,8 +189,8 @@ public class FillMeetingData
 	}
 
 	/**
-	 * Metoda sprawdzaj¹ca czy dane id wystêpuje w bazie dancyh.
-	 * @param id szukane id spotkania
+	 * Metoda sprawdzaj¹ca czy dane ID wystêpuje w bazie dancyh.
+	 * @param id szukane ID spotkania
 	 * @return zwraca id w przypadku znalzienia id w bazie danych; zwraca -1 w przypadku, gdy szukane id nie wystêpuje w bazie
 	 */
 	public int getId(int id)
@@ -200,7 +200,7 @@ public class FillMeetingData
 
 	/**
 	 * Metoda wstawiaj¹ca nowe spotkanie do bazy danych.
-	 * @param id id spotkania
+	 * @param id ID spotkania
 	 * @param name nazwa spotkania
 	 * @param localization lokalizacja spotkania
 	 * @param date data spotkania
@@ -213,7 +213,7 @@ public class FillMeetingData
 
 	/**
 	 * Metoda usuwaj¹ca spotkanie z bazy/serializowanego obiektu (w zale¿noœci od trubu).
-	 * @param id id usuwanego spotkania
+	 * @param id ID usuwanego spotkania
 	 */
 	public void deleteMeeting(int id)
 	{
@@ -229,7 +229,7 @@ public class FillMeetingData
 
 	/**
 	 * Metoda usuwaj¹ca spotkanie z mapy spotkañ.
-	 * @param id id spotkania
+	 * @param id ID spotkania
 	 */
 	public void deleteMeetingFromList(int id)
 	{
@@ -238,7 +238,7 @@ public class FillMeetingData
 
 	/**
 	 * Metoda dodaj¹ca nowe spotkanie do mapy spotkañ.
-	 * @param id id spotkania
+	 * @param id ID spotkania
 	 * @param value ³añcuch zankowy opisuj¹cy spotkanie
 	 */
 	public void addToDictionary(int id, String value)
@@ -255,7 +255,7 @@ public class FillMeetingData
 
 	/**
 	 * Metoda dodaj¹ca now¹ nazwê spotkania do listy nazw sptokañ.
-	 * @param id id spotkania  
+	 * @param id ID spotkania  
 	 * @param value nazwa spotkania
 	 */
 	public void addName(int id, String value)
@@ -265,7 +265,7 @@ public class FillMeetingData
 
 	/**
 	 * 
-	 * @return zwraca listê wszystkich dostêpnych id spotkañ
+	 * @return zwraca listê wszystkich dostêpnych id spotkañ.
 	 */
 	public ArrayList<Integer> getAllIDs()
 	{

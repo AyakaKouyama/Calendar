@@ -17,37 +17,50 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Okno ustawieñ aplikacji. Obs³uguje zmianê ustawieñ aplikacji przez
+ * u¿ytkownika.
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class Settings extends JFrame implements ItemListener, ActionListener
 {
 	private static final long serialVersionUID = 1L;
-	private JLabel alarmSound;
-	private JLabel themeLabel;
-	private JLabel urlLabel;
-	private JButton ok;
-	private JButton change;
-	private JButton setDefualt;
+	protected JLabel alarmSound;
+	protected JLabel themeLabel;
+	protected JLabel urlLabel;
+	protected JButton ok;
+	protected JButton change;
+	protected JButton setDefualt;
 
-	private Choice choice;
-	private Choice theme;
+	protected Choice choice;
+	protected Choice theme;
 
-	private String sTheme;
-	private String sMode;
-	private String sChoice;
-	
-	private JRadioButton modeXml;
-	private JRadioButton modeBase;
-	private ButtonGroup mode;
-	private JTextField url;
+	protected String sTheme;
+	protected String sMode;
+	protected String sChoice;
 
-	private int iMode;
+	protected JRadioButton modeXml;
+	protected JRadioButton modeBase;
+	protected ButtonGroup mode;
+	protected JTextField url;
 
-	private AlarmClockLogic alarm;
-	private Window window;
+	protected int iMode;
+
+	protected AlarmClockLogic alarm;
+	protected Window window;
 
 	/**
-	 * Konstruktor klasy inicjalizuje kompinenty takie jak okno oraz zawarte w nim przyciski itp.
-	 * @param window okno - rodzic 
-	 * @param alarm klasa do obs³ugi logiki kalendarza
+	 * Konstruktor klasy inicjalizuje kompinenty takie jak okno oraz zawarte w nim
+	 * przyciski itp.
+	 * 
+	 * @param window
+	 *            okno - rodzic
+	 * @param alarm
+	 *            klasa do obs³ugi logiki kalendarza
 	 */
 	Settings(Window window, AlarmClockLogic alarm)
 	{
@@ -59,7 +72,8 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 	}
 
 	/**
-	 * Metoda inicjalizuj¹ca okno ustawieñ. Ustawia parametry takie jak rozmiar okna, nazwa itp.
+	 * Metoda inicjalizuj¹ca okno ustawieñ.Ustawia parametry takie jak rozmiar
+	 * okna, nazwa itp.
 	 */
 	private void initFrame()
 	{
@@ -70,9 +84,10 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 		setSize(380, 270);
 		setLocationRelativeTo(null);
 	}
-	
+
 	/*
-	 * Metoda do inicjalizacji komponentów: przycisków, list wyboru, radioprzycisków itp.
+	 * Metoda do inicjalizacji komponentów: przycisków, list wyboru, radioprzycisków
+	 * itp.
 	 */
 	private void initComponents()
 	{
@@ -133,8 +148,8 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 			iMode = 1;
 			modeBase.setSelected(true);
 		}
-		
-		if(alarm.getConnectionStatus() == true)
+
+		if (alarm.getConnectionStatus() == true)
 		{
 			iMode = 2;
 			modeXml.setSelected(true);
@@ -166,9 +181,9 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 		add(setDefualt);
 		setIconImage(new ImageIcon("calendar.png").getImage());
 	}
-	
+
 	/*
-	 * Metoda s³u¿¹ca do wyœwietlania okna
+	 * Metoda s³u¿¹ca do wyœwietlania okna.
 	 */
 	public void openWindiow()
 	{
@@ -176,8 +191,9 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 	}
 
 	/*
-	 * Metoda do ob³ugi zmiany stanu list wyboru. Wywo³uje odpowiednie metody m.in. do odœwie¿ania kalendarza po zmianie motywu.
-	 * (non-Javadoc)
+	 * Metoda do ob³ugi zmiany stanu list wyboru. Wywo³uje odpowiednie metody m.in.
+	 * do odœwie¿ania kalendarza po zmianie motywu. (non-Javadoc)
+	 * 
 	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
 	 */
 	@Override
@@ -236,30 +252,31 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 					e1.printStackTrace();
 				}
 
-
 				window.setMode();
 
 			} else
 			{
 				iMode = 1;
-					try
-					{
-						window.getCalendarWindow().getCalendar().setMode(iMode);
-						window.getAlarmLogic().setMode(iMode);
-					} catch (ClassNotFoundException | SQLException e1)
-					{
-						e1.printStackTrace();
-					}
+				try
+				{
+					window.getCalendarWindow().getCalendar().setMode(iMode);
+					window.getAlarmLogic().setMode(iMode);
+				} catch (ClassNotFoundException | SQLException e1)
+				{
+					e1.printStackTrace();
+				}
 
 				window.setMode();
 			}
 		}
 	}
 
-	
 	/**
-	 * Metoda do obs³ugi zdarzeñ generwoanych prze przyciski. Odpowiednio zamyka okno, zmienia URL bazy, przywraca domyœlny URL.
-	 * @param e zdarzenie generowane przez naciœniêcie przycisku
+	 * Metoda do obs³ugi zdarzeñ generwoanych prze przyciski.Odpowiednio zamyka
+	 * okno, zmienia URL bazy, przywraca domyœlny URL.
+	 * 
+	 * @param e
+	 *            zdarzenie generowane przez naciœniêcie przycisku
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -298,16 +315,16 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 	}
 
 	/**
-	 * 
-	 * @return obecny tryb pracy aplikacji ("XML"/"Baza danych")
+	 * Zwaraca wartoœæ liczbow¹ obecnego trybu pracy aplikacji.
+	 * @return zwraca 1 w przypadku trybu "XML", 2 w przypadku tryby "Baza danych"
 	 */
 	public int getMode()
 	{
 		return iMode;
 	}
-	
+
 	/**
-	 * 
+	 * Metoda zwracaj¹ca ³añcuch znaków opisuj¹cy wybrany dzwiêk alarmu.
 	 * @return zwraca ³ancuch znaków okreœlaj¹cy wybrany dzwiêk alarmu
 	 */
 	public String getChoice()
@@ -316,8 +333,8 @@ public class Settings extends JFrame implements ItemListener, ActionListener
 	}
 
 	/**
-	 * 
-	 * @return zwraca ³añcuch znaków okreœlaj¹cy wybrany motyw kalendarza 
+	 * Metoda zwracaj¹ca ³añcuch znaków opisuj¹cy wybrany motyw kalendarza.
+	 * @return zwraca ³añcuch znaków okreœlaj¹cy wybrany motyw kalendarza
 	 */
 	public String getTheme()
 	{

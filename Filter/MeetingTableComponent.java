@@ -5,6 +5,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Klasa zawieraj¹ca tabelê wszystkich spotkañ (umieszczona w oknie klasy
+ * MeetingsFilter).
  * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
@@ -28,7 +30,7 @@ public class MeetingTableComponent
 	private MeetingsFilterLogic logic;
 
 	/**
-	 * Konstruktor klasy; wywo³uje metody do inicjalizacji tabeli oraz wype³nienia
+	 * Konstruktor klasy.Wywo³uje metody do inicjalizacji tabeli oraz wype³nienia
 	 * ich danymi.
 	 * 
 	 * @param frame
@@ -147,6 +149,7 @@ public class MeetingTableComponent
 	/**
 	 * 
 	 * Metoda przekazuj¹ca informacje o parametrach spotkania wywo³ywana podczas
+	 * wype³niania listy.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -179,9 +182,12 @@ public class MeetingTableComponent
 
 	}
 
-	/**  
-	 * Metoda odczytuj¹ca datê spotkania na podstawie jego id i konwertuj¹ca id na odpowiedni ³añcuch znaków.
-	 * @param id id spotkania
+	/**
+	 * Metoda odczytuj¹ca datê spotkania na podstawie jego id i konwertuj¹ca id na
+	 * odpowiedni ³añcuch znaków.
+	 * 
+	 * @param id
+	 *            id spotkania
 	 * @return ³añcuch znaków bêd¹cy dat¹ spotkania
 	 */
 	public String getDate(int id)
@@ -201,9 +207,13 @@ public class MeetingTableComponent
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca odpowiednie metody klasy logiki s³u¿¹ce do sortowania danych
-	 * @param value wartoœæ wg której sortowane maj¹ byæ dane
-	 * @param order porz¹dek malej¹cy/rosn¹cy
+	 * Metoda wywo³uj¹ca odpowiednie metody klasy logiki s³u¿¹ce do sortowania
+	 * danych.
+	 * 
+	 * @param value
+	 *            wartoœæ wg której sortowane maj¹ byæ dane
+	 * @param order
+	 *            porz¹dek malej¹cy/rosn¹cy
 	 */
 	public void sort(String value, int order)
 	{
@@ -212,7 +222,7 @@ public class MeetingTableComponent
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca zawartoœæ tabeli spotkañ.
 	 * @return zawartoœæ tabeli spotkañ
 	 */
 	public Object[][] getData()
@@ -221,8 +231,10 @@ public class MeetingTableComponent
 	}
 
 	/**
-	 * 
-	 * @param wartoœæ jaka ma zostaæ przypisana do pola data zawieraj¹cego dane o spotkaniach
+	 * Metoda ustawiaj¹ca now¹ wartoœæ do obiektu reprezentuj¹cego spotkania.
+	 * @param obj
+	 *            jaka ma zostaæ przypisana do pola data zawieraj¹cego dane o
+	 *            spotkaniach
 	 */
 	public void setData(Object[][] obj)
 	{
@@ -230,6 +242,7 @@ public class MeetingTableComponent
 	}
 
 	/**
+	 * 
 	 * Metoda przywracaj¹ca domyœlne ustawienia (usuwa wszystkie filtry).
 	 */
 	public void resetData()

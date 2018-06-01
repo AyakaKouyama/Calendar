@@ -14,7 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**  
+/**
+ * G³ówne okno programu. Zawiera tabelê kalendarz oraz przyciski uruchamiaj¹ce
+ * odpowiednie funkcje programu.
+ * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
  */
@@ -37,7 +40,6 @@ public class Window extends WindowAdapter implements ActionListener
 	private JButton export;
 	private JPanel alarmCloclkPanel;
 
-
 	/**
 	 * Konstruktor klasy Widnow. Inicjalizuje okno oraz zawarte w nim komponenty.
 	 */
@@ -50,7 +52,8 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * Metoda do inicjalizacji okna. Ustawia niezbêdne parametry okna takie jak nazwa, rozmiar itp.
+	 * Metoda do inicjalizacji okna. Ustawia niezbêdne parametry okna takie jak
+	 * nazwa, rozmiar itp.
 	 */
 	private void initWindow()
 	{
@@ -96,7 +99,8 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * Metoda do inicjalizacji komponentów zawartych w oknie takich jak np. przyciski, napisy.
+	 * Metoda do inicjalizacji komponentów zawartych w oknie takich jak np.
+	 * przyciski, napisy.
 	 */
 	private void initComponents()
 	{
@@ -144,8 +148,9 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * @param e zdarzenie generowane po naciœniêciu na komponent
-	 * Metoda do ob³ugi zdarzeñ po naciœniêciu na dany przycisk.
+	 * @param e
+	 *            zdarzenie generowane po naciœniêciu na komponent Metoda do ob³ugi
+	 *            zdarzeñ po naciœniêciu na dany przycisk.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -172,10 +177,9 @@ public class Window extends WindowAdapter implements ActionListener
 		if (source == allAlarms)
 		{
 			AllAlarms alarmList;
-				int mode = settings.getMode().equals("XML") ? 2 : 1;
-				alarmList = new AllAlarms(mode, alarmLogic.getAlarmList());
-				alarmList.show();
-
+			int mode = settings.getMode().equals("XML") ? 2 : 1;
+			alarmList = new AllAlarms(mode, alarmLogic.getAlarmList());
+			alarmList.show();
 
 		}
 
@@ -193,7 +197,8 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * Metoda aktualizuj¹ca stan okna po zmianie trybu pracy aplikacji z "XML" na "Baza danych" i odworotnie.
+	 * Metoda aktualizuj¹ca stan okna po zmianie trybu pracy aplikacji z "XML" na
+	 * "Baza danych" i odworotnie.
 	 */
 	public void setMode()
 	{
@@ -201,10 +206,12 @@ public class Window extends WindowAdapter implements ActionListener
 		calendarWindow.refresh();
 	}
 
-
 	/**
-	 * @param e zdarzenie generowane w momencie zamknêcia okna
-	 * Metoda wywo³uj¹ca odpowiednie metody maj¹ce na celu zapis stanu aplikacji w momencie zakoñczenia jej dzia³ania.
+	 * Metoda wywo³uj¹ca odpowiednie metody maj¹ce na celu zapis stanu aplikacji w
+	 * momencie zakoñczenia jej dzia³ania.
+	 * 
+	 * @param e
+	 *            zdarzenie generowane w momencie zamknêcia okna
 	 */
 	@Override
 	public void windowClosing(WindowEvent e)
@@ -214,7 +221,7 @@ public class Window extends WindowAdapter implements ActionListener
 			saveSettings.serialize(settings);
 			calendarWindow.saveData();
 		}
-		
+
 		if (alarmLogic != null)
 		{
 			alarmLogic.saveData();
@@ -223,8 +230,10 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
+	 * Metoda zwracaj¹ca obiekt typuChosenSettings zawieraj¹cy informacje o obecnej
+	 * konfiguracji aplikacji.
 	 * 
-	 * @return obiekt typu ChosenSettings zawieraj¹cy informacje o obecnej konfiguracji aplikacji
+	 * @return obiekt typu ChosenSettings
 	 */
 	public ChosenSettings getSettings()
 	{
@@ -232,7 +241,7 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca g³ówne okno programu.
 	 * @return okno
 	 */
 	public Frame getFrame()
@@ -241,7 +250,7 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 *  Metoda zwracaj¹ca okno ustawieñ aplikacji.
 	 * @return okno ustawieñ aplikacji
 	 */
 	public Settings getOptionWindow()
@@ -250,7 +259,7 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca obiekt typu AlarmClockLogic odpowiedzialny za logikê kalendarza.
 	 * @return obiekt typu AlarmClockLogic odpowiedzialny za logikê kalendarza
 	 */
 	public AlarmClockLogic getAlarmLogic()
@@ -259,7 +268,7 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca okno tabeli kalendarza.
 	 * @return okno tabeli kalendarza
 	 */
 	public CalendarWindow getCalendarWindow()

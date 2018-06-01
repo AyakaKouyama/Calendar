@@ -5,6 +5,10 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 /**
+ * Klasa obs³uguj¹ca logikê kalendarza tj. wype³nianie komórek odopwiednimi
+ * wartoœciami w zale¿noœci od wybranego miesi¹ca, roku oraz dostêpnych spotkañ.
+ * Przekazuje informacje, które maj¹ zostaæ zapisane w bazie/pliku do klas
+ * warstw ni¿szych.
  * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
@@ -43,7 +47,7 @@ public class CalendarLogic
 	private CalendarWindow window;
 
 	/**
-	 * Konstruktor klasy; tworzy odpowiednie obiekty potrzebne do pracy aplikacji.
+	 * Konstruktor klasy.Tworzy odpowiednie obiekty potrzebne do pracy aplikacji.
 	 * 
 	 * @param window
 	 *            okno rodzic
@@ -68,9 +72,10 @@ public class CalendarLogic
 	}
 
 	/**
+	 * Metoda zwracj¹ca iloœæ dni w miesi¹cu, który jest aktualnie obs³ugiwany.
 	 * 
 	 * @return zwraca iloœæ dni w miesi¹cu, który aktualnie jest obs³ugiwany w
-	 *         kalendarzu
+	 *         kalendarzu.
 	 */
 	public int getDays()
 	{
@@ -79,7 +84,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda s³u¿aca do wype³nienia tablicy danymi wyœwietlanymi w komórkach tabeli
+	 * Metoda s³u¿¹ca do wype³nienia tablicy danymi wyœwietlanymi w komórkach tabeli
 	 * kalendarza (nag³ówek, dni miesi¹ca, nazwy wydarzeñ).
 	 * 
 	 * @param year
@@ -140,7 +145,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda zwracaj¹ca rz¹d, w którym znajduje siê obecnie obs³ugiwany dzieñ
+	 * Metoda zwracaj¹ca rz¹d, w którym znajduje siê obecnie obs³ugiwany dzieñ.
 	 * 
 	 * @param day
 	 *            obs³ugiwany dziêñ
@@ -152,7 +157,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda zwracaj¹ca kolumnê, w której znajduje siê obecnie obs³ugiwany dzieñ
+	 * Metoda zwracaj¹ca kolumnê, w której znajduje siê obecnie obs³ugiwany dzieñ.
 	 * 
 	 * @param day
 	 *            obs³ugiwany dziêñ
@@ -169,7 +174,7 @@ public class CalendarLogic
 	 *            rz¹d
 	 * @param j
 	 *            kolumna
-	 * @return zwraca wartoœæ przechowywan¹ w tabeli, w rzêdzie i, kolumnie j
+	 * @return zwraca wartoœæ przechowywan¹ w tabeli, w rzêdzie i, kolumnie j.
 	 */
 	public Object getCellValue(int i, int j)
 	{
@@ -177,7 +182,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda ustawiaj¹ca wartoœæ konkretnej pozycji w tabeli
+	 * Metoda ustawiaj¹ca wartoœæ konkretnej pozycji w tabeli.
 	 * 
 	 * @param value
 	 *            wstawiana wartoœæ
@@ -192,7 +197,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do bazy
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do bazy.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -206,7 +211,7 @@ public class CalendarLogic
 
 	/**
 	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do serializowanego
-	 * obiektu
+	 * obiektu.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -227,7 +232,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody zapisuj¹ce lokalizacje spotkania do bazy
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce lokalizacje spotkania do bazy.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -241,7 +246,7 @@ public class CalendarLogic
 
 	/**
 	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do serializowanego
-	 * obiektu
+	 * obiektu.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -261,7 +266,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody zapisuj¹ce datê spotkania do bazy
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce datê spotkania do bazy.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -274,7 +279,8 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody zapisuj¹ce datê spotkania do serializowanego obiektu
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce datê spotkania do serializowanego
+	 * obiektu.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -295,7 +301,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody zapisuj¹ce szczegó³y spotkania do bazy
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce szczegó³y spotkania do bazy.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -309,7 +315,7 @@ public class CalendarLogic
 
 	/**
 	 * Metoda wywo³uj¹ca metody zapisuj¹ce szczegó³y spotkania do serializowanego
-	 * obiektu
+	 * obiektu.
 	 * 
 	 * @param id
 	 *            id spotkania
@@ -331,8 +337,12 @@ public class CalendarLogic
 	}
 
 	/**
-	 * @param id id spotkania
-	 * @return zwraca id w przypadku znalezienia id w bazie; zwraca -1 w przypadku, gdy szukane id nie wystêpuje w bazie
+	 * Metoda wywo³uj¹ca metodê sprawdzaj¹c¹, czy dane ID wystêpuje w bazie.
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @return zwraca id w przypadku znalezienia id w bazie; zwraca -1 w przypadku,
+	 *         gdy szukane id nie wystêpuje w bazie
 	 */
 	public int getId(int id)
 	{
@@ -340,12 +350,19 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³ujaca odpowienie metody wstawiaj¹ce nowy rekord (spotkanie) do bazy danych
-	 * @param id id spotkania
-	 * @param name nazwa spotkania
-	 * @param localization lokalizacja spotkania
-	 * @param date data spotkania
-	 * @param details szczegó³y spotkania
+	 * Metoda wywo³ujaca odpowienie metody wstawiaj¹ce nowy rekord (spotkanie) do
+	 * bazy danych.
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param name
+	 *            nazwa spotkania
+	 * @param localization
+	 *            lokalizacja spotkania
+	 * @param date
+	 *            data spotkania
+	 * @param details
+	 *            szczegó³y spotkania
 	 */
 	public void insert(int id, String name, String localization, String date, String details)
 	{
@@ -353,8 +370,11 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wywo³uj¹ca metody s³u¿¹ce do usuniêcia spotkania z bazy/serializowanego obiektu
-	 * @param id id spotkania
+	 * Metoda wywo³uj¹ca metody s³u¿¹ce do usuniêcia spotkania z
+	 * bazy/serializowanego obiektu.
+	 * 
+	 * @param id
+	 *            id spotkania
 	 */
 	public void deleteMeeting(int id)
 	{
@@ -364,8 +384,10 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wyow³uj¹ca metodê usuwaj¹c¹ spotkanie z listy
-	 * @param id id spotkania
+	 * Metoda wyow³uj¹ca metodê usuwaj¹c¹ spotkanie z listy.
+	 * 
+	 * @param id
+	 *            id spotkania
 	 */
 	public void deleteMeetingFromList(int id)
 	{
@@ -373,9 +395,12 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda wyow³uj¹ca metody s³u¿¹ce do dodania elementu do listy spotkañ
-	 * @param id id spotkania
-	 * @param value ³añcuch znaków opisuj¹cy spotkanie
+	 * Metoda wyow³uj¹ca metody s³u¿¹ce do dodania elementu do listy spotkañ.
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            ³añcuch znaków opisuj¹cy spotkanie
 	 */
 	public void AddElementToList(int id, String value)
 	{
@@ -383,17 +408,20 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Meotda wywo³uj¹ca metodê dodaj¹c¹ nazwê spotkania do listy
-	 * @param id id spotkania
-	 * @param value nazwa spotkania
+	 * Meotda wywo³uj¹ca metodê dodaj¹c¹ nazwê spotkania do listy.
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            nazwa spotkania
 	 */
 	public void addNameToList(int id, String value)
 	{
 		dbFill.addName(id, value);
 	}
 
-
 	/**
+	 * Metoda zwracaj¹ca mapê wszystkich spotkañ.
 	 * 
 	 * @return zwraca mapê wszystkich spotkañ
 	 */
@@ -403,8 +431,10 @@ public class CalendarLogic
 	}
 
 	/**
+	 * Metoda zwracaj¹ca wartoœæ liczbow¹ aktualnego trubu pracy aplikacji.
 	 * 
-	 * @return zwraca wartoœæ liczbow¹ trybu w jakim pracuje aplikcja. 1 - "XML", 2 - "Baza dancyh"
+	 * @return zwraca wartoœæ liczbow¹ trybu w jakim pracuje aplikcja. 1 - "XML", 2
+	 *         - "Baza dancyh"
 	 */
 	public int getMode()
 	{
@@ -413,9 +443,16 @@ public class CalendarLogic
 
 	/**
 	 * Metoda ustawiaj¹ca tryb pracy aplikacji.
-	 * @param value wartoœæ liczbowa ustawianego trybu pracy
-	 * @throws ClassNotFoundException {@link https://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html}
-	 * @throws SQLException {@link https://docs.oracle.com/javase/7/docs/api/java/sql/SQLException.html}
+	 * 
+	 * @param value
+	 *            wartoœæ liczbowa ustawianego trybu pracy
+	 * @throws ClassNotFoundException
+	 *             <a href=
+	 *             "https://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html">https://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html</a>
+	 * @throws SQLException
+	 *             <a href=
+	 *             "https://docs.oracle.com/javase/7/docs/api/java/sql/SQLException.html">https://docs.oracle.com/javase/7/docs/api/java/sql/SQLException.html</a>
+	 * 
 	 */
 	public void setMode(int value) throws ClassNotFoundException, SQLException
 	{
@@ -424,7 +461,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * 
+	 * Metoda zwracaj¹ca obiekt typu FillMeetingData.
 	 * @return obiekt typu FilleMeetingData
 	 */
 	public FillMeetingData getFillMeetingData()
@@ -433,7 +470,7 @@ public class CalendarLogic
 	}
 
 	/**
-	 * Metoda zapisuj¹ca stan aplikacji
+	 * Metoda zapisuj¹ca stan aplikacji.
 	 */
 	public void saveData()
 	{

@@ -3,12 +3,23 @@ import java.sql.SQLException;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
+/**
+ * Okno wyboru œcie¿ki pliku do zapisu pliku .csv.
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class ExportWindow 
 {
 	private JFileChooser choose;
 	private JFrame frame;
 	private ExportLogic logic;
 	
+	/**
+	 * Konstruktor klasy.
+	 * @param frame okno rodzic
+	 * @param data klasa zwieraj¹ca dane potrzebne do zapisu do pliku
+	 */
 	ExportWindow(JFrame frame, FillMeetingData data)
 	{
 		choose = new JFileChooser();
@@ -22,6 +33,9 @@ public class ExportWindow
 		this.frame = frame;
 	}
 	
+	/**
+	 * Meotda wywo³uj¹ca metodê zapisu danych o spotkaniach.
+	 */
 	public void saveCSV() 
 	{
 		int returnValue = choose.showSaveDialog(frame);

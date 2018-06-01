@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 /**
+ * Okno zawieracj¹ce tabelê z wszystkimi spotkaniami oraz przyciski i pola
+ * tekstowe umo¿liwiaj¹ce wyszukiwanie, filtrowanie, sortowanie oraz usuwanie
+ * danych.
  * 
  * @author Sylwia Mieszkowska
  * @author Anna Ciep³ucha
@@ -19,29 +22,29 @@ import javax.swing.JTextField;
  */
 public class MeetingsFilter implements ActionListener
 {
-	private JFrame frame;
-	private JButton ok;
-	private JButton up;
-	private JButton down;
-	private JButton remove;
-	private JButton findOlder;
-	private JButton removeSlelected;
-	private JButton removeOne;
-	private JButton findField;
-	private JLabel findL;
-	private JLabel olderL;
-	private JLabel sortL;
-	private JTextField find;
-	private JTextField olderThan;
-	private Choice findChoice;
-	private Choice choice;
+	protected JFrame frame;
+	protected JButton ok;
+	protected JButton up;
+	protected JButton down;
+	protected JButton remove;
+	protected JButton findOlder;
+	protected JButton removeSlelected;
+	protected JButton removeOne;
+	protected JButton findField;
+	protected JLabel findL;
+	protected JLabel olderL;
+	protected JLabel sortL;
+	protected JTextField find;
+	protected JTextField olderThan;
+	protected Choice findChoice;
+	protected Choice choice;
 
-	private int order = 1;
+	protected int order = 1;
 
-	private MeetingTableComponent table;
-	private MeetingsFilterLogic logic;
-	private Window window;
-	private FillMeetingData meetingData;
+	protected MeetingTableComponent table;
+	protected MeetingsFilterLogic logic;
+	protected Window window;
+	protected FillMeetingData meetingData;
 
 	/**
 	 * Kontruktor klasy inicjalizuje komponety oraz okno.
@@ -59,7 +62,7 @@ public class MeetingsFilter implements ActionListener
 	}
 
 	/**
-	 * Metoda do inicjalizacji okna. Ustawia parametry takie jak jego rozmiar oraz
+	 * Metoda do inicjalizacji okna.Ustawia parametry takie jak jego rozmiar oraz
 	 * nazwa.
 	 */
 	private void initFrame()

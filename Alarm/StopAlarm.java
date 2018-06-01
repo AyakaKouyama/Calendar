@@ -7,6 +7,14 @@ import java.awt.event.ItemListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+/**
+ * Okno zatrzymania alarmu. Pojawia siê w momencie uruchomienia alarmu. Posiada
+ * mo¿liwoœc wy³¹czenia alramu lub ustawienia drzemki.
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class StopAlarm implements ActionListener, ItemListener
 {
 	private JFrame frame;

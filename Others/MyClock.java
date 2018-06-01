@@ -7,6 +7,12 @@ import java.text.SimpleDateFormat;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
+/**
+ * Klasa zawieraj¹ca komponenty aktualizuj¹ce siê co sekundê, reprezentuj¹ce zegar oraz aktualn¹ datê systemow¹.
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class MyClock implements ActionListener
 {
 	private Timer timer;
@@ -14,6 +20,10 @@ public class MyClock implements ActionListener
 	private JLabel dateLabel;
 	private JLabel currentDate;
 
+	/**
+	 * Konstruktor klasy.
+	 * @param frame okno rodzic
+	 */
 	MyClock(Frame frame)
 	{
 		timer = new Timer(delay, this);
@@ -23,6 +33,9 @@ public class MyClock implements ActionListener
 		frame.add(currentDate);
 	}
 	
+	/**
+	 * Metoda inicjalizuj¹ca komponenty - napisy zawieraj¹ce datê i czas.
+	 */
 	private void initComponents()
 	{
 		dateLabel = new JLabel(new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis())));
@@ -35,6 +48,9 @@ public class MyClock implements ActionListener
 
 	}
 
+	/**
+	 * Metoda aktualizuj¹ca napisy co sekundê na podstawie timera.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
