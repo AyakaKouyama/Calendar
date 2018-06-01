@@ -12,8 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-
-public class AlarmClock  implements ActionListener
+public class AlarmClock implements ActionListener
 {
 	private JFrame frame;
 	private JButton ok;
@@ -25,21 +24,22 @@ public class AlarmClock  implements ActionListener
 	private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-	
+
 	private boolean accteped = false;
 	private String sDate;
-	
+	private String formattedDate;
+
 	private Window window;
 	private AlarmClockLogic music;
-	
+
 	AlarmClock(Window window, AlarmClockLogic music)
 	{
 		this.window = window;
 		this.music = music;
 		initFrame();
-		initComponents();	
+		initComponents();
 	}
-	
+
 	private void initFrame()
 	{
 		frame = new JFrame();
@@ -51,12 +51,12 @@ public class AlarmClock  implements ActionListener
 		frame.setSize(400, 300);
 		frame.setLocationRelativeTo(null);
 	}
-	
+
 	private void initComponents()
 	{
 		dateLabel = new JLabel("Data: (dd/mm/yyyy)");
 		timeLabel = new JLabel("Godzina: (hh:mm)");
-		
+
 		dateLabel.setBounds(150, 0, 200, 50);
 		frame.add(dateLabel);
 		date = new JFormattedTextField(dateFormat);
@@ -66,7 +66,7 @@ public class AlarmClock  implements ActionListener
 		date.setHorizontalAlignment(SwingConstants.CENTER);
 		date.addActionListener(this);
 		frame.add(date);
-		
+
 		timeLabel.setBounds(150, 80, 200, 50);
 		frame.add(timeLabel);
 		time = new JFormattedTextField(timeFormat);
@@ -76,23 +76,23 @@ public class AlarmClock  implements ActionListener
 		time.setHorizontalAlignment(SwingConstants.CENTER);
 		time.addActionListener(this);
 		frame.add(time);
-		
+
 		ok = new JButton("Ok");
 		ok.setBounds(220, 200, 80, 30);
 		ok.addActionListener(this);
 		frame.add(ok);
-		
+
 		cancel = new JButton("Anuluj");
 		cancel.setBounds(100, 200, 80, 30);
 		cancel.addActionListener(this);
 		frame.add(cancel);
 	}
-	
+
 	public void add()
 	{
 		frame.setVisible(true);
 	}
-	
+
 	public void updateDate()
 	{
 		date.setText((new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()))));
@@ -100,48 +100,53 @@ public class AlarmClock  implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent e)
 	{
 		Object source = e.getSource();
-		
-		if(source == ok)
+
+		if (source == ok)
 		{
 			accteped = true;
 			AlarmInfoDialog alarmInfo = new AlarmInfoDialog(getDate());
-			System.out.println(sDate);
-			if(alarmInfo.show(window.getFrame()) == true)
+
+			if (alarmInfo.show(window.getFrame()) == true)
 			{
-			    music.addAlarm(sDate);
-			    music.addAlarmToList(sDate);
-			    frame.dispose();
+				music.addAlarm(formattedDate);
+				music.addAlarmToList(formattedDate);
+				frame.dispose();
 			}
 
 		}
 
-		if(source == cancel)
+		if (source == cancel)
 		{
 			frame.dispose();
 		}
 
 	}
-	
+
 	public Calendar getDate()
 	{
-		if(accteped == true)
+		if (accteped == true)
 		{
-		 try
+			try
 			{
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(format.parse(date.getText() + " " + time.getText()));
-				sDate = Integer.toString(cal.get(Calendar.YEAR)) + '-' + Integer.toString(cal.get(Calendar.MONTH) + 1) + '-' + Integer.toString(cal.get(Calendar.DATE)) + " " + Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE));
-                return cal;
-			}
-			catch (java.text.ParseException e) 
+			
+				SimpleDateFormat newformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:00.0");
+				Calendar formatted = Calendar.getInstance();
+				formatted.setTime(format.parse(date.getText() + " " + time.getText()));
+				formattedDate = newformat.format(formatted.getTime());
+				
+				return cal;
+			} catch (java.text.ParseException e)
 			{
 				e.printStackTrace();
 			}
 		}
 
 		return null;
-	}	
+	}
+	
 }

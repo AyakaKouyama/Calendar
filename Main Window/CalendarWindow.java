@@ -46,15 +46,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		theme = new Theme();
 		panel = new JPanel();
 		this.window = window;
-
-		try
-		{
-			calendar = new CalendarLogic(this);
-		} catch (ClassNotFoundException | SQLException e)
-		{
-			ConnectionError error = new ConnectionError();
-			error.show(window.getFrame());
-		}
+		calendar = new CalendarLogic(this);
 
 		initTable();
 		initComponents();
@@ -311,7 +303,8 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 				int row, int column)
 		{
 
-			calendar.fillCalendar(currentYear, currentMonth);
+			if(calendar != null)
+				calendar.fillCalendar(currentYear, currentMonth);
 
 			if (row == 0)
 			{

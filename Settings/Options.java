@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -110,7 +113,6 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		mode = new ButtonGroup();
 		mode.add(modeXml);
 		mode.add(modeBase);
-		System.out.print(window.getSettings().getMode());
 		if (window.getSettings().getMode().equals("XML"))
 		{
 			iMode = 2;
@@ -162,7 +164,14 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		{
 			sChoice = choice.getSelectedItem();
 			window.getSettings().setSound(sChoice);
-			alarm.setSound();
+			try
+			{
+				alarm.setSound();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | NullPointerException e1)
+			{
+				SoundNotFoundError error = new SoundNotFoundError();
+				error.show(this);
+			}
 		}
 
 		if (source == theme)
@@ -196,25 +205,27 @@ public class Options extends JFrame implements ItemListener, ActionListener
 				try
 				{
 					window.getCalendarWindow().getCalendar().setMode(iMode);
+					window.getAlarmLogic().setMode(iMode);
 				} catch (ClassNotFoundException | SQLException e1)
 				{
-					ConnectionError error = new ConnectionError();
-					error.show(window.getFrame());
+					e1.printStackTrace();
 				}
+
 
 				window.setMode();
 
 			} else
 			{
 				iMode = 1;
-				try
-				{
-					window.getCalendarWindow().getCalendar().setMode(iMode);
-				} catch (ClassNotFoundException | SQLException e1)
-				{
-					ConnectionError error = new ConnectionError();
-					error.show(window.getFrame());
-				}
+					try
+					{
+						window.getCalendarWindow().getCalendar().setMode(iMode);
+						window.getAlarmLogic().setMode(iMode);
+					} catch (ClassNotFoundException | SQLException e1)
+					{
+						e1.printStackTrace();
+					}
+
 				window.setMode();
 			}
 		}
@@ -236,8 +247,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 				alarm.setUrl(url.getText());
 			} catch (ClassNotFoundException | SQLException e1)
 			{
-				ConnectionError error = new ConnectionError();
-				error.show(window.getFrame());
+				e1.printStackTrace();
 				url.setText(alarm.getDefaultUrl());
 			}
 		}
@@ -250,8 +260,7 @@ public class Options extends JFrame implements ItemListener, ActionListener
 
 			} catch (ClassNotFoundException | SQLException e1)
 			{
-				ConnectionError error = new ConnectionError();
-				error.show(window.getFrame());
+				e1.printStackTrace();
 			}
 
 		}

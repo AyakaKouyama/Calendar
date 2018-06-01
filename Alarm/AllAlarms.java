@@ -27,19 +27,10 @@ public class AllAlarms implements ActionListener
 
 	private AlarmList alarms;
 
-	AllAlarms()
+	AllAlarms(int mode, AlarmList alarms) throws ClassNotFoundException, SQLException
 	{
-		try
-		{
-			alarms = new AlarmList();
-		} catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		} catch (SQLException e)
-		{
-			ConnectionError error = new ConnectionError();
-			error.show(frame);
-		}
+
+		this.alarms = alarms;
 		initFrame();
 		initComponents();
 		fillList();
@@ -86,7 +77,7 @@ public class AllAlarms implements ActionListener
 
 	public void fillList()
 	{
-		alarms.fill();
+		//alarms.fill();
 		int size = alarms.getList().size();
 		for (int i = 0; i < size; i++)
 		{

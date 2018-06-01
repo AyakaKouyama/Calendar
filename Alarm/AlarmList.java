@@ -4,21 +4,64 @@ import java.util.ArrayList;
 public class AlarmList 
 {
 	private ArrayList<String> alarm;
+	private ArrayList<AlarmObject> alarmXml;
 	private AlarmTable db;
-	
-	AlarmList() throws ClassNotFoundException, SQLException
+	private ProgressBar bar;
+	private int mode;
+	private boolean connectionFailed = false;
+	AlarmList(int mode, boolean showBar) 
 	{
+		this.mode = mode;
 		alarm = new ArrayList<String>();
-		db = new AlarmTable();
+		AlarmObjectList alarmsXml = new AlarmObjectList();
+		bar = new ProgressBar();
+		if(showBar == true)
+			bar.show();
+		alarmXml = alarmsXml.deserializeList();
+		try
+		{
+			db = new AlarmTable();
+		} catch (ClassNotFoundException | SQLException e)
+		{
+
+			mode = 2;
+			
+			connectionFailed = true;
+			bar.close();
+			System.out.println(mode);
+			fill();
+		}
+		bar.close();
+		fill();
 	}
 	
 	public void fill()
 	{
-		ArrayList<Integer> ids = db.getAllIds();
+		mode = connectionFailed == true ? 2 : mode;
 		
-		for(int i = 0; i<ids.size(); i++)
+		if(mode == 1)
 		{
-			alarm.add(db.getDate(ids.get(i)));
+			ArrayList<Integer> ids = db.getAllIds();
+			
+			for(int i = 0; i<ids.size(); i++)
+			{
+				alarm.add(db.getDate(ids.get(i)));
+			}
+		}
+		else
+		{
+			if(alarmXml != null)
+			{
+				for(int i = 0; i<alarmXml.size(); i++)
+				{
+					alarm.add(alarmXml.get(i).getDate());
+				}
+			}
+			else
+			{
+				alarm = new ArrayList<String>();
+				alarmXml = new ArrayList<AlarmObject>();
+			}
 		}
 		
 	}
@@ -35,13 +78,26 @@ public class AlarmList
 	
 	public void addAlarmToDB(String value)
 	{
-		ArrayList<Integer> ids = db.getAllIds();
-		db.insertDate(ids.size() + 1, value);
+		if(mode == 1)
+		{
+			ArrayList<Integer> ids = db.getAllIds();
+		    db.insertDate(ids.size() + 1, value);
+		}
+		else
+		{
+			AlarmObject newAlarm = new AlarmObject();
+			newAlarm.setDate(value);
+			alarmXml.add(newAlarm);
+		}
+		
 	}
 	
 	public void update(int id, String value)
 	{
-		db.setDate(id, value);
+		if(mode == 1)
+			db.setDate(id, value);
+		else
+			alarmXml.get(id).setDate(value);
 	}
 	
 	public void updateList(int id, String value)
@@ -51,7 +107,28 @@ public class AlarmList
 	
 	public void removeAlarm(String value)
 	{
-		db.remove(value);
+		if(mode == 1)
+			db.remove(value);
+		else
+		{
+			for(int i = 0; i<alarmXml.size(); i++)
+			{
+				if(alarmXml.get(i).getDate().equals(value))
+				{
+					alarmXml.remove(i);
+					break;
+				}
+			}
+		}
+		
+		for(int i = 0; i<alarm.size(); i++)
+		{
+			if(alarm.get(i).equals(value))
+			{
+				alarm.remove(i);
+				break;
+			}
+		}
 	}
 	
 	public String getDefaultUrl()
@@ -69,4 +146,13 @@ public class AlarmList
 		db.setUrl(value);
 	}
 	
+	public ArrayList<AlarmObject> getAlarmXml()
+	{
+		return alarmXml;
+	}
+	
+	public boolean getConnectionStatus()
+	{
+		return connectionFailed;
+	}
 }

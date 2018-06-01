@@ -10,7 +10,7 @@ public class AlarmTable
 	private ResultSet rs;
 	private DataBase db;
 
-	AlarmTable() throws ClassNotFoundException, SQLException
+	AlarmTable() throws ClassNotFoundException, SQLException 
 	{
 		db = new DataBase();
 		db.connectToDataBase();

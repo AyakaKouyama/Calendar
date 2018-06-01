@@ -64,7 +64,6 @@ public class MeetingTableComponent
 	public void fillList()
 	{
 		meetingData.getAllIDs();
-		System.out.println(meetingData.getAllIDs().size());
 		for(int i = 0; i<size; i++)
 		{
 			cellValues(meetingData.getAllIDs().get(i));
@@ -109,10 +108,8 @@ public class MeetingTableComponent
 		String meeting = meetingData.getMap().get(id);
 
 		int[] index = new int[5];
-		System.out.println("ID" + id);
-		System.out.println(meetingData.getMap().get(id));
 		index[0] = meeting.indexOf(':');
-		System.out.println(index[0]);
+		
 		for(int i = 1; i<5; i++)
 		{
 			index[i] = meeting.indexOf(':', (index[i-1] + 1));

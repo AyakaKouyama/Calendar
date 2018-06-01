@@ -17,8 +17,6 @@ public class ExportWindow
 				logic = new ExportLogic(data);
 			} catch (ClassNotFoundException | SQLException e)
 			{
-				ConnectionError error = new ConnectionError();
-				error.show(frame);
 			}
 		
 		this.frame = frame;

@@ -9,27 +9,55 @@ public class FillMeetingData
 	private Map<Integer, String> names;
 	private HashMap<Integer, MeetingObject> meetingObject;
 	private ArrayList<Integer> xmlIds;
-	
+
 	private int mode;
 	private CalendarLogic calendarLogic;
 	private MeetingTable db;
+	private ProgressBar bar;
+	private boolean connectionFailed = false;
 
-	FillMeetingData(CalendarLogic calendarLogic, int mode, HashMap<Integer, MeetingObject> list, ArrayList<Integer> allIds) throws ClassNotFoundException, SQLException
+	FillMeetingData(CalendarLogic calendarLogic, int mode, HashMap<Integer, MeetingObject> list,
+			ArrayList<Integer> allIds, boolean showBar)
 	{
 		this.calendarLogic = calendarLogic;
 		this.mode = mode;
-		db = new MeetingTable();
+		bar = new ProgressBar();
+		if(showBar == true)
+			bar.show();
 		
+		try
+		{
+			db = new MeetingTable();
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			mode = 2;
+			connectionFailed = true;
+			bar.close();
+			
+			ConnectionError error = new ConnectionError();
+			error.show(null);
+			
+			meetingObject = list;
+			meeting = new HashMap<Integer, String>();
+			names = new HashMap<Integer, String>();
+			xmlIds = allIds;
+
+			fillMeetingsDictionary();
+		}
+
+		bar.close();
 		meetingObject = list;
 		meeting = new HashMap<Integer, String>();
 		names = new HashMap<Integer, String>();
 		xmlIds = allIds;
-		
+
 		fillMeetingsDictionary();
 	}
 
 	public void fillMeetingsDictionary()
 	{
+		mode = connectionFailed == true ? 2 : mode;
+		
 		if (mode == 1)
 		{
 			ArrayList<Integer> ids = db.getAllIds();
@@ -126,8 +154,7 @@ public class FillMeetingData
 	public void addToDictionary(int id, String value)
 	{
 		meeting.put(id, value);
-		if (mode == 2)
-			xmlIds.add(id);
+		if (mode == 2) xmlIds.add(id);
 	}
 
 	public void addName(int id, String value)
@@ -139,7 +166,6 @@ public class FillMeetingData
 	{
 		if (mode == 1)
 			return db.getAllIds();
-		else
-			return xmlIds;
+		else return xmlIds;
 	}
 }

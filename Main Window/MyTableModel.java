@@ -26,7 +26,8 @@ public class MyTableModel extends AbstractTableModel
 	MyTableModel(CalendarWindow window)
 	{
 		this.calendar = window.getCalendar();
-		data = calendar.fillCalendar(window.getYear(), window.getMonth());
+		if(calendar != null)
+			data = calendar.fillCalendar(window.getYear(), window.getMonth());
 
 		for (int i = 0; i < 7; i++)
 		{

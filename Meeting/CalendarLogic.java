@@ -25,8 +25,6 @@ public class CalendarLogic
 	
 	private String[] columnNames = { "Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz" };
 	private int[] currentPosition = { -1, -1 };
-
-	private int daysInMonth;
 	private int dayOfWeek;
 	private int mode;
 	
@@ -36,7 +34,7 @@ public class CalendarLogic
 	
 	private CalendarWindow window;
 	
-	CalendarLogic(CalendarWindow window) throws ClassNotFoundException, SQLException
+	CalendarLogic(CalendarWindow window) 
 	{
 		this.window = window;
 		MeetingObjectList list = new MeetingObjectList();
@@ -46,13 +44,13 @@ public class CalendarLogic
 
 		if (meetingObject != null)
 		{
-			dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+			dbFill = new FillMeetingData(this, mode, meetingObject, allIds, true);
 		} 
 		else
 		{
 			meetingObject = new HashMap<Integer, MeetingObject>();
 			allIds = new ArrayList<Integer>();
-			dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+			dbFill = new FillMeetingData(this, mode, meetingObject, allIds, true);
 		}
 	}
 
@@ -266,7 +264,7 @@ public class CalendarLogic
 	public void setMode(int value) throws ClassNotFoundException, SQLException
 	{
 		mode = value;
-		dbFill = new FillMeetingData(this, mode, meetingObject, allIds);
+		dbFill = new FillMeetingData(this, mode, meetingObject, allIds, false);
 	}
 	
 	public FillMeetingData getFillMeetingData()

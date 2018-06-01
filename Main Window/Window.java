@@ -3,8 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +23,7 @@ public class Window extends WindowAdapter implements ActionListener
 	private CalendarWindow calendarWindow;
 	private Serializer saveSettings;
 	private ChosenSettings settings;
-	
+
 	private JFrame frame;
 	private JButton about;
 	private JButton alarmClock;
@@ -63,19 +67,20 @@ public class Window extends WindowAdapter implements ActionListener
 		{
 			settings = (ChosenSettings) saveSettings.deserialize();
 		}
+
 		try
 		{
 			alarmLogic = new AlarmClockLogic(settings);
-		} catch (ClassNotFoundException | SQLException e)
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | NullPointerException e)
 		{
-			ConnectionError error = new ConnectionError();
+			System.out.println("sdf");
+			SoundNotFoundError error = new SoundNotFoundError();
 			error.show(frame);
-			settings.setMode("XML");	
 		}
-			optionsWidnow = new Options(this, alarmLogic);
-			alarmWindow = new AlarmClock(this, alarmLogic);
-			calendarWindow = new CalendarWindow(this);
-}
+		optionsWidnow = new Options(this, alarmLogic);
+		alarmWindow = new AlarmClock(this, alarmLogic);
+		calendarWindow = new CalendarWindow(this);
+	}
 
 	private void initComponents()
 	{
@@ -143,8 +148,17 @@ public class Window extends WindowAdapter implements ActionListener
 
 		if (source == allAlarms)
 		{
-			AllAlarms alarmList = new AllAlarms();
-			alarmList.show();
+			AllAlarms alarmList;
+			try
+			{
+				int mode = settings.getMode().equals("XML") ? 2 : 1;
+				alarmList = new AllAlarms(mode, alarmLogic.getAlarmList());
+				alarmList.show();
+			} catch (ClassNotFoundException | SQLException e1)
+			{
+				e1.printStackTrace();
+			}
+
 		}
 
 		if (source == filter)
@@ -166,22 +180,25 @@ public class Window extends WindowAdapter implements ActionListener
 		calendarWindow.refresh();
 	}
 
-	@Override
-	public void windowClosed(WindowEvent e)
-	{
-		saveSettings.serialize(settings);
-		Serializer serializer = new Serializer("meeting.xml");
-		serializer.serialize(calendarWindow.getMeeting());
-	}
 
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		saveSettings.serialize(settings);
-		Serializer serializer = new Serializer("meeting.xml");
-		serializer.serialize(calendarWindow.getMeeting());
+		if (calendarWindow != null)
+		{
+			saveSettings.serialize(settings);
+			Serializer serializer = new Serializer("meeting.xml");
+			serializer.serialize(calendarWindow.getMeeting());
+		}
+		
+		if (alarmLogic != null)
+		{
+			Serializer serialzier2 = new Serializer("alarm.xml");
+			serialzier2.serialize(alarmLogic.getAlarmXml());
+		}
+
 	}
-	
+
 	public ChosenSettings getSettings()
 	{
 		return settings;

@@ -13,11 +13,10 @@ public class DataBase
 		connectionUrl = defaultUrl;
 	}
 
-	public void connectToDataBase() throws SQLException, ClassNotFoundException
+	public void connectToDataBase() throws SQLException, ClassNotFoundException 
 	{
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		con = DriverManager.getConnection(connectionUrl);
-
 	}
 
 	public Connection getConnection()

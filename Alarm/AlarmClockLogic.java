@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -36,17 +37,18 @@ public class AlarmClockLogic implements ActionListener
 
 	AlarmList alarms;
 
-	AlarmClockLogic(ChosenSettings settings) throws ClassNotFoundException, SQLException
+	AlarmClockLogic(ChosenSettings settings) throws UnsupportedAudioFileException, IOException, LineUnavailableException, NullPointerException
 	{
 		this.settings = settings;
 		this.musicName = settings.getSound();
 		this.stopAlarm = new StopAlarm(this);
-		alarms = new AlarmList();
-		alarms.fill();
+		int mode = settings.getMode().equals("XML") ? 2 : 1;
+		alarms = new AlarmList(mode, true);
+
 		init();
 	}
 
-	public void setSound()
+	public void setSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException, NullPointerException
 	{
 		if (clip.isOpen() == true)
 		{
@@ -56,28 +58,16 @@ public class AlarmClockLogic implements ActionListener
 		init();
 	}
 
-	public void init()
+	public void init() throws UnsupportedAudioFileException, IOException, LineUnavailableException, NullPointerException
 	{
 		timer = new Timer(delay, this);
 		timer.start();
 
-		try
-		{
-			url = this.getClass().getClassLoader().getResource(musicName + ".wav");
-			audioIn = AudioSystem.getAudioInputStream(url);
-			clip = AudioSystem.getClip();
-			clip.open(audioIn);
+		url = this.getClass().getClassLoader().getResource(musicName + ".wav");
 
-		} catch (UnsupportedAudioFileException exc)
-		{
-			System.out.println(exc.getMessage());
-		} catch (LineUnavailableException exc)
-		{
-			System.out.println(exc.getMessage());
-		} catch (IOException exc)
-		{
-			System.out.println(exc.getMessage());
-		}
+		audioIn = AudioSystem.getAudioInputStream(url);
+		clip = AudioSystem.getClip();
+		clip.open(audioIn);
 	}
 
 	public void playMusic()
@@ -139,18 +129,26 @@ public class AlarmClockLogic implements ActionListener
 
 			int currentMinutes = cal.get(Calendar.MINUTE);
 			int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+			int currentDay = cal.get(Calendar.DATE);
 
 			currentMinutes += stopAlarm.getNapTime();
-			if (minutes >= 60)
+			if (currentMinutes >= 60)
 			{
-				minutes = minutes % 60;
-				hours += 1;
+				currentMinutes = currentMinutes % 60;
+				currentHour += 1;
+				if (currentHour > 23)
+				{
+					currentHour = currentHour % 24;
+					currentDay += 1;
+				}
 			}
 
-			System.out.println(id);
-			String sDate = Integer.toString(cal.get(Calendar.YEAR)) + '-'
-					+ Integer.toString(cal.get(Calendar.MONTH) + 1) + '-' + Integer.toString(cal.get(Calendar.DATE))
-					+ " " + Integer.toString(currentHour) + ":" + Integer.toString(currentMinutes);
+			cal.set(Calendar.MINUTE, currentMinutes);
+			cal.set(Calendar.HOUR_OF_DAY, currentHour);
+			cal.set(Calendar.DATE, currentDay);
+
+			SimpleDateFormat newformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:00.0");
+			String sDate = newformat.format(cal.getTime());
 			alarms.addAlarmToDB(sDate);
 			alarms.updateList(id, sDate);
 		}
@@ -186,6 +184,35 @@ public class AlarmClockLogic implements ActionListener
 	public void setUrl(String value) throws ClassNotFoundException, SQLException
 	{
 		alarms.setUrl(value);
+	}
+
+	public ArrayList<String> getList()
+	{
+		return alarms.getList();
+	}
+
+	public ArrayList<AlarmObject> getAlarmXml()
+	{
+		return alarms.getAlarmXml();
+	}
+
+	public AlarmList getAlarmList()
+	{
+		return alarms;
+	}
+
+	public void setMode(int mode)
+	{
+
+		Serializer serializer = new Serializer("alarm.xml");
+		serializer.serialize(alarms.getAlarmXml());
+		alarms = new AlarmList(mode, false);
+		alarms.fill();
+	}
+
+	public boolean getConnectionStatus()
+	{
+		return alarms.getConnectionStatus();
 	}
 
 }
