@@ -55,6 +55,28 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 	private CalendarLogic mcalenadar;
 	private Window window;
 
+	/**
+	 * Konstruktor klasy inicjalizuje okno oraz komponenty zawarte w oknie.
+	 * 
+	 * @param window
+	 *            okno - rodzic
+	 * @param calendar
+	 *            klasa do obs³ugi logiki kalendarza
+	 * @param column
+	 *            kolumna dla której wywo³ano okno
+	 * @param row
+	 *            rz¹d dla którego wywo³ano okno
+	 * @param year
+	 *            rok dla którego wyow³ano okno
+	 * @param month
+	 *            miesi¹c dla którego wywo³ano okno
+	 * @param day
+	 *            dzieñ dla którego wywo³ano okno
+	 * @param soundName
+	 *            wybrany dzwiêk alarmu
+	 * @param alarmClock
+	 *            klasa do obs³ugi logiki alarmu
+	 */
 	InsertMeetingWindow(Window window, CalendarLogic calendar, int column, int row, int year, int month, int day,
 			String soundName, AlarmClockLogic alarmClock)
 	{
@@ -73,12 +95,16 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 
 	}
 
+	/**
+	 * Metoda s³u¿¹ca do wype³nienia komórek z informacjami o spotkaniu na podstawie
+	 * listy spotkañ
+	 */
 	public void initFillTable()
 	{
 
 		String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 100);
 		int id = Integer.parseInt(sId);
-		String meeting = mcalenadar.getDB().getMap().get(id);
+		String meeting = mcalenadar.getFillMeetingData().getMap().get(id);
 
 		if (meeting != null && meeting != "")
 		{
@@ -107,6 +133,10 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 
 	}
 
+	/**
+	 * Metoda do inicjalizacji komponentów: pól tekstowych, przycisków, listy
+	 * wyboru.
+	 */
 	private void initComponents()
 	{
 		detalisLabel = new JLabel("Szczegó³y");
@@ -178,6 +208,10 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 
 	}
 
+	/**
+	 * Metoda do inicjalizacji okna. Ustawia parametry takie jak np. rozmiar okna,
+	 * nazwa.
+	 */
 	public void initFrame()
 	{
 		frame = new JFrame();
@@ -190,11 +224,21 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		frame.setLocationRelativeTo(null);
 	}
 
+	/**
+	 * Metoda s³u¿aca do wyœwietlania okna.
+	 */
 	public void show()
 	{
 		frame.setVisible(true);
 	}
 
+	/**
+	 * @param e
+	 *            zdarzenie generowane przez naciœniecie przyciskó Metdoa do obs³ugi
+	 *            zdarzeñ generwoanych przez naciœniêcie przycisków. Odpowiednio
+	 *            zamyka okno, usuwa spotkanie, ustawia przypomnienie o spotkaniu.
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -216,7 +260,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 				frame.dispose();
 			} else if (stringName.equals("") == true)
 			{
-				IntertNameWarning warning = new IntertNameWarning();
+				InsertNameWarning warning = new InsertNameWarning();
 				warning.show(frame);
 			} else
 			{
@@ -239,7 +283,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		{
 			String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 1000);
 			int id = Integer.parseInt(sId);
-			
+
 			name.setText("");
 			localization.setText("");
 			time.setText("");
@@ -256,6 +300,14 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		}
 	}
 
+	/**
+	 * Metoda aktualizuj¹ca stan tabeli kalendarza po dodaniu nowego spotkania
+	 * 
+	 * @param row
+	 *            modyfikowany rz¹d
+	 * @param column
+	 *            modyfikowana kolumna
+	 */
 	public void fill(int row, int column)
 	{
 		if (!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("")
@@ -269,6 +321,16 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		}
 	}
 
+	/**
+	 * Metdoa wywo³uj¹ca metody s³u¿¹ce do dodania spotkania do listy spotkañ,
+	 * modyfikuj¹ce stan bazy oraz obiektu przechowuj¹cego spotkania do pliku XML (w
+	 * zale¿noœci od u¿ywanego trybu)
+	 * 
+	 * @param row
+	 *            modyfikowany rz¹d
+	 * @param column
+	 *            modyfikowana kolumna
+	 */
 	public void fillData(int row, int column)
 	{
 		String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 1000);
@@ -288,7 +350,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			{
 				mcalenadar.setName(id, stringName);
 				mcalenadar.setLocalization(id, stringLocalization);
-				mcalenadar.setDate(id, stringDate); // ???
+				mcalenadar.setDate(id, stringDate);
 				mcalenadar.setDetails(id, stringDetails);
 			} else
 			{
@@ -299,7 +361,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			{
 				mcalenadar.setNameXml(id, stringName);
 				mcalenadar.setLocalizationXml(id, stringLocalization);
-				mcalenadar.setDateXml(id, stringDate); // ???
+				mcalenadar.setDateXml(id, stringDate);
 				mcalenadar.setDetailsXml(id, stringDetails);
 			}
 		} else
@@ -308,16 +370,20 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		}
 	}
 
+	/**
+	 * 
+	 * @return ³añcuch znaków zawieraj¹cy szczegó³y spotkania
+	 */
 	public String getDetails()
 	{
 		return stringDetails;
 	}
 
-	public boolean getDone()
-	{
-		return done;
-	}
-
+	/**
+	 * Metoda s³u¿aca do dodania noewego powiadomienia o spotkaniu.
+	 * 
+	 * @return kalendarz z ustawion¹ dat¹ przypomnienia o spotkaniu
+	 */
 	public Calendar getDate()
 	{
 		if (accepted == true)
@@ -381,10 +447,10 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			{
 				e1.printStackTrace();
 			}
-			
+
 			SimpleDateFormat newformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:00.0");
 			String ssDate = newformat.format(formatted.getTime());
-			
+
 			alarmClock.addAlarm(ssDate);
 			alarmClock.addAlarmToList(ssDate);
 			try
@@ -399,6 +465,14 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		return null;
 	}
 
+	/**
+	 * Metoda do obs³ugi zdarzeñ przez zmianê na liœcie wyboru czasu przypomnienia o
+	 * zdarzeniu
+	 * 
+	 * @param e
+	 *            zdarzenie generwoane przez zmianê na liœcie wyboru czasu
+	 *            przypomnienia o zdarzeniu
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e)
 	{

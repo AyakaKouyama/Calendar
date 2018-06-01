@@ -4,6 +4,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
 public class CalendarLogic
 {
 
@@ -22,19 +28,27 @@ public class CalendarLogic
 			{ null, null, null, null, null, null, null },
 			{ null, null, null, null, null, null, null },
 			{ null, null, null, null, null, null, null }, };
-	
-	private String[] columnNames = { "Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz" };
-	private int[] currentPosition = { -1, -1 };
+
+	private String[] columnNames =
+	{ "Pon", "Wto", "Œr", "Czw", "Pt", "Sob", "Niedz" };
+	private int[] currentPosition =
+	{ -1, -1 };
 	private int dayOfWeek;
 	private int mode;
-	
+
 	private FillMeetingData dbFill;
 	private HashMap<Integer, MeetingObject> meetingObject;
 	private ArrayList<Integer> allIds;
-	
+
 	private CalendarWindow window;
-	
-	CalendarLogic(CalendarWindow window) 
+
+	/**
+	 * Konstruktor klasy; tworzy odpowiednie obiekty potrzebne do pracy aplikacji.
+	 * 
+	 * @param window
+	 *            okno rodzic
+	 */
+	public CalendarLogic(CalendarWindow window)
 	{
 		this.window = window;
 		MeetingObjectList list = new MeetingObjectList();
@@ -45,8 +59,7 @@ public class CalendarLogic
 		if (meetingObject != null)
 		{
 			dbFill = new FillMeetingData(this, mode, meetingObject, allIds, true);
-		} 
-		else
+		} else
 		{
 			meetingObject = new HashMap<Integer, MeetingObject>();
 			allIds = new ArrayList<Integer>();
@@ -54,12 +67,28 @@ public class CalendarLogic
 		}
 	}
 
+	/**
+	 * 
+	 * @return zwraca iloœæ dni w miesi¹cu, który aktualnie jest obs³ugiwany w
+	 *         kalendarzu
+	 */
 	public int getDays()
 	{
 		Calendar cal = new GregorianCalendar(window.getYear(), window.getMonth() - 1, 1);
 		return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
+	/**
+	 * Metoda s³u¿aca do wype³nienia tablicy danymi wyœwietlanymi w komórkach tabeli
+	 * kalendarza (nag³ówek, dni miesi¹ca, nazwy wydarzeñ).
+	 * 
+	 * @param year
+	 *            obecnie obs³ugiwany rok przez kalendarz
+	 * @param month
+	 *            obecnie obs³ugiwany miesi¹c przez kalendarz
+	 * @return tablica wype³niona danymi, które maj¹ zostaæ wyœwietlnone w oknie
+	 *         kalendarza
+	 */
 	public Object[][] fillCalendar(int year, int month)
 	{
 		Calendar calendar = Calendar.getInstance();
@@ -96,7 +125,7 @@ public class CalendarLogic
 						if (x <= getDays())
 						{
 							data[i][j] = x;
-							dbFill.fillCalendar(month, year, dayOfWeek, getDays(), x, i, j);
+							dbFill.fillCalendar(month, year, x, i, j);
 							x++;
 						} else
 						{
@@ -110,41 +139,80 @@ public class CalendarLogic
 		return data;
 	}
 
+	/**
+	 * Metoda zwracaj¹ca rz¹d, w którym znajduje siê obecnie obs³ugiwany dzieñ
+	 * 
+	 * @param day
+	 *            obs³ugiwany dziêñ
+	 * @return nr rzêdu, w którym znajduje siê dany dzieñ
+	 */
 	public int currentDayRow(int day)
 	{
 		return currentPosition[0];
 	}
 
+	/**
+	 * Metoda zwracaj¹ca kolumnê, w której znajduje siê obecnie obs³ugiwany dzieñ
+	 * 
+	 * @param day
+	 *            obs³ugiwany dziêñ
+	 * @return nr kolumny, w której znajduje siê dany dzieñ
+	 */
 	public int currentDayColumn(int day)
 	{
 		return currentPosition[1];
 	}
 
-	public Object getData()
-	{
-		return data;
-	}
-
-	public void setObject(String value, int i, int j)
-	{
-		data[i][j] = value;
-	}
-
+	/**
+	 * 
+	 * @param i
+	 *            rz¹d
+	 * @param j
+	 *            kolumna
+	 * @return zwraca wartoœæ przechowywan¹ w tabeli, w rzêdzie i, kolumnie j
+	 */
 	public Object getCellValue(int i, int j)
 	{
 		return data[i][j];
 	}
 
+	/**
+	 * Metoda ustawiaj¹ca wartoœæ konkretnej pozycji w tabeli
+	 * 
+	 * @param value
+	 *            wstawiana wartoœæ
+	 * @param i
+	 *            rz¹d
+	 * @param j
+	 *            kolumna
+	 */
 	public void setCellValue(String value, int i, int j)
 	{
 		data[i][j] = value;
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do bazy
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            nazwa spotkania
+	 */
 	public void setName(int id, String value)
 	{
 		dbFill.setName(id, value);
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do serializowanego
+	 * obiektu
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            nazwa spotkania
+	 */
 	public void setNameXml(int id, String value)
 	{
 
@@ -158,11 +226,28 @@ public class CalendarLogic
 		}
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce lokalizacje spotkania do bazy
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            lokalizacja spotkania
+	 */
 	public void setLocalization(int id, String value)
 	{
 		dbFill.setLocalization(id, value);
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce nazwê spotkania do serializowanego
+	 * obiektu
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            lokalizacja spotkania
+	 */
 	public void setLocalizationXml(int id, String value)
 	{
 		if (meetingObject.get(id) != null)
@@ -174,13 +259,28 @@ public class CalendarLogic
 			meetingObject.get(id).setLocalization(value);
 		}
 	}
-	
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce datê spotkania do bazy
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            data spotkania
+	 */
 	public void setDate(int id, String value)
 	{
 		dbFill.setDate(id, value);
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce datê spotkania do serializowanego obiektu
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            data spotkania
+	 */
 	public void setDateXml(int id, String value)
 	{
 		if (meetingObject.get(id) != null)
@@ -194,11 +294,28 @@ public class CalendarLogic
 
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce szczegó³y spotkania do bazy
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            szczdegó³y spotkania
+	 */
 	public void setDetails(int id, String value)
 	{
 		dbFill.setDetails(id, value);
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody zapisuj¹ce szczegó³y spotkania do serializowanego
+	 * obiektu
+	 * 
+	 * @param id
+	 *            id spotkania
+	 * @param value
+	 *            szczegó³y spotkania
+	 */
 	public void setDetailsXml(int id, String value)
 	{
 
@@ -213,63 +330,115 @@ public class CalendarLogic
 
 	}
 
+	/**
+	 * @param id id spotkania
+	 * @return zwraca id w przypadku znalezienia id w bazie; zwraca -1 w przypadku, gdy szukane id nie wystêpuje w bazie
+	 */
 	public int getId(int id)
 	{
 		return dbFill.getId(id);
 	}
 
+	/**
+	 * Metoda wywo³ujaca odpowienie metody wstawiaj¹ce nowy rekord (spotkanie) do bazy danych
+	 * @param id id spotkania
+	 * @param name nazwa spotkania
+	 * @param localization lokalizacja spotkania
+	 * @param date data spotkania
+	 * @param details szczegó³y spotkania
+	 */
 	public void insert(int id, String name, String localization, String date, String details)
 	{
 		dbFill.insert(id, name, localization, date, details);
 	}
 
+	/**
+	 * Metoda wywo³uj¹ca metody s³u¿¹ce do usuniêcia spotkania z bazy/serializowanego obiektu
+	 * @param id id spotkania
+	 */
 	public void deleteMeeting(int id)
 	{
-		if(mode == 1)
+		if (mode == 1)
 			dbFill.deleteMeeting(id);
-		else
-			meetingObject.remove(id);
+		else meetingObject.remove(id);
 	}
 
+	/**
+	 * Metoda wyow³uj¹ca metodê usuwaj¹c¹ spotkanie z listy
+	 * @param id id spotkania
+	 */
 	public void deleteMeetingFromList(int id)
 	{
 		dbFill.deleteMeetingFromList(id);
 	}
 
+	/**
+	 * Metoda wyow³uj¹ca metody s³u¿¹ce do dodania elementu do listy spotkañ
+	 * @param id id spotkania
+	 * @param value ³añcuch znaków opisuj¹cy spotkanie
+	 */
 	public void AddElementToList(int id, String value)
 	{
 		dbFill.addToDictionary(id, value);
 	}
 
+	/**
+	 * Meotda wywo³uj¹ca metodê dodaj¹c¹ nazwê spotkania do listy
+	 * @param id id spotkania
+	 * @param value nazwa spotkania
+	 */
 	public void addNameToList(int id, String value)
 	{
 		dbFill.addName(id, value);
 	}
 
-	public FillMeetingData getDB()
-	{
-		return dbFill;
-	}
 
+	/**
+	 * 
+	 * @return zwraca mapê wszystkich spotkañ
+	 */
 	public HashMap<Integer, MeetingObject> getObjectMeetings()
 	{
 		return meetingObject;
 	}
 
+	/**
+	 * 
+	 * @return zwraca wartoœæ liczbow¹ trybu w jakim pracuje aplikcja. 1 - "XML", 2 - "Baza dancyh"
+	 */
 	public int getMode()
 	{
 		return mode;
 	}
 
+	/**
+	 * Metoda ustawiaj¹ca tryb pracy aplikacji.
+	 * @param value wartoœæ liczbowa ustawianego trybu pracy
+	 * @throws ClassNotFoundException {@link https://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html}
+	 * @throws SQLException {@link https://docs.oracle.com/javase/7/docs/api/java/sql/SQLException.html}
+	 */
 	public void setMode(int value) throws ClassNotFoundException, SQLException
 	{
 		mode = value;
 		dbFill = new FillMeetingData(this, mode, meetingObject, allIds, false);
 	}
-	
+
+	/**
+	 * 
+	 * @return obiekt typu FilleMeetingData
+	 */
 	public FillMeetingData getFillMeetingData()
 	{
 		return dbFill;
+	}
+
+	/**
+	 * Metoda zapisuj¹ca stan aplikacji
+	 */
+	public void saveData()
+	{
+		Serializer serializer = new Serializer("meeting.xml");
+		serializer.serialize(meetingObject);
 	}
 
 }

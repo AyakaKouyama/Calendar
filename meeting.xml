@@ -2,13 +2,13 @@
 <java version="9.0.1" class="java.beans.XMLDecoder">
  <object class="java.util.HashMap">
   <void method="put">
-   <int>1618</int>
+   <int>20618</int>
    <object class="MeetingObject" id="MeetingObject0">
     <void class="MeetingObject" method="getField">
      <string>name</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string>1</string>
+      <string>gigigi</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
@@ -22,79 +22,13 @@
      <string>time</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string>17:06</string>
+      <string>17:54</string>
      </void>
     </void>
     <void class="MeetingObject" method="getField">
      <string>details</string>
      <void method="set">
       <object idref="MeetingObject0"/>
-      <string></string>
-     </void>
-    </void>
-   </object>
-  </void>
-  <void method="put">
-   <int>16618</int>
-   <object class="MeetingObject" id="MeetingObject1">
-    <void class="MeetingObject" method="getField">
-     <string>name</string>
-     <void method="set">
-      <object idref="MeetingObject1"/>
-      <string>test</string>
-     </void>
-    </void>
-    <void class="MeetingObject" method="getField">
-     <string>localization</string>
-     <void method="set">
-      <object idref="MeetingObject1"/>
-      <string>spotkanie</string>
-     </void>
-    </void>
-    <void class="MeetingObject" method="getField">
-     <string>time</string>
-     <void method="set">
-      <object idref="MeetingObject1"/>
-      <string>17:06</string>
-     </void>
-    </void>
-    <void class="MeetingObject" method="getField">
-     <string>details</string>
-     <void method="set">
-      <object idref="MeetingObject1"/>
-      <string>siaiaa</string>
-     </void>
-    </void>
-   </object>
-  </void>
-  <void method="put">
-   <int>22618</int>
-   <object class="MeetingObject" id="MeetingObject2">
-    <void class="MeetingObject" method="getField">
-     <string>name</string>
-     <void method="set">
-      <object idref="MeetingObject2"/>
-      <string>lkmlml</string>
-     </void>
-    </void>
-    <void class="MeetingObject" method="getField">
-     <string>localization</string>
-     <void method="set">
-      <object idref="MeetingObject2"/>
-      <string></string>
-     </void>
-    </void>
-    <void class="MeetingObject" method="getField">
-     <string>time</string>
-     <void method="set">
-      <object idref="MeetingObject2"/>
-      <string>17:06</string>
-     </void>
-    </void>
-    <void class="MeetingObject" method="getField">
-     <string>details</string>
-     <void method="set">
-      <object idref="MeetingObject2"/>
       <string></string>
      </void>
     </void>

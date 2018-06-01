@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class Options extends JFrame implements ItemListener, ActionListener
+public class Settings extends JFrame implements ItemListener, ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private JLabel alarmSound;
@@ -44,7 +44,12 @@ public class Options extends JFrame implements ItemListener, ActionListener
 	private AlarmClockLogic alarm;
 	private Window window;
 
-	Options(Window window, AlarmClockLogic alarm)
+	/**
+	 * Konstruktor klasy inicjalizuje kompinenty takie jak okno oraz zawarte w nim przyciski itp.
+	 * @param window okno - rodzic 
+	 * @param alarm klasa do obs³ugi logiki kalendarza
+	 */
+	Settings(Window window, AlarmClockLogic alarm)
 	{
 
 		this.window = window;
@@ -53,6 +58,9 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		initComponents();
 	}
 
+	/**
+	 * Metoda inicjalizuj¹ca okno ustawieñ. Ustawia parametry takie jak rozmiar okna, nazwa itp.
+	 */
 	private void initFrame()
 	{
 		setTitle("Ustawienia");
@@ -63,6 +71,9 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		setLocationRelativeTo(null);
 	}
 	
+	/*
+	 * Metoda do inicjalizacji komponentów: przycisków, list wyboru, radioprzycisków itp.
+	 */
 	private void initComponents()
 	{
 		ok = new JButton("OK");
@@ -156,11 +167,19 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		setIconImage(new ImageIcon("calendar.png").getImage());
 	}
 	
+	/*
+	 * Metoda s³u¿¹ca do wyœwietlania okna
+	 */
 	public void openWindiow()
 	{
 		setVisible(true);
 	}
 
+	/*
+	 * Metoda do ob³ugi zmiany stanu list wyboru. Wywo³uje odpowiednie metody m.in. do odœwie¿ania kalendarza po zmianie motywu.
+	 * (non-Javadoc)
+	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent e)
 	{
@@ -237,6 +256,11 @@ public class Options extends JFrame implements ItemListener, ActionListener
 		}
 	}
 
+	
+	/**
+	 * Metoda do obs³ugi zdarzeñ generwoanych prze przyciski. Odpowiednio zamyka okno, zmienia URL bazy, przywraca domyœlny URL.
+	 * @param e zdarzenie generowane przez naciœniêcie przycisku
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -273,16 +297,28 @@ public class Options extends JFrame implements ItemListener, ActionListener
 
 	}
 
+	/**
+	 * 
+	 * @return obecny tryb pracy aplikacji ("XML"/"Baza danych")
+	 */
 	public int getMode()
 	{
 		return iMode;
 	}
 	
+	/**
+	 * 
+	 * @return zwraca ³ancuch znaków okreœlaj¹cy wybrany dzwiêk alarmu
+	 */
 	public String getChoice()
 	{
 		return sChoice;
 	}
 
+	/**
+	 * 
+	 * @return zwraca ³añcuch znaków okreœlaj¹cy wybrany motyw kalendarza 
+	 */
 	public String getTheme()
 	{
 		return sTheme;

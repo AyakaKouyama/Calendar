@@ -2,7 +2,7 @@ import java.awt.Frame;
 
 import javax.swing.JOptionPane;
 
-public class IntertNameWarning implements MessageWindow
+public class InsertNameWarning implements MessageWindow
 {
 
 	public void show(Frame frame)

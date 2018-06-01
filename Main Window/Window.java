@@ -14,10 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**  
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ */
 public class Window extends WindowAdapter implements ActionListener
 {
 	private MyClock clock;
-	private Options optionsWidnow;
+	private Settings optionsWidnow;
 	private AlarmClock alarmWindow;
 	private AlarmClockLogic alarmLogic;
 	private CalendarWindow calendarWindow;
@@ -33,7 +37,11 @@ public class Window extends WindowAdapter implements ActionListener
 	private JButton export;
 	private JPanel alarmCloclkPanel;
 
-	Window()
+
+	/**
+	 * Konstruktor klasy Widnow. Inicjalizuje okno oraz zawarte w nim komponenty.
+	 */
+	public Window()
 	{
 		frame = new JFrame();
 		initWindow();
@@ -41,6 +49,9 @@ public class Window extends WindowAdapter implements ActionListener
 		initComponents();
 	}
 
+	/**
+	 * Metoda do inicjalizacji okna. Ustawia niezbêdne parametry okna takie jak nazwa, rozmiar itp.
+	 */
 	private void initWindow()
 	{
 		frame.getContentPane().setLayout(null);
@@ -53,6 +64,9 @@ public class Window extends WindowAdapter implements ActionListener
 		frame.setLocationRelativeTo(null);
 	}
 
+	/**
+	 * Metoda do inicjalizacji obiektów potrzebnych do obslugi aplikacji.
+	 */
 	private void initObjects()
 	{
 		saveSettings = new Serializer("settings.xml");
@@ -73,15 +87,17 @@ public class Window extends WindowAdapter implements ActionListener
 			alarmLogic = new AlarmClockLogic(settings);
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | NullPointerException e)
 		{
-			System.out.println("sdf");
 			SoundNotFoundError error = new SoundNotFoundError();
 			error.show(frame);
 		}
-		optionsWidnow = new Options(this, alarmLogic);
+		optionsWidnow = new Settings(this, alarmLogic);
 		alarmWindow = new AlarmClock(this, alarmLogic);
 		calendarWindow = new CalendarWindow(this);
 	}
 
+	/**
+	 * Metoda do inicjalizacji komponentów zawartych w oknie takich jak np. przyciski, napisy.
+	 */
 	private void initComponents()
 	{
 		about = new JButton("Info");
@@ -119,11 +135,18 @@ public class Window extends WindowAdapter implements ActionListener
 		frame.add(export);
 	}
 
+	/**
+	 * Metoda s³u¿¹ca do wyœwietlania okna.
+	 */
 	public void show()
 	{
 		frame.setVisible(true);
 	}
 
+	/**
+	 * @param e zdarzenie generowane po naciœniêciu na komponent
+	 * Metoda do ob³ugi zdarzeñ po naciœniêciu na dany przycisk.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -149,15 +172,10 @@ public class Window extends WindowAdapter implements ActionListener
 		if (source == allAlarms)
 		{
 			AllAlarms alarmList;
-			try
-			{
 				int mode = settings.getMode().equals("XML") ? 2 : 1;
 				alarmList = new AllAlarms(mode, alarmLogic.getAlarmList());
 				alarmList.show();
-			} catch (ClassNotFoundException | SQLException e1)
-			{
-				e1.printStackTrace();
-			}
+
 
 		}
 
@@ -174,6 +192,9 @@ public class Window extends WindowAdapter implements ActionListener
 
 	}
 
+	/**
+	 * Metoda aktualizuj¹ca stan okna po zmianie trybu pracy aplikacji z "XML" na "Baza danych" i odworotnie.
+	 */
 	public void setMode()
 	{
 		calendarWindow.updateCalendar();
@@ -181,44 +202,66 @@ public class Window extends WindowAdapter implements ActionListener
 	}
 
 
+	/**
+	 * @param e zdarzenie generowane w momencie zamknêcia okna
+	 * Metoda wywo³uj¹ca odpowiednie metody maj¹ce na celu zapis stanu aplikacji w momencie zakoñczenia jej dzia³ania.
+	 */
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
 		if (calendarWindow != null)
 		{
 			saveSettings.serialize(settings);
-			Serializer serializer = new Serializer("meeting.xml");
-			serializer.serialize(calendarWindow.getMeeting());
+			calendarWindow.saveData();
 		}
 		
 		if (alarmLogic != null)
 		{
-			Serializer serialzier2 = new Serializer("alarm.xml");
-			serialzier2.serialize(alarmLogic.getAlarmXml());
+			alarmLogic.saveData();
 		}
 
 	}
 
+	/**
+	 * 
+	 * @return obiekt typu ChosenSettings zawieraj¹cy informacje o obecnej konfiguracji aplikacji
+	 */
 	public ChosenSettings getSettings()
 	{
 		return settings;
 	}
 
+	/**
+	 * 
+	 * @return okno
+	 */
 	public Frame getFrame()
 	{
 		return frame;
 	}
 
-	public Options getOptionWindow()
+	/**
+	 * 
+	 * @return okno ustawieñ aplikacji
+	 */
+	public Settings getOptionWindow()
 	{
 		return optionsWidnow;
 	}
 
+	/**
+	 * 
+	 * @return obiekt typu AlarmClockLogic odpowiedzialny za logikê kalendarza
+	 */
 	public AlarmClockLogic getAlarmLogic()
 	{
 		return alarmLogic;
 	}
 
+	/**
+	 * 
+	 * @return okno tabeli kalendarza
+	 */
 	public CalendarWindow getCalendarWindow()
 	{
 		return calendarWindow;

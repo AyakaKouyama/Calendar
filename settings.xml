@@ -19,7 +19,7 @@
    <string>mode</string>
    <void method="set">
     <object idref="ChosenSettings0"/>
-    <string>XML</string>
+    <string>Baza danych</string>
    </void>
   </void>
   <void class="ChosenSettings" method="getField">

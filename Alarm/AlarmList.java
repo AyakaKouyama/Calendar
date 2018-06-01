@@ -15,20 +15,19 @@ public class AlarmList
 		alarm = new ArrayList<String>();
 		AlarmObjectList alarmsXml = new AlarmObjectList();
 		bar = new ProgressBar();
+		alarmXml = alarmsXml.deserializeList();
+		
 		if(showBar == true)
 			bar.show();
-		alarmXml = alarmsXml.deserializeList();
+		
 		try
 		{
 			db = new AlarmTable();
 		} catch (ClassNotFoundException | SQLException e)
 		{
-
 			mode = 2;
-			
 			connectionFailed = true;
 			bar.close();
-			System.out.println(mode);
 			fill();
 		}
 		bar.close();
@@ -38,7 +37,6 @@ public class AlarmList
 	public void fill()
 	{
 		mode = connectionFailed == true ? 2 : mode;
-		
 		if(mode == 1)
 		{
 			ArrayList<Integer> ids = db.getAllIds();
@@ -154,5 +152,11 @@ public class AlarmList
 	public boolean getConnectionStatus()
 	{
 		return connectionFailed;
+	}
+	
+	public void saveData()
+	{
+		Serializer serialzier2 = new Serializer("alarm.xml");
+		serialzier2.serialize(alarmXml);
 	}
 }

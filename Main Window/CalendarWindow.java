@@ -18,6 +18,13 @@ import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+/**
+ * 
+ * @author Sylwia Mieszkowska
+ * @author Anna Ciep³ucha
+ *
+ */
+
 public class CalendarWindow extends MouseAdapter implements ActionListener
 {
 	private JButton next;
@@ -37,7 +44,16 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 	private Window window;
 	private CalendarLogic calendar;
 
-	CalendarWindow(Window window)
+	/**
+	 * Konstruktor klasy; tworzy nowy obiekt oraz inicjalizuje komponenty potrzebne
+	 * do wyœwietlania kalendarza (tabela, przyciski do zmiany miesi¹ca/roku).
+	 * 
+	 * @param window
+	 *            okno w którym wyœwietlana jest tabela z zawartoœci¹ kalendarza
+	 * @see #initComponents()
+	 * @see #initTable()
+	 */
+	public CalendarWindow(Window window)
 	{
 		currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
@@ -52,6 +68,9 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		initComponents();
 	}
 
+	/**
+	 * Metoda do inicjalizacji przycisków s³u¿acych do zmiany miesi¹ca oraz roku
+	 */
 	private void initComponents()
 	{
 		panel.setBounds(20, 100, 560, 800);
@@ -88,6 +107,13 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		window.getFrame().add(month);
 	}
 
+	/***
+	 * 
+	 * Metoda do inicjalizacji klaendarza. Tworzy obiekt tabeli oraz ustawia jej
+	 * parametry - wymiary, sposób renderowania komórek u¿ywaj¹c spersonalizowanego
+	 * renderera.
+	 * 
+	 */
 	void initTable()
 	{
 		table = new JTable(new MyTableModel(this));
@@ -117,6 +143,9 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 
 	}
 
+	/**
+	 * Odœwie¿a zawartoœæ tabeli po zmianie motywu.
+	 */
 	public void refresh()
 	{
 		panel.remove(table);
@@ -127,6 +156,13 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		table.addMouseListener(this);
 	}
 
+	/**
+	 * @param e
+	 *            zdarzenie generowane przez naciœniêcie przycisku myszt Metoda do
+	 *            obslugi zdarzeñ generwoanych przez naciœniêcie myszy. Po
+	 *            dwukrotnym naciœniêciu na komórkê w tabeli otwierane jest okno
+	 *            zawieraj¹ce szczegó³y spotkania.
+	 */
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
@@ -146,6 +182,10 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		}
 	}
 
+	/**
+	 * Metoda do wype³niania komórek tabeli odpowiednimi wartoœciami po zmianie
+	 * roku/miesi¹ca.
+	 */
 	public void updateCalendar()
 	{
 		for (int i = 0; i < 13; i++)
@@ -154,7 +194,7 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 			{
 				if (i % 2 == 0 && table.getValueAt(i, j) != null)
 				{
-					calendar.setObject(null, i, j);
+					calendar.setCellValue(null, i, j);
 				}
 			}
 		}
@@ -169,26 +209,62 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		}
 	}
 
+	/**
+	 * 
+	 * @param value
+	 *            wartoœæ, któr¹ ma zostaæ wype³niona komórka w tabeli
+	 * @param row
+	 *            rz¹d, w którym znajduje siê komórka tabeli
+	 * @param column
+	 *            kolumna, w której znajduje siê komórka tabeli
+	 */
 	public void fillCell(String value, int row, int column)
 	{
 		table.setValueAt(value, row, column);
 	}
 
+	/**
+	 * 
+	 * @param value
+	 *            wartoœæ jaka ma zostaæ przypisana do pola currentMonth Metoda do
+	 *            ustawiania wartoœci pola cuurentMonth (obecny miesi¹c w
+	 *            kalendarzu)
+	 */
 	public void setCurrentMonth(int value)
 	{
 		currentMonth = value;
 	}
 
+	/**
+	 * 
+	 * @param value
+	 *            wartoœc jaka ma zostaæ przypisana do pola currentDay Metoda do
+	 *            ustawiania wartoœci pola currentDay (obecny dzieñ w kalendarzu)
+	 */
 	public void setCurrentDay(int value)
 	{
 		currentDay = value;
 	}
 
+	/**
+	 * 
+	 * @param value
+	 *            wartoœc jaka ma zostaæ przypisana do pola currentYear Metoda do
+	 *            ustawiania wartoœci pola currentYear (obecny rok w kalendarzu)
+	 */
 	public void setCurrentYear(int value)
 	{
 		currentYear = value;
 	}
 
+	/**
+	 * @param e
+	 *            zdarzenie generowane przez naciœniêcie na przycisk Metoda do
+	 *            obs³ugi przycisków do zmiany miesi¹ca/roku. Zmienia wartoœæ pola
+	 *            currentYear oraz currentMonth, jednoczeœnie zmieniaj¹c wartoœæ
+	 *            wyœwietlnaego miesi¹ca/roku. Aktualizuje zawartoœæ kalendarza,
+	 *            wywo³uj¹c metodê updateCalendar().
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -242,52 +318,95 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 		}
 	}
 
+	/**
+	 * 
+	 * @return obiekt CalendarLogic obs³uguj¹cy logikê kalendarza
+	 */
 	public CalendarLogic getCalendar()
 	{
 		return calendar;
 	}
 
+	/**
+	 * 
+	 * @return wartoœæ aktualnego roku ustawionego w kalendarzu
+	 */
 	public int getYear()
 	{
 		return currentYear;
 	}
 
+	/**
+	 * 
+	 * @return wartoœæ aktualnego miesi¹ca ustawionego w kalendarzu
+	 */
 	public int getMonth()
 	{
 		return currentMonth;
 	}
 
+	/**
+	 * 
+	 * @return wartoœæ aktualnego dnia ustawionego w kalendarzu
+	 */
 	public int getCurrentDay()
 	{
 		return currentDay;
 	}
 
+	/**
+	 * 
+	 * @return tryb pracy aplikacji ("XML" lub "Baza danych")
+	 */
 	public int getMode()
 	{
 		return window.getOptionWindow().getMode();
 	}
 
+	/**
+	 * 
+	 * @return mapa zawieraj¹ca wszystkie spotkania
+	 */
 	public HashMap<Integer, MeetingObject> getMeeting()
 	{
 		return calendar.getObjectMeetings();
 	}
 
+	/**
+	 * 
+	 * @return okno kalendarza
+	 */
 	public CalendarWindow getCalendarWindow()
 	{
 		return this;
 	}
 
+	/**
+	 * 
+	 * @return obiekt odpowiedzialny za wype³nianie kolekcji zawieraj¹cych spotkania
+	 *         i manipulowanie nimi
+	 */
 	public FillMeetingData getFillMeetingData()
 	{
 		return calendar.getFillMeetingData();
 	}
 
+	/**
+	 * 
+	 * @author Sylwia Mieszkowska
+	 * @author Anna Ciep³ucha
+	 *
+	 */
 	private class MyRenderer extends JTextArea implements TableCellRenderer
 	{
 		private static final long serialVersionUID = 1L;
 		private Color[] colors;
 
-		MyRenderer()
+		/**
+		 * Konstruktor klasy ustawiaj¹cy styl zawijania linii w tabeli oraz odczytuj¹cy
+		 * wybrany motyw.
+		 */
+		public MyRenderer()
 		{
 			setLineWrap(true);
 			setWrapStyleWord(true);
@@ -298,13 +417,16 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 			colors = theme.getTheme();
 		}
 
+		/**
+		 * Metoda opisuj¹ca sposób renderowania poszczególnych komórek (ich kolor,
+		 * zawartoœæ, czcionkê).
+		 */
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column)
 		{
 
-			if(calendar != null)
-				calendar.fillCalendar(currentYear, currentMonth);
+			if (calendar != null) calendar.fillCalendar(currentYear, currentMonth);
 
 			if (row == 0)
 			{
@@ -344,5 +466,13 @@ public class CalendarWindow extends MouseAdapter implements ActionListener
 
 			return this;
 		}
+	}
+
+	/**
+	 * Metoda wywo³uj¹ca odpowiednie metody do zapisu stanu kalendarza
+	 */
+	public void saveData()
+	{
+		calendar.saveData();
 	}
 }
