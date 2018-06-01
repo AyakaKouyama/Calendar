@@ -1,3 +1,4 @@
+import java.awt.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,7 +144,15 @@ public class FillMeetingData
 
 	public void deleteMeeting(int id)
 	{
-		db.deleteMeeting(id);
+		if(mode == 1)
+		{
+			db.deleteMeeting(id);
+		}
+		else
+		{
+			meetingObject.remove(id);
+		}
+		
 	}
 
 	public void deleteMeetingFromList(int id)
@@ -153,8 +162,15 @@ public class FillMeetingData
 
 	public void addToDictionary(int id, String value)
 	{
-		meeting.put(id, value);
-		if (mode == 2) xmlIds.add(id);
+		if(mode == 1)
+			meeting.put(id, value);
+		else
+		{
+			meeting.put(id, value);
+			xmlIds.add(id);
+		}
+			
+		
 	}
 
 	public void addName(int id, String value)

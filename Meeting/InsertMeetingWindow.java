@@ -232,7 +232,6 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		{
 			accepted = true;
 			alarmInfo = new AlarmInfoDialog(getDate());
-
 			alarmInfo.show(window.getFrame());
 		}
 
@@ -240,22 +239,15 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		{
 			String sId = Integer.toString(day) + Integer.toString(month) + Integer.toString(year % 1000);
 			int id = Integer.parseInt(sId);
-			//if (mcalenadar.getMode() == 1)
-			//{
-				//if (mcalenadar.getId(id) != -1)
-				//{
-					name.setText("");
-					localization.setText("");
-					time.setText("");
-					details.setText("");
-					
-					mcalenadar.deleteMeeting(id);
-					fill(column, row);
-					fillData(column, row);
-				//}
-			//}
+			
+			name.setText("");
+			localization.setText("");
+			time.setText("");
+			details.setText("");
 
-
+			mcalenadar.deleteMeeting(id);
+			fill(column, row);
+			fillData(column, row);
 		}
 
 		if (source == cancel)
@@ -269,7 +261,7 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 		if (!name.getText().equals("") || !localization.getText().equals("") || !time.getText().equals("")
 				|| !details.getText().equals(""))
 		{
-			
+
 			window.getCalendarWindow().fillCell(stringName, row, column);
 		} else
 		{
@@ -381,8 +373,18 @@ public class InsertMeetingWindow implements ActionListener, ItemListener
 			String sDate = Integer.toString(d) + "/" + Integer.toString(month) + "/" + Integer.toString(year);
 			Calendar cal = Calendar.getInstance();
 
-			String ssDate = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(day) + " "
-					+ sTime;
+			Calendar formatted = Calendar.getInstance();
+			try
+			{
+				formatted.setTime(format.parse(sDate + " " + sTime));
+			} catch (ParseException e1)
+			{
+				e1.printStackTrace();
+			}
+			
+			SimpleDateFormat newformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:00.0");
+			String ssDate = newformat.format(formatted.getTime());
+			
 			alarmClock.addAlarm(ssDate);
 			alarmClock.addAlarmToList(ssDate);
 			try

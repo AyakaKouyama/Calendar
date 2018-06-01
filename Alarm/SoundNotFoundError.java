@@ -10,8 +10,7 @@ public class SoundNotFoundError implements MessageWindow
 	{
 		String message = "Nie znaleziono plików audio. Pliki z rozszerzeniem .wav nale¿y umieœciæ w katalogu /bin.";
 
-		JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);
-		
+		JOptionPane.showMessageDialog(frame, message, "Error", JOptionPane.ERROR_MESSAGE);	
 	}
 	
 }

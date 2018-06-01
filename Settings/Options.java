@@ -122,6 +122,12 @@ public class Options extends JFrame implements ItemListener, ActionListener
 			iMode = 1;
 			modeBase.setSelected(true);
 		}
+		
+		if(alarm.getConnectionStatus() == true)
+		{
+			iMode = 2;
+			modeXml.setSelected(true);
+		}
 		modeXml.addItemListener(this);
 		modeBase.addItemListener(this);
 		add(modeXml);

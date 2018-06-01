@@ -30,6 +30,7 @@ public class MeetingTableComponent
 		data = new Object[meetingData.getMap().size()][4];
 		logic = new MeetingsFilterLogic(window.getCalendarWindow().getCalendar().getDB());
 		
+		System.out.println(size);
 		fillList();
 		oryginalData = data;
 		initComponents();
@@ -63,6 +64,7 @@ public class MeetingTableComponent
 	
 	public void fillList()
 	{
+		System.out.println("asdf");
 		meetingData.getAllIDs();
 		for(int i = 0; i<size; i++)
 		{
