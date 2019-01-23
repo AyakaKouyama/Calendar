@@ -1,4 +1,4 @@
-# Organizer
+# Calendar
 Calendar which allows to:
 * plan events
 * set alarm clock
